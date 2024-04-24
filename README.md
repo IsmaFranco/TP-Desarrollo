@@ -9,3 +9,33 @@
 -  Zampa Gino - 49504 
 
 ## Tema 
+### Descripción
+Negocio a cargo de la venta al por menor de indumentaria textil, la cual se encuentra clasificada según el tipo de prenda, sus talles, colores, disponibilidad y precio. Por parte de los proveedores, se lleva un registro del stock de los productos y con quien debe comunicarse el administrador en caso de necesitar más. Además, cuenta con un servicio de envío dependiendo la ciudad a la que pertenezca el cliente.
+
+## Modelo 
+pegar imagen
+
+## Alcance Funcional
+### Alcance Mínimo 
+Regularidad:
+
+|  Req               |    Detalle     |
+|---                 |---       |
+|CRUD simple         ||
+| CRUD dependiente   ||
+| Listado + detalle  ||
+| CUU/Epic           ||
+
+Adicionales para Aprobación
+|  Req               |    Detalle     |
+|---                 |---       |
+|CRUD                ||
+|CUU/Epic            ||
+|Otros               ||
+
+## Alcance Funcional Voluntario
+|  Req               |    Detalle     |
+|---                 |---       |
+|Listados            ||
+|CUU/Epic            ||
+|Otros               ||

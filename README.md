@@ -14,6 +14,7 @@ Negocio a cargo de la venta al por menor de indumentaria textil, la cual se encu
 
 ## Modelo 
 [tp dsw 2024 tienda de ropa.pdf]
+(![image](https://github.com/IsmaFranco/TP-Desarrollo/assets/164551766/c5307017-4971-46cf-bfc9-c03a890d8de9))
 ( https://dbdiagram.io/d/6629572e03593b6b61e2beeb )
 
 ## Alcance Funcional

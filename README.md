@@ -1,4 +1,4 @@
-# Propuesta TP Desarrollo de SofWare
+# Propuesta TP Desarrollo de SoftWare
 
 ## Grupo
 

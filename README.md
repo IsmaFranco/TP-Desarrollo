@@ -14,6 +14,7 @@ Negocio a cargo de la venta al por menor de indumentaria textil, la cual se encu
 
 ## Modelo 
 [tp dsw 2024 tienda de ropa.pdf]
+( https://dbdiagram.io/d/6629572e03593b6b61e2beeb )
 
 ## Alcance Funcional
 ### Alcance Mínimo 
@@ -21,11 +22,9 @@ Regularidad:
 
 |  Req               |    Detalle     |
 |---                 |---       |
-|CRUD simple         ||
+| CRUD simple        ||
 | CRUD dependiente   ||
-| Listado + detalle  ||![DER tp dsw 2024 ](https://github.com/IsmaFranco/TP-Desarrollo/assets/74618994/2996e10c-6ca3-48d9-84fb-bd833e7e9e08)
-(https://github.com/IsmaFranco/TP-Desarrollo/files/15099441/tp.dsw.2024.tienda.de.ropa.pdf)
-
+| Listado + detalle  ||
 | CUU/Epic           ||
 
 Adicionales para Aprobación
@@ -35,8 +34,7 @@ Adicionales para Aprobación
 |CUU/Epic            ||
 |Otros               ||
 
-## Alcance Funcional(https://github.com/IsmaFranco/TP-Desarrollo/files/15099440/tp.dsw.2024.tienda.de.ropa.pdf)
-nal Voluntario
+## Alcance Funcional Voluntario
 |  Req               |    Detalle     |
 |---                 |---       |
 |Listados            ||

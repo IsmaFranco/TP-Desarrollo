@@ -23,7 +23,8 @@ Regularidad:
 
 |  Req               |    Detalle     |
 |---                 |---       |
-| CRUD simple        ||
+| CRUD simple        | 1. CRUD 
+                       2.  |
 | CRUD dependiente   ||
 | Listado + detalle  ||
 | CUU/Epic           ||

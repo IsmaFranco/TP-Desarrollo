@@ -31,8 +31,8 @@ Regularidad:
 Adicionales para Aprobación
 |  Req               |    Detalle     |
 |---                 |---       |
-|CRUD                |1. CRUD Prendas <br> 2. CRUD Proovedores <br> 3. CRUD Clientes <br> 4. CRUD Localidad <br> 6. CRUD <br> 7. CRUD |
-|CUU/Epic            |1. Registrar un pedido <br> 2. Registrar un nuevo cliente|
+|CRUD                | 1. CRUD Prendas <br> 2. CRUD Proovedores <br> 3. CRUD Clientes <br> 4. CRUD Localidad <br> 5. CRUP Pedido <br> 6. CRUD Envio <br> |
+|CUU/Epic            |1. Registrar un pedido <br> 2. Registrar un nuevo cliente <br> 3. Actualizar monto prenda 4. Cargar nueva prenda|
 
 ## Alcance Funcional Voluntario
 |  Req               |    Detalle     |

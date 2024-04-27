@@ -23,7 +23,7 @@ Regularidad:
 
 |  Req               |    Detalle     |
 |---                 |---       |
-| CRUD simple        | 1. CRUD Prendas |2. CRUD Proovedores | 3. CRUD Clientes | 4. CRUD Localidad|
+| CRUD simple        | 1. CRUD Prendas  2. CRUD Proovedores  3. CRUD Clientes  4. CRUD Localidad|
 | CRUD dependiente   | 1. CRUP Pedido | 2. CRUD Envio|
 | Listado + detalle  ||
 | CUU/Epic           ||

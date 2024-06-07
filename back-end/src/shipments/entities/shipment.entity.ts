@@ -1,19 +1,19 @@
+import { PrimaryGeneratedColumn, Column } from 'typeorm';
 export class Shipment { 
-  
     @PrimaryGeneratedColumn('increment')
     idSh: number;
 
     @Column({type: 'real', nullable: false})
-    shipmentCost: real;
+    shipmentCost: number;
 
     @Column({type: 'timestamp', name:'dateShipmentOut' })
     dateSh:Date;
-  
+
     @Column({type: 'real', nullable: false })
-    actualWeight: real;
-  
+    actualWeight: number;
+    
     @Column({type: 'real', nullable: false })
-    volumetricWeight: real: 
+    volumetricWeight: number;
 
 
     /* @Column({type: 'timestamp', name:'updatedPurchase' })

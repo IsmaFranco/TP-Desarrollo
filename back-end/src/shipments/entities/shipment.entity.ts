@@ -1,4 +1,4 @@
-import { PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Column, PrimaryGeneratedColumn } from 'typeorm';
 export class Shipment {
   @PrimaryGeneratedColumn('increment')
   idSh: number;

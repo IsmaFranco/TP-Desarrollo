@@ -13,9 +13,7 @@
 Negocio a cargo de la venta al por menor de indumentaria textil, la cual se encuentra clasificada según el tipo de prenda, sus talles, colores, disponibilidad y precio. Por parte de los proveedores, se lleva un registro del stock de los productos y con quien debe comunicarse el administrador en caso de necesitar más. Además, cuenta con un servicio de envío dependiendo la ciudad a la que pertenezca el cliente.
 
 ## Modelo 
-![image](https://github.com/IsmaFranco/TP-Desarrollo/assets/164551766/5869d839-0c55-4111-828d-42ac5cefc341)
-
-(https://dbdiagram.io/d/6629572e03593b6b61e2beeb)
+(https://app.diagrams.net/#G1T820d4CNIOQc7aCUXa8UF6I6R0Vd3Hd8#%7B%22pageId%22%3A%22SbjHolrNF-ujds2NBdKP%22%7D)
 
 ## Alcance Funcional
 ### Alcance Mínimo 

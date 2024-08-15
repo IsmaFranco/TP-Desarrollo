@@ -1,4 +1,6 @@
-import { Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+
+@Entity()
 export class Shipment {
   @PrimaryGeneratedColumn('increment')
   idSh: number;

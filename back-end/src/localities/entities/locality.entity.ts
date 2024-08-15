@@ -1,8 +1,9 @@
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+@Entity()
 export class Locality {
-   @PrimaryGeneratedColumn(//hay q ver si se le pone parametros)
-    postalCode: number;
+  @PrimaryGeneratedColumn()
+  postalCode: number;
 
-    @Column({type: 'varchar', nullable: false, length:100 })
-    nameLo: string;
-
+  @Column({ type: 'varchar', nullable: false, length: 100 })
+  nameLo: string;
 }

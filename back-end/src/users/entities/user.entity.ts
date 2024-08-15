@@ -1,4 +1,6 @@
-import { PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+
+@Entity()
 export abstract class User {
   @PrimaryGeneratedColumn('increment')
   idUs: number;

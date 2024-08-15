@@ -1,7 +1,9 @@
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+@Entity()
 export class Province {
-   @PrimaryGeneratedColumn('increment')
-    idPr: number;
+  @PrimaryGeneratedColumn('increment')
+  idPr: number;
 
-    @Column({type: 'varchar', length: 200, nullable: false})
-    name: string;
+  @Column({ type: 'varchar', length: 200, nullable: false })
+  name: string;
 }

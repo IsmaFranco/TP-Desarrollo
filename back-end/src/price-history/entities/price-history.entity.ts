@@ -1,8 +1,9 @@
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+@Entity()
 export class PriceHistory {
-   @PrimaryGeneratedColumn({type: 'timestamp', name:'datePurchase' })
-    fechaPh: date;
+  @PrimaryGeneratedColumn({ type: 'number', name: 'datePurchase' })
+  fechaPh: number; // ver bien q onda con esta columna
 
-    @Column({type: 'real', nullable: false})
-    total: real;
-  
+  @Column({ type: 'number', nullable: false })
+  total: number;
 }

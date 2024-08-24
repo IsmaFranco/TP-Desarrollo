@@ -1,26 +1,38 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreatePurchaseDto } from './dto/create-purchase.dto';
 import { UpdatePurchaseDto } from './dto/update-purchase.dto';
+import { Purchase } from './entities/purchase.entity';
 
 @Injectable()
 export class PurchasesService {
-  create(createPurchaseDto: CreatePurchaseDto) {
-    return 'This action adds a new purchase';
+  constructor(
+    @InjectRepository(Purchase)
+    private purchaseRepository: Repository<Purchase>,
+  ) {}
+  create(createPurchaseDto: CreatePurchaseDto): Promise<Purchase> {
+    const purchase = this.purchaseRepository.create(createPurchaseDto);
+    return this.purchaseRepository.save(purchase);
   }
 
-  findAll() {
-    return `This action returns all purchases`;
+  findAll(): Promise<Purchase[]> {
+    return this.purchaseRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} purchase`;
+  findOne(idPu: number): Promise<Purchase> {
+    return this.purchaseRepository.findOne({ where: { idPu: idPu } });
   }
 
-  update(id: number, updatePurchaseDto: UpdatePurchaseDto) {
-    return `This action updates a #${id} purchase`;
+  async update(
+    idPu: number,
+    updatePurchaseDto: UpdatePurchaseDto,
+  ): Promise<Purchase> {
+    await this.purchaseRepository.update(idPu, updatePurchaseDto);
+    return this.findOne(idPu);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} purchase`;
+  async remove(idPu: number): Promise<void> {
+    await this.purchaseRepository.delete(idPu);
   }
 }

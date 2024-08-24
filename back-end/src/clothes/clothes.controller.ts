@@ -1,34 +1,46 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { ClothesService } from './clothes.service';
 import { CreateClotheDto } from './dto/create-clothe.dto';
 import { UpdateClotheDto } from './dto/update-clothe.dto';
+import { Clothe } from './entities/clothe.entity'; // Añadimos esta línea para importar la entidClad Clothes
 
 @Controller('clothes')
 export class ClothesController {
   constructor(private readonly clothesService: ClothesService) {}
 
   @Post()
-  create(@Body() createClotheDto: CreateClotheDto) {
+  create(@Body() createClotheDto: CreateClotheDto): Promise<Clothe> {
     return this.clothesService.create(createClotheDto);
   }
 
   @Get()
-  findAll() {
+  findAll(): Promise<Clothe[]> {
     return this.clothesService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.clothesService.findOne(+id);
+  @Get(':idCl')
+  findOne(@Param('idCl') idCl: number): Promise<Clothe> {
+    return this.clothesService.findOne(idCl);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateClotheDto: UpdateClotheDto) {
-    return this.clothesService.update(+id, updateClotheDto);
+  @Patch(':idCl')
+  update(
+    @Param('idCl') idCl: number,
+    @Body() updateClotheDto: UpdateClotheDto,
+  ): Promise<Clothe> {
+    return this.clothesService.update(+idCl, updateClotheDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.clothesService.remove(+id);
+  @Delete(':idCl')
+  remove(@Param('idCl') idCl: number): Promise<void> {
+    return this.clothesService.remove(idCl);
   }
 }

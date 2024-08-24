@@ -10,36 +10,38 @@ import {
 import { CustomersService } from './customers.service';
 import { CreateCustomerDto } from './dto/create-customer.dto';
 import { UpdateCustomerDto } from './dto/update-customer.dto';
+import { Customer } from './entities/customer.entity'; // Añadimos esta línea para importar la entidUsUsad Admin
 
 @Controller('customers')
 export class CustomersController {
   constructor(private readonly customersService: CustomersService) {}
 
   @Post()
-  create(@Body() createCustomerDto: CreateCustomerDto) {
+  create(@Body() createCustomerDto: CreateCustomerDto): Promise<Customer> {
     return this.customersService.create(createCustomerDto);
   }
 
   @Get()
-  findAll() {
+  findAll(): Promise<Customer[]> {
     return this.customersService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.customersService.findOne(+id);
+  @Get(':idUs')
+  findOne(@Param('idUs') idUs: number): Promise<Customer> {
+    return this.customersService.findOne(+idUs);
   }
 
-  @Patch(':id')
+  @Patch(':idUs')
   update(
-    @Param('id') id: string,
+    @Param('idUs') idUs: number,
     @Body() updateCustomerDto: UpdateCustomerDto,
-  ) {
-    return this.customersService.update(+id, updateCustomerDto);
+  ): Promise<Customer> {
+    return this.customersService.update(+idUs, updateCustomerDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.customersService.remove(+id);
+  @Delete(':idUs')
+  remove(@Param('idUs') idUs: number): Promise<void> {
+    // Cambiamos el tipo de retorno de Admin a voidUs pq no se, pero no debería retornar nada
+    return this.customersService.remove(+idUs);
   }
 }

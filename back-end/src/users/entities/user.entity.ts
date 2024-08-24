@@ -6,17 +6,20 @@ export abstract class User {
   idUs: number;
 
   @Column({ type: 'varchar', length: 20, nullable: true })
-  nombre: string;
+  nameUs: string;
 
   @Column({ type: 'varchar', length: 20, nullable: true })
-  apellido: string;
+  lastNameUs: string;
 
   @Column({ type: 'varchar', length: 50, nullable: true })
-  email: string;
+  emailUs: string;
 
   @Column({ type: 'varchar', length: 20, nullable: true })
-  telefono: string;
+  phoneUs: string;
+
+  @Column({ type: 'varchar', length: 50, nullable: true })
+  addressUs: string;
 
   @Column({ type: 'varchar', length: 20, nullable: true })
-  contraseña: string; // ver bien como es lo de la contgraseña y si este atr esta bien pasado
+  passwordUs: string; // ver bien como es lo de la contgraseña y si este atr esta bien pasado
 }

@@ -1,26 +1,39 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateProvinceDto } from './dto/create-province.dto';
 import { UpdateProvinceDto } from './dto/update-province.dto';
+import { Province } from './entities/province.entity';
 
 @Injectable()
 export class ProvincesService {
-  create(createProvinceDto: CreateProvinceDto) {
-    return 'This action adds a new province';
+  constructor(
+    @InjectRepository(Province)
+    private provinceRepository: Repository<Province>,
+  ) {}
+
+  create(createProvinceDto: CreateProvinceDto): Promise<Province> {
+    const province = this.provinceRepository.create(createProvinceDto);
+    return this.provinceRepository.save(province);
   }
 
-  findAll() {
-    return `This action returns all provinces`;
+  findAll(): Promise<Province[]> {
+    return this.provinceRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} province`;
+  findOne(idPr: number): Promise<Province> {
+    return this.provinceRepository.findOne({ where: { idPr: idPr } });
   }
 
-  update(id: number, updateProvinceDto: UpdateProvinceDto) {
-    return `This action updates a #${id} province`;
+  async update(
+    idPr: number,
+    updateProvinceDto: UpdateProvinceDto,
+  ): Promise<Province> {
+    await this.provinceRepository.update(idPr, updateProvinceDto);
+    return this.findOne(idPr);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} province`;
+  async remove(idPr: number): Promise<void> {
+    await this.provinceRepository.delete(idPr);
   }
 }

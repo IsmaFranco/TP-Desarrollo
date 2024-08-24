@@ -10,36 +10,37 @@ import {
 import { SuppliersService } from './suppliers.service';
 import { CreateSupplierDto } from './dto/create-supplier.dto';
 import { UpdateSupplierDto } from './dto/update-supplier.dto';
+import { Supplier } from './entities/supplier.entity';
 
 @Controller('suppliers')
 export class SuppliersController {
   constructor(private readonly suppliersService: SuppliersService) {}
 
   @Post()
-  create(@Body() createSupplierDto: CreateSupplierDto) {
+  create(@Body() createSupplierDto: CreateSupplierDto): Promise<Supplier> {
     return this.suppliersService.create(createSupplierDto);
   }
 
   @Get()
-  findAll() {
+  findAll(): Promise<Supplier[]> {
     return this.suppliersService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.suppliersService.findOne(+id);
+  @Get(':idUs')
+  findOne(@Param('idUs') idUs: number): Promise<Supplier> {
+    return this.suppliersService.findOne(+idUs);
   }
 
-  @Patch(':id')
+  @Patch(':idUs')
   update(
-    @Param('id') id: string,
+    @Param('idUs') idUs: number,
     @Body() updateSupplierDto: UpdateSupplierDto,
-  ) {
-    return this.suppliersService.update(+id, updateSupplierDto);
+  ): Promise<Supplier> {
+    return this.suppliersService.update(+idUs, updateSupplierDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.suppliersService.remove(+id);
+  @Delete(':idUs')
+  remove(@Param('idUs') idUs: number): Promise<void> {
+    return this.suppliersService.remove(+idUs);
   }
 }

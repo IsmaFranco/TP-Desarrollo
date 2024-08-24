@@ -1,34 +1,46 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { ProvincesService } from './provinces.service';
 import { CreateProvinceDto } from './dto/create-province.dto';
 import { UpdateProvinceDto } from './dto/update-province.dto';
+import { Province } from './entities/province.entity';
 
 @Controller('provinces')
 export class ProvincesController {
   constructor(private readonly provincesService: ProvincesService) {}
 
   @Post()
-  create(@Body() createProvinceDto: CreateProvinceDto) {
+  create(@Body() createProvinceDto: CreateProvinceDto): Promise<Province> {
     return this.provincesService.create(createProvinceDto);
   }
 
   @Get()
-  findAll() {
+  findAll(): Promise<Province[]> {
     return this.provincesService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.provincesService.findOne(+id);
+  @Get(':idPr')
+  findOne(@Param('idPr') idPr: number): Promise<Province> {
+    return this.provincesService.findOne(+idPr);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateProvinceDto: UpdateProvinceDto) {
-    return this.provincesService.update(+id, updateProvinceDto);
+  @Patch(':idPr')
+  update(
+    @Param('idPr') idPr: number,
+    @Body() updateProvinceDto: UpdateProvinceDto,
+  ): Promise<Province> {
+    return this.provincesService.update(+idPr, updateProvinceDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.provincesService.remove(+id);
+  @Delete(':idPr')
+  remove(@Param('idPr') idPr: number): Promise<void> {
+    return this.provincesService.remove(+idPr);
   }
 }

@@ -17,6 +17,11 @@ export class Shipment {
   @Column({ type: 'real', nullable: false })
   volumetricWeight: number;
 
-  /* @Column({type: 'timestamp', name:'updatedPurchase' })
-  updatedPu:Date; cuando cambia el estado */
+  @Column({
+    type: 'varchar',
+    nullable: false,
+    length: 200,
+    default: 'Procesando Datos Envio',
+  })
+  status: string; // estado del envio
 }

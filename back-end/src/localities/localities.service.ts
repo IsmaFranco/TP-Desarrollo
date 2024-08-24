@@ -1,26 +1,41 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateLocalityDto } from './dto/create-locality.dto';
 import { UpdateLocalityDto } from './dto/update-locality.dto';
+import { Locality } from './entities/locality.entity';
 
 @Injectable()
 export class LocalitiesService {
-  create(createLocalityDto: CreateLocalityDto) {
-    return 'This action adds a new locality';
+  constructor(
+    @InjectRepository(Locality)
+    private localityRepository: Repository<Locality>,
+  ) {}
+
+  create(createLocalityDto: CreateLocalityDto): Promise<Locality> {
+    const locality = this.localityRepository.create(createLocalityDto);
+    return this.localityRepository.save(locality);
   }
 
-  findAll() {
-    return `This action returns all localities`;
+  findAll(): Promise<Locality[]> {
+    return this.localityRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} locality`;
+  findOne(postalCode: number): Promise<Locality> {
+    return this.localityRepository.findOne({
+      where: { postalCode: postalCode },
+    });
   }
 
-  update(id: number, updateLocalityDto: UpdateLocalityDto) {
-    return `This action updates a #${id} locality`;
+  async update(
+    postalCode: number,
+    updateLocalityDto: UpdateLocalityDto,
+  ): Promise<Locality> {
+    await this.localityRepository.update(postalCode, updateLocalityDto);
+    return this.findOne(postalCode);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} locality`;
+  async remove(postalCode: number): Promise<void> {
+    await this.localityRepository.delete(postalCode);
   }
 }

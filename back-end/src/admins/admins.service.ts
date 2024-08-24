@@ -21,16 +21,16 @@ export class AdminsService {
     return this.adminRepository.find(); // Cambiado a adminRepository, decia admins y era admin
   }
 
-  findOne(id: number): Promise<Admin> {
-    return this.adminRepository.findOne(id); // Cambiado a adminRepository, decia admins y era admin
+  findOne(idUs: number): Promise<Admin> {
+    return this.adminRepository.findOne({ where: { idUs: idUs } }); // Cambiado a adminRepository, decia admins y era admin
   }
 
-  async update(id: number, updateAdminDto: UpdateAdminDto): Promise<Admin> {
-    await this.adminRepository.update(id, updateAdminDto); // Cambiado a adminRepository, decia admins y era admin
-    return this.findOne(id);
+  async update(idUs: number, updateAdminDto: UpdateAdminDto): Promise<Admin> {
+    await this.adminRepository.update(idUs, updateAdminDto); // Cambiado a adminRepository, decia admins y era admin
+    return this.findOne(idUs);
   }
 
-  async remove(id: number): Promise<void> {
-    await this.adminRepository.delete(id);
+  async remove(idUs: number): Promise<void> {
+    await this.adminRepository.delete(idUs);
   }
 }

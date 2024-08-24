@@ -5,5 +5,5 @@ export class Province {
   idPr: number;
 
   @Column({ type: 'varchar', length: 200, nullable: false })
-  name: string;
+  namePr: string;
 }

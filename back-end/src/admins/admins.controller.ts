@@ -10,7 +10,7 @@ import {
 import { AdminsService } from './admins.service';
 import { CreateAdminDto } from './dto/create-admin.dto';
 import { UpdateAdminDto } from './dto/update-admin.dto';
-import { Admin } from './entities/admin.entity'; // Añadimos esta línea para importar la entidad Admin
+import { Admin } from './entities/admin.entity'; // Añadimos esta línea para importar la entidUsad Admin
 
 @Controller('admins')
 export class AdminsController {
@@ -26,22 +26,22 @@ export class AdminsController {
     return this.adminsService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: number): Promise<Admin> {
-    return this.adminsService.findOne(id);
+  @Get(':idUs')
+  findOne(@Param('idUs') idUs: number): Promise<Admin> {
+    return this.adminsService.findOne(+idUs);
   }
 
-  @Patch(':id')
+  @Patch(':idUs')
   update(
-    @Param('id') id: number,
+    @Param('idUs') idUs: number,
     @Body() updateAdminDto: UpdateAdminDto,
   ): Promise<Admin> {
-    return this.adminsService.update(+id, updateAdminDto);
+    return this.adminsService.update(+idUs, updateAdminDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: number): Promise<void> {
-    // Cambiamos el tipo de retorno de Admin a void pq no se, pero no debería retornar nada
-    return this.adminsService.remove(id);
+  @Delete(':idUs')
+  remove(@Param('idUs') idUs: number): Promise<void> {
+    // Cambiamos el tipo de retorno de Admin a voidUs pq no se, pero no debería retornar nada
+    return this.adminsService.remove(+idUs);
   }
 }

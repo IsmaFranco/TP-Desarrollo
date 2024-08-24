@@ -1,34 +1,46 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { PurchasesService } from './purchases.service';
 import { CreatePurchaseDto } from './dto/create-purchase.dto';
 import { UpdatePurchaseDto } from './dto/update-purchase.dto';
+import { Purchase } from './entities/purchase.entity';
 
 @Controller('purchases')
 export class PurchasesController {
   constructor(private readonly purchasesService: PurchasesService) {}
 
   @Post()
-  create(@Body() createPurchaseDto: CreatePurchaseDto) {
+  create(@Body() createPurchaseDto: CreatePurchaseDto): Promise<Purchase> {
     return this.purchasesService.create(createPurchaseDto);
   }
 
   @Get()
-  findAll() {
+  findAll(): Promise<Purchase[]> {
     return this.purchasesService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.purchasesService.findOne(+id);
+  @Get(':idPu')
+  findOne(@Param('idPu') idPu: number): Promise<Purchase> {
+    return this.purchasesService.findOne(+idPu);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePurchaseDto: UpdatePurchaseDto) {
-    return this.purchasesService.update(+id, updatePurchaseDto);
+  @Patch(':idPu')
+  update(
+    @Param('idPu') idPu: number,
+    @Body() updatePurchaseDto: UpdatePurchaseDto,
+  ): Promise<Purchase> {
+    return this.purchasesService.update(+idPu, updatePurchaseDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.purchasesService.remove(+id);
+  @Delete(':idPu')
+  remove(@Param('idPu') idPu: number): Promise<void> {
+    return this.purchasesService.remove(+idPu);
   }
 }

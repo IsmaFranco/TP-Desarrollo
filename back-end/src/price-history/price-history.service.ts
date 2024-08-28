@@ -1,6 +1,9 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreatePriceHistoryDto } from './dto/create-price-history.dto';
 import { UpdatePriceHistoryDto } from './dto/update-price-history.dto';
+import { PriceHistory } from './entities/price-history.entity';
 
 @Injectable()
 export class PriceHistoryService {

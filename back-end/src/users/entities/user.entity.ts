@@ -12,7 +12,7 @@ export abstract class User {
   lastNameUs: string;
 
   @Column({ type: 'varchar', length: 50, nullable: true })
-  emailUs: string;
+  emailUs: email;
 
   @Column({ type: 'varchar', length: 20, nullable: true })
   phoneUs: string;
@@ -21,5 +21,5 @@ export abstract class User {
   addressUs: string;
 
   @Column({ type: 'varchar', length: 20, nullable: true })
-  passwordUs: string; // ver bien como es lo de la contgraseña y si este atr esta bien pasado
+  passwordUs: password; // ver bien como es lo de la contgraseña y si este atr esta bien pasado
 }

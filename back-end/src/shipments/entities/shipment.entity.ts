@@ -1,4 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Locality } from 'src/localities/entities/locality.entity';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Purchase } from 'src/purchases/entities/purchase.entity';
 
 @Entity()
 export class Shipment {
@@ -24,4 +26,10 @@ export class Shipment {
     default: 'Procesando Datos Envio',
   })
   status: string; // estado del envio
+
+  @OneToMany(() => Locality, (locality) => locality.shipments)
+  locality: Locality;
+
+  @OneToMany(() => Purchase, (purchase) => purchase.shipment)
+  purchases: Purchase[];
 }

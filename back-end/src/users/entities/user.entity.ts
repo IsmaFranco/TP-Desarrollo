@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { Locality } from '../../localities/entities/locality.entity';
 
 @Entity()
 export abstract class User {
@@ -12,7 +13,7 @@ export abstract class User {
   lastNameUs: string;
 
   @Column({ type: 'varchar', length: 50, nullable: true })
-  emailUs: email;
+  emailUs: string;
 
   @Column({ type: 'varchar', length: 20, nullable: true })
   phoneUs: string;
@@ -21,5 +22,8 @@ export abstract class User {
   addressUs: string;
 
   @Column({ type: 'varchar', length: 20, nullable: true })
-  passwordUs: password; // ver bien como es lo de la contgraseña y si este atr esta bien pasado
+  passwordUs: string; // ver bien como es lo de la contgraseña y si este atr esta bien pasado
+
+  @ManyToOne(() => Locality, (locality) => locality.users)
+  locality: Locality;
 }

@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Purchase } from 'src/purchases/entities/purchase.entity';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 
 @Entity()
 export class Clothe {
@@ -19,4 +20,7 @@ export class Clothe {
 
   @Column({ type: 'varchar', nullable: false, length: 200 })
   image: string; //ver bien el tipo de string osea no se si estaria bien que sea tipo string
+
+  @ManyToOne(() => Purchase, (purchase) => purchase.clothes)
+  purchase: Purchase;
 }

@@ -40,7 +40,7 @@ export class LocalitiesController {
   }
 
   @Delete(':postalCode')
-  remove(@Param('postalCode') postalCode: number): Promise<Locality> {
+  remove(@Param('postalCode') postalCode: number): Promise<void> {
     return this.localitiesService.remove(+postalCode);
   }
 }

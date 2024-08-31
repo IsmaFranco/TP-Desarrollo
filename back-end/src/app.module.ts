@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PurchasesModule } from './purchases/purchases.module';
-import { PriceHistoryModule } from './price-history/price-history.module';
+//import { PriceHistoryModule } from './price-history/price-history.module';
 import { ClothesModule } from './clothes/clothes.module';
 import { ShipmentsModule } from './shipments/shipments.module';
 import { ProvincesModule } from './provinces/provinces.module';
@@ -26,7 +26,7 @@ Module({
       synchronize: true,
     }),
     PurchasesModule,
-    PriceHistoryModule,
+    //PriceHistoryModule,
     ClothesModule,
     ShipmentsModule,
     ProvincesModule,

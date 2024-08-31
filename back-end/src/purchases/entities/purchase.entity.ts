@@ -1,4 +1,12 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Clothe } from 'src/clothes/entities/clothe.entity';
+import { Shipment } from 'src/shipments/entities/shipment.entity';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  OneToMany,
+} from 'typeorm';
 @Entity()
 export class Purchase {
   @PrimaryGeneratedColumn('increment')
@@ -18,4 +26,10 @@ export class Purchase {
 
   /* @Column({type: 'timestamp', name:'updatedPurchase' })
   updatedPu:Date; cuando cambia el estado */
+
+  @ManyToOne(() => Shipment, (shipment) => shipment.purchases)
+  shipment: Shipment;
+
+  @OneToMany(() => Clothe, (clothe) => clothe.purchase)
+  clothes: Clothe[];
 }

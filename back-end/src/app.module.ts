@@ -12,16 +12,35 @@ import { UsersModule } from './users/users.module';
 import { AdminsModule } from './admins/admins.module';
 import { CustomersModule } from './customers/customers.module';
 import { SuppliersModule } from './suppliers/suppliers.module';
-
-Module({
+import { Clothe } from './clothes/entities/clothe.entity';
+import { Purchase } from './purchases/entities/purchase.entity';
+import { Supplier } from './suppliers/entities/supplier.entity';
+import { Shipment } from './shipments/entities/shipment.entity';
+import { User } from './users/entities/user.entity';
+import { Admin } from './admins/entities/admin.entity';
+import { Customer } from './customers/entities/customer.entity';
+import { Province } from './provinces/entities/province.entity';
+import { Locality } from './localities/entities/locality.entity';
+@Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'localhost',
-      port: 3306,
+      host: '127.0.0.1',
+      port: 3307,
       username: 'root',
-      password: 'password',
-      database: 'test',
+      password: '',
+      database: 'tp-desarrollo',
+      entities: [
+        Clothe,
+        Purchase,
+        Supplier,
+        Shipment,
+        User,
+        Admin,
+        Customer,
+        Province,
+        Locality,
+      ],
       autoLoadEntities: true,
       synchronize: true,
     }),
@@ -38,5 +57,5 @@ Module({
   ],
   controllers: [AppController],
   providers: [AppService],
-});
+})
 export class AppModule {}

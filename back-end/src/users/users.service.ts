@@ -14,7 +14,7 @@ export class UsersService {
 
   create(createUserDto: CreateUserDto): Promise<User> {
     const user = this.userRepository.create(createUserDto);
-    return this.userRepository.save(user);
+    return this.userRepository.save(user); //este guarda en la base de datos ver si me conviene hacer un  async create y hacer un await de esto
   }
 
   findAll(): Promise<User[]> {

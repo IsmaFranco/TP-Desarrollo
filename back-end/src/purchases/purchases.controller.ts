@@ -28,7 +28,7 @@ export class PurchasesController {
 
   @Get(':idPu')
   findOne(@Param('idPu') idPu: number): Promise<Purchase> {
-    return this.purchasesService.findOne(+idPu);
+    return this.purchasesService.findOne(idPu);
   }
 
   @Patch(':idPu')
@@ -36,11 +36,11 @@ export class PurchasesController {
     @Param('idPu') idPu: number,
     @Body() updatePurchaseDto: UpdatePurchaseDto,
   ): Promise<Purchase> {
-    return this.purchasesService.update(+idPu, updatePurchaseDto);
+    return this.purchasesService.update(idPu, updatePurchaseDto);
   }
 
   @Delete(':idPu')
   remove(@Param('idPu') idPu: number): Promise<void> {
-    return this.purchasesService.remove(+idPu);
+    return this.purchasesService.remove(idPu);
   }
 }

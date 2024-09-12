@@ -36,11 +36,11 @@ export class UsersController {
     @Param('idUs') idUs: number,
     @Body() updateUserDto: UpdateUserDto,
   ): Promise<User> {
-    return this.usersService.update(+idUs, updateUserDto);
+    return this.usersService.update(idUs, updateUserDto);
   }
 
   @Delete(':idUs')
   remove(@Param('idUs') idUs: number): Promise<void> {
-    return this.usersService.remove(+idUs);
+    return this.usersService.remove(idUs);
   }
 }

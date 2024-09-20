@@ -7,5 +7,6 @@ import { Locality } from './entities/locality.entity';
   imports: [TypeOrmModule.forFeature([Locality])],
   controllers: [LocalitiesController],
   providers: [LocalitiesService],
+  exports: [TypeOrmModule],
 })
 export class LocalitiesModule {}

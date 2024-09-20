@@ -14,4 +14,5 @@ export class Locality {
 
   @OneToMany(() => Shipment, (shipment) => shipment.locality)
   shipments: Shipment[];
+  //eager: true;ver si usamos esto es para que traiga los datos de la relacion en un findone
 }

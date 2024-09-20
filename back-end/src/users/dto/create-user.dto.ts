@@ -27,5 +27,5 @@ export class CreateUserDto {
   province: string;estos los deberia elegir, el usuario de una lista pq asumimos que ya esta cargado*/
   @IsInt()
   @IsPositive()
-  localityPostalCode: number;
+  postalCode: number;
 }

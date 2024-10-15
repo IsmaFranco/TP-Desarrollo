@@ -21,12 +21,14 @@ import { Admin } from './admins/entities/admin.entity';
 import { Customer } from './customers/entities/customer.entity';
 import { Province } from './provinces/entities/province.entity';
 import { Locality } from './localities/entities/locality.entity';
+import { AuthModule } from './auth/auth.module';
+
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: '127.0.0.1',
-      port: 3307,
+      port: 3306,
       username: 'root',
       password: '',
       database: 'tp-desarrollo',
@@ -54,6 +56,7 @@ import { Locality } from './localities/entities/locality.entity';
     AdminsModule,
     CustomersModule,
     SuppliersModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

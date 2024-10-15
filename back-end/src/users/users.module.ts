@@ -9,6 +9,7 @@ import { LocalitiesService } from 'src/localities/localities.service';
 @Module({
   imports: [TypeOrmModule.forFeature([User]), LocalitiesModule], //ver bien si es necesario importar LocalitiesModule o si es con loca
   controllers: [UsersController],
-  providers: [UsersService, LocalitiesService],
+  providers: [UsersService, LocalitiesService, UsersService],
+  exports: [UsersService],
 })
 export class UsersModule {}

@@ -1,4 +1,10 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Post,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
 import { Logindto } from './dto/login.dto';
@@ -8,11 +14,12 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('register')
+  @UsePipes(new ValidationPipe({ transform: true }))
   register(
     @Body()
     registerDto: RegisterDto,
   ) {
-    //console.log(registerDto); lo dejo para verlo dsp ya que no esta validando los datos (creo)
+    console.log(registerDto); //lo dejo para verlo dsp ya que no esta validando los datos (creo)
     return this.authService.register(registerDto);
   }
 

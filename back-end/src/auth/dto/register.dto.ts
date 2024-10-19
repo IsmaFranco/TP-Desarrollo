@@ -10,7 +10,7 @@ import {
 
 export class RegisterDto {
   //no estaria validando que cumpla con los datos
-  @Transform(({ value }) => value.trim()) // esto sirve para que la contraseña no tenga espacios
+  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value)) // esto sirve para que la contraseña no tenga espacios
   @IsString()
   @MinLength(2)
   @MaxLength(50)
@@ -24,7 +24,7 @@ export class RegisterDto {
   @IsEmail()
   emailUs: string;
 
-  @Transform(({ value }) => value.trim()) // esto sirve para que la contraseña no tenga espacios
+  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value)) // esto sirve para que la contraseña no tenga espacios
   @IsString()
   @MinLength(6)
   @MaxLength(50)

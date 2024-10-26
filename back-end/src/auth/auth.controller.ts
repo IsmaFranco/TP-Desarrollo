@@ -6,13 +6,24 @@ import {
   UseGuards,
   UsePipes,
   ValidationPipe,
-  Request,
+  Req,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
 import { Logindto } from './dto/login.dto';
 import { AuthGuard } from './guard/auth.guard';
+import { Request } from 'express';
+import { Roles } from './decorators/roles.decorators';
+import { RolesGuard } from './guard/roles.guard';
+import { Rol } from './enums/rol.eneum';
 
+interface RequestWithUser extends Request {
+  user: {
+    // id: number; ver si es necesario agregarlo
+    emailUs: string;
+    rol: string[];
+  };
+}
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
@@ -37,11 +48,12 @@ export class AuthController {
   }
 
   @Get('profile')
-  @UseGuards(AuthGuard)
+  @Roles(Rol.ADMIN, Rol.USER, Rol.SUPPLIER)
+  @UseGuards(AuthGuard, RolesGuard)
   profile(
-    @Request()
-    req,
+    @Req()
+    req: RequestWithUser,
   ) {
-    return req.user;
+    return this.authService.profile(req.user);
   }
 }

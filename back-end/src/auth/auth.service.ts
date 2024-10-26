@@ -27,7 +27,9 @@ export class AuthService {
     const hashedPassword = await bcryptjs.hash(registerDto.passwordUs, 10);
     registerDto.passwordUs = hashedPassword;
 
-    return await this.usersService.create(registerDto);
+    await this.usersService.create(registerDto); //lo almacena en la base de datos
+
+    return { emailUs: registerDto.emailUs, nameUs: registerDto.nameUs }; // devuelve el nombre y el email
   }
 
   async login({ emailUs, passwordUs }: Logindto) {
@@ -41,9 +43,12 @@ export class AuthService {
       throw new UnauthorizedException('Contraseña incorrecta');
     }
 
-    const payload = { emailUs: user.emailUs };
+    const payload = { emailUs: user.emailUs, rol: user.rol };
     const token = await this.jwtService.sign(payload);
 
     return { token, emailUs };
+  }
+  async profile({ emailUs, rol }: { emailUs: string; rol: string[] }) {
+    return await this.usersService.findOneByEmail(emailUs);
   }
 }

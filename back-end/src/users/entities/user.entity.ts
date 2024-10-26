@@ -25,7 +25,7 @@ export abstract class User {
   passwordUs: string; // ver bien como es lo de la contgraseña y si este atr esta bien pasado
 
   @Column({ default: 'user' })
-  rol: string;
+  rol: string; //tendria que haber sido role, pero ya avanzamos bastante y no quiero cambiarlo
 
   @ManyToOne(() => Locality, (locality) => locality.users)
   locality: Locality;

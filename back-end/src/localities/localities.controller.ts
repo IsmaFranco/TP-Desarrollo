@@ -6,17 +6,22 @@ import {
   Patch,
   Param,
   Delete,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { LocalitiesService } from './localities.service';
 import { CreateLocalityDto } from './dto/create-locality.dto';
 import { UpdateLocalityDto } from './dto/update-locality.dto';
 import { Locality } from './entities/locality.entity';
-
+import { Rol } from 'src/common/enums/rol.enum';
+import { Auth } from 'src/auth/decorators/auth.decorators';
+@Auth(Rol.ADMIN)
 @Controller('localities')
 export class LocalitiesController {
   constructor(private readonly localitiesService: LocalitiesService) {}
 
   @Post()
+  @UsePipes(new ValidationPipe({ transform: true }))
   create(@Body() createLocalityDto: CreateLocalityDto): Promise<Locality> {
     return this.localitiesService.create(createLocalityDto);
   }

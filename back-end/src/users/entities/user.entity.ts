@@ -1,5 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { Locality } from '../../localities/entities/locality.entity';
+import { Rol } from '../../common/enums/rol.enum';
 
 @Entity()
 export abstract class User {
@@ -21,11 +22,11 @@ export abstract class User {
   @Column({ type: 'varchar', length: 50, nullable: false })
   addressUs: string;
 
-  @Column({ type: 'varchar', length: 20, nullable: false }) //nullabe false significa que no puede ser nulo
+  @Column({ type: 'varchar', length: 20, nullable: false, select: false }) //nullabe false significa que no puede ser nulo
   passwordUs: string; // ver bien como es lo de la contgraseña y si este atr esta bien pasado
 
-  @Column({ default: 'user' })
-  rol: string; //tendria que haber sido role, pero ya avanzamos bastante y no quiero cambiarlo
+  @Column({ type: 'enum', default: Rol.USER, enum: Rol })
+  rol: Rol; //tendria que haber sido role, pero ya avanzamos bastante y no quiero cambiarlo
 
   @ManyToOne(() => Locality, (locality) => locality.users)
   locality: Locality;

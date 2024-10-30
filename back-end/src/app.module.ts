@@ -9,16 +9,16 @@ import { ShipmentsModule } from './shipments/shipments.module';
 import { ProvincesModule } from './provinces/provinces.module';
 import { LocalitiesModule } from './localities/localities.module';
 import { UsersModule } from './users/users.module';
-import { AdminsModule } from './admins/admins.module';
-import { CustomersModule } from './customers/customers.module';
-import { SuppliersModule } from './suppliers/suppliers.module';
+//import { AdminsModule } from './admins/admins.module';
+//import { CustomersModule } from './customers/customers.module';
+//import { SuppliersModule } from './suppliers/suppliers.module';
 import { Clothe } from './clothes/entities/clothe.entity';
 import { Purchase } from './purchases/entities/purchase.entity';
-import { Supplier } from './suppliers/entities/supplier.entity';
+//import { Supplier } from './suppliers/entities/supplier.entity';
 import { Shipment } from './shipments/entities/shipment.entity';
 import { User } from './users/entities/user.entity';
-import { Admin } from './admins/entities/admin.entity';
-import { Customer } from './customers/entities/customer.entity';
+//import { Admin } from './admins/entities/admin.entity';
+//import { Customer } from './customers/entities/customer.entity';
 import { Province } from './provinces/entities/province.entity';
 import { Locality } from './localities/entities/locality.entity';
 import { AuthModule } from './auth/auth.module';
@@ -35,11 +35,11 @@ import { AuthModule } from './auth/auth.module';
       entities: [
         Clothe,
         Purchase,
-        Supplier,
+        //Supplier,
         Shipment,
         User,
-        Admin,
-        Customer,
+        //Admin,
+        //Customer,
         Province,
         Locality,
       ],
@@ -53,9 +53,9 @@ import { AuthModule } from './auth/auth.module';
     ProvincesModule,
     LocalitiesModule,
     UsersModule,
-    AdminsModule,
-    CustomersModule,
-    SuppliersModule,
+    //AdminsModule,
+    //CustomersModule,
+    //SuppliersModule,
     AuthModule,
   ],
   controllers: [AppController],

@@ -1,5 +1,6 @@
 import { Clothe } from 'src/clothes/entities/clothe.entity';
 import { Shipment } from 'src/shipments/entities/shipment.entity';
+import { User } from 'src/users/entities/user.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -32,4 +33,7 @@ export class Purchase {
 
   @OneToMany(() => Clothe, (clothe) => clothe.purchase)
   clothes: Clothe[];
+
+  @ManyToOne(() => User, (user) => user.purchases)
+  user: User;
 }

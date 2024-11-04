@@ -30,7 +30,7 @@ import { AuthModule } from './auth/auth.module';
       host: '127.0.0.1',
       port: 3306,
       username: 'root',
-      password: '',
+      password: '1234',
       database: 'tp-desarrollo',
       entities: [
         Clothe,

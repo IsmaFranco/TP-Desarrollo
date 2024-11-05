@@ -13,7 +13,7 @@ export class RegisterDto {
   @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value)) // esto sirve para que la contraseña no tenga espacios
   @IsString()
   @MinLength(2)
-  @MaxLength(50)
+  @MaxLength(150)
   nameUs: string;
 
   @IsString()
@@ -27,7 +27,7 @@ export class RegisterDto {
   @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value)) // esto sirve para que la contraseña no tenga espacios
   @IsString()
   @MinLength(6)
-  @MaxLength(50)
+  @MaxLength(150)
   passwordUs: string;
 
   @IsInt()

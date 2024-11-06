@@ -16,14 +16,9 @@ export class LoginComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder) {
     this.loginForm = this.formBuilder.group({
-      email: ['', Validators.required, Validators.email],
-      password: ['', Validators.required, Validators.minLength(6)]
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]]
     });
-  }
-
-  menuOption: string = '';
-  onOption(menuOption: string){
-    this.menuOption = menuOption;
   }
 
   ngOnInit(): void {
@@ -31,6 +26,16 @@ export class LoginComponent implements OnInit {
 
   enviar(event: Event){
     event.preventDefault();
-    console.log(this.loginForm?.value);
+    console.log(this.loginForm.value);
   }
+
+  menuOption: string = '';
+  onOption(menuOption: string){
+    this.menuOption = menuOption;
+  }
+
+  hasError(field: string, typeError: string){
+    return this.loginForm.get(field)?.hasError(typeError) && this.loginForm.get(field)?.touched;
+  }
+
 }

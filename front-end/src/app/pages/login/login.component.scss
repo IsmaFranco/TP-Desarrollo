@@ -15,60 +15,12 @@
 }
 
 *::selection {
-    background: var(--primary);
+    background: blue;
     color: white;
 }
 
 h1{
     text-align: center;
-}
-
-.socials-row {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-}
-
-.socials-row img {
-    width: 1.5rem;
-    height: 1.5rem;
-}
-
-.socials-row > a {
-    padding: 0.5rem;
-    border-radius: 0.5rem;
-    width: 100%;
-    min-height: 3rem;
-    display: flex;
-    gap: 0.75rem;
-    justify-content: center;
-    align-items: center;
-    text-decoration: none;
-    font-size: 1.1rem;
-    color: var(--secondary);
-    padding: 0.5rem;
-    background: var(--white);
-    transition: all .3s ease;
-    font-weight: 700;
-}
-
-.socials-row > a:hover {
-    border: 1px solid var(--primary);
-}
-
-.lines {
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    display: flex;
-    gap: 1rem;
-    font-weight: bold;
-    align-items: center;
-}
-
-.line {
-    height: 2px;
-    flex: 1;
-    background: var(--border);
 }
 
 .text-field {
@@ -95,32 +47,27 @@ h1{
     color: var(--text);
 }
 
-.text-field input:user-invalid {
-    background: var(--white);
-    color: var(--error);
-    border: 1px solid var(--error);
-}
-
-.text-field input:user-invalid ~ .error-message {
+.error-message {
     display: block;
     margin-top: 0.25rem;
-    font-size: 0.8rem;
-    color: var(--error);
+    font-size: 13px;
+    color: red;
 }
 
 .text-field input:focus {
-    border: 1px solid var(--primary);
+    border: 1px solid rgb(230, 230, 230);
     box-shadow: 4px 4px 4px rgba(219, 219, 219, 0.2);
 }
 
 .my-form {
     display: flex;
     margin: auto;
+    margin-top: 50px;
     flex-direction: column;
     justify-content: start;
     position: relative;
     gap: 1rem;
-    background: var(--white);
+    background: rgb(23, 23, 23);
     width: 100%;
     max-width: 32rem;
     padding: 3rem 2rem;

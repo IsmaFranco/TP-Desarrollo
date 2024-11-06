@@ -1,18 +1,26 @@
 <div class="my-form">
-    <form [formGroup]="loginForm" (submit)="enviar($event)">
+    <form [formGroup]="loginForm" novalidate (submit)="enviar($event)">
         <h1>Log In</h1>
         <div class="text-field">
             <label for="email">Email</label>
-            <input type="email" id="email" name="email" placeholder="johndoe@gmail.com" autocomplete="off" required formControlName="email">
-            <label for="email">Password</label>
-            <input type="password" id="password" name="password" placeholder="Your password" autocomplete="off" required formControlName="password">
+            <input type="email" id="email" name="email" placeholder="johndoe@gmail.com" autocomplete="off" formControlName="email" ngClass="{is-invalid: hasError('email', 'required') || hasError('email', 'email')}">
+            @if (hasError('email', 'required')){
+                <span class="error-message" >Email is required</span>}
+            @if (hasError('email', 'email')){
+                <span class="error-message" >Email is invalid</span>}
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Your password" autocomplete="off" formControlName="password" ngClass="{is-invalid: hasError('password', 'required') || hasError('password', 'minlenght')}">
+            @if (hasError('password', 'required')){
+                <span class="error-message" >Password is required</span>}
+            @if (hasError('password', 'minlength')){
+                <span class="error-message" >Email is too short</span>}
         </div>
         <button type="submit" class="my-form__button">Login</button>
     </form>
     <div class="my-form__actions">
         <div class="my-form__row">
             <span>Don't Have an account?</span>
-            <a class="nav-item nav-link" routerLink="sign-up" [ngClass]="{active: menuOption == 'sign-up'}" (click)="onOption('sign-up')">Sign Up</a>
+            <a class="nav-item nav-link" [routerLink]="['/sign-up']" [ngClass]="{active: menuOption == 'sign-up'}" (click)="onOption('sign-up')">Sign Up</a>
         </div>
     </div>
 </div>

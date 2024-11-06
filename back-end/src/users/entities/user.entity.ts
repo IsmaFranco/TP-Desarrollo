@@ -30,7 +30,7 @@ export abstract class User {
   @Column({ type: 'varchar', length: 50, nullable: false })
   addressUs: string;
 
-  @Column({ type: 'varchar', length: 20, nullable: false, select: false }) //nullabe false significa que no puede ser nulo
+  @Column({ type: 'varchar', length: 200, nullable: false, select: false }) //nullabe false significa que no puede ser nulo
   passwordUs: string; // ver bien como es lo de la contgraseña y si este atr esta bien pasado
 
   @Column({ type: 'enum', default: Rol.USER, enum: Rol })

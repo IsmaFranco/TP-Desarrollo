@@ -7,6 +7,7 @@ import {
   MaxLength,
   MinLength,
 } from 'class-validator';
+import { Rol } from 'src/common/enums/rol.enum';
 
 export class RegisterDto {
   //no estaria validando que cumpla con los datos
@@ -45,4 +46,6 @@ export class RegisterDto {
   @IsInt()
   @IsPositive()
   postalCode: number;
+
+  rol: Rol;
 }

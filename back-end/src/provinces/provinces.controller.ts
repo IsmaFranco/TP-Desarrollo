@@ -16,7 +16,6 @@ import { Province } from './entities/province.entity';
 import { Auth } from 'src/auth/decorators/auth.decorators';
 import { Rol } from 'src/common/enums/rol.enum';
 
-@Auth(Rol.ADMIN)
 @Controller('provinces')
 export class ProvincesController {
   constructor(private readonly provincesService: ProvincesService) {}

@@ -1,8 +1,17 @@
-.general-styles{
-    background-color: rgb(40, 40, 40);
-    color: rgb(220, 220, 220);
-    min-height: 100vh;
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.app-container {
+    background: rgb(33, 33, 33);
+    color: rgb(210, 210, 210)
+}
+
+.main-container {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    min-height: 100vh; // Se asegura de que el contenedor ocupe la pantalla completa
 }
+

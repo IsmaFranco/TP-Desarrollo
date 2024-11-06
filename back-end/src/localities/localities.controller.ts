@@ -15,7 +15,8 @@ import { UpdateLocalityDto } from './dto/update-locality.dto';
 import { Locality } from './entities/locality.entity';
 import { Rol } from 'src/common/enums/rol.enum';
 import { Auth } from 'src/auth/decorators/auth.decorators';
-@Auth(Rol.ADMIN)
+
+
 @Controller('localities')
 export class LocalitiesController {
   constructor(private readonly localitiesService: LocalitiesService) {}

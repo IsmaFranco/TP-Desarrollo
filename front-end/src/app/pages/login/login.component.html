@@ -1,5 +1,5 @@
 <div class="my-form">
-    <form [formGroup]="loginForm" novalidate (submit)="enviar($event)">
+    <form [formGroup]="loginForm" novalidate (ngSubmit)="onSubmit()" >
         <h1>Log In</h1>
         <div class="text-field">
             <label for="email">Email</label>
@@ -15,7 +15,7 @@
             @if (hasError('password', 'minlength')){
                 <span class="error-message" >Email is too short</span>}
         </div>
-        <button type="submit" class="my-form__button">Login</button>
+        <button type="submit" class="my-form__button" >Login</button>
     </form>
     <div class="my-form__actions">
         <div class="my-form__row">

@@ -43,11 +43,11 @@ export class AuthController {
 
   @Post('login')
   @UsePipes(new ValidationPipe({ transform: true }))
-  login(
+  async login(
     @Body()
     loginDto: Logindto,
   ) {
-    return this.authService.login(loginDto);
+    return this.authService.validateUser(loginDto.emailUs, loginDto.passwordUs);
   }
 
   @Get('profile')

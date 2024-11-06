@@ -16,6 +16,14 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
+  async validateUser(email: string, password: string): Promise<any> {
+    const user = await this.usersService.findOneByEmail(email);
+    if (user && (await bcryptjs.compare(password, user.passwordUs))) {
+      return { message: 'Login exitoso', user };
+    }
+    throw new Error('Credenciales incorrectas');
+  }
+
   async register(registerDto: RegisterDto) {
     const user = await this.usersService.findOneByEmail(registerDto.emailUs);
 
@@ -38,7 +46,7 @@ export class AuthService {
       throw new UnauthorizedException('Email incorrecto');
     }
 
-    const isPasswordValid = bcryptjs.compare(passwordUs, user.passwordUs);
+    const isPasswordValid = await bcryptjs.compare(passwordUs, user.passwordUs);
     if (!isPasswordValid) {
       throw new UnauthorizedException('Contraseña incorrecta');
     }

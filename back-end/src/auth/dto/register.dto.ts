@@ -28,7 +28,7 @@ export class RegisterDto {
   @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value)) // esto sirve para que la contraseña no tenga espacios
   @IsString()
   @MinLength(6)
-  @MaxLength(150)
+  @MaxLength(200)
   passwordUs: string;
 
   @IsInt()

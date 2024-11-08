@@ -9,6 +9,6 @@ export class Logindto {
   @Transform(({ value }) => value.trim()) // esto sirve para que la contraseña no tenga espacios
   @IsString()
   @MinLength(6)
-  @MaxLength(50)
+  @MaxLength(200)
   passwordUs: string;
 }

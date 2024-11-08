@@ -18,6 +18,7 @@ export class AuthService {
 
   async validateUser(email: string, password: string): Promise<any> {
     const user = await this.usersService.findOneByEmail(email);
+
     if (user && (await bcryptjs.compare(password, user.passwordUs))) {
       return { message: 'Login exitoso', user };
     }
@@ -25,6 +26,7 @@ export class AuthService {
   }
 
   async register(registerDto: RegisterDto) {
+    console.log(registerDto);
     const user = await this.usersService.findOneByEmail(registerDto.emailUs);
 
     if (user) {
@@ -48,6 +50,7 @@ export class AuthService {
 
     const isPasswordValid = await bcryptjs.compare(passwordUs, user.passwordUs);
     if (!isPasswordValid) {
+      console.log('Contraseña incorrecta');
       throw new UnauthorizedException('Contraseña incorrecta');
     }
 

@@ -33,7 +33,7 @@ h1{
     color: rgb(25, 25, 25);
     max-width: 100%;
     width: 100%;
-    border: 1px solid var(--border);
+    border: 1px solid var#F4F4F6;
     min-height: 3rem;
     letter-spacing: 0.3rem;
     outline: none;
@@ -99,7 +99,8 @@ h1{
 }
 
 .my-form__button:hover {
-    background: var(--primary-dark);
+    background: #484848;
+    color: rgb(219, 219, 219);
 }
 
 /* my form actions */
@@ -109,19 +110,19 @@ h1{
     align-self: center;
     width: 100%;
     justify-content: space-between;
-    color: var(--secondary);
+    color: #d0d0d0;
     gap: 1rem;
     margin-top: 0.5rem;
 }
 
 .my-form__actions a {
-    color: var(--secondary);
     font-weight: 600;
     text-decoration: none;
 }
 
 .my-form__actions a:hover {
     text-decoration: underline;
+    cursor: pointer;
 }
 
 .my-form__row {

@@ -12,14 +12,14 @@
             <li class="nav-item">
             <a class="nav-link" routerLink="products" [ngClass]="{active: menuOption == 'products'}" (click)="onOption('products')">Products</a>
             </li>
-            <li class="nav-item" *ngIf="!isAuthenticated">
+            <li class="nav-item" *ngIf="!isAuthenticated()">
             <a class="nav-link" routerLink="login" [ngClass]="{active: menuOption == 'login'}" (click)="onOption('login')">Login</a>
             </li>
-            <li class="nav-item" *ngIf="isAuthenticated">
+            <li class="nav-item" *ngIf="isAuthenticated()">
             <a class="nav-link" routerLink="bag" [ngClass]="{active: menuOption == 'bag'}" (click)="onOption('bag')">Bag</a>
             </li>
-            <li class="nav-item" *ngIf="isAuthenticated">
-            <a class="nav-link" routerLink="profile" [ngClass]="{active: menuOption == 'profile'}" (click)="onOption('profile')">Profile</a>
+            <li class="nav-item" *ngIf="isAuthenticated()">
+            <a class="nav-link close" (click)="logout()" >Close</a>
             </li>
         </ul>
         </div>

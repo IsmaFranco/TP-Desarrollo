@@ -47,7 +47,7 @@ export class AuthController {
     @Body()
     loginDto: Logindto,
   ) {
-    return this.authService.validateUser(loginDto.emailUs, loginDto.passwordUs);
+    return this.authService.login(loginDto);
   }
 
   @Get('profile')

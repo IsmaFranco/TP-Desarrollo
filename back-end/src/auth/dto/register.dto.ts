@@ -47,5 +47,5 @@ export class RegisterDto {
   @IsPositive()
   postalCode: number;
 
-  rol: Rol;
+  //rol: Rol;
 }

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
-import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterOutlet, Routes } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { InjectionToken } from '@angular/core';
@@ -32,7 +32,10 @@ export class LoginComponent implements OnInit {
     this.authService.login(email, password).subscribe(
       response => {
         console.log('Login exitoso:', response);
-        this.router.navigate(['/home']);
+        this.router.navigate(['/'], {replaceUrl: true});
+        setTimeout(() => {
+          window.location.reload();
+        }, 10);
       }
     );
   }

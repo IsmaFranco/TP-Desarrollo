@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { RouterLink, RouterOutlet, Routes, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { LOCAL_STORAGE } from '../../services/local-storage.provider.service';
 
@@ -12,11 +12,12 @@ import { LOCAL_STORAGE } from '../../services/local-storage.provider.service';
   styleUrl: './nav.component.scss'
 })
 export class NavComponent implements OnInit {
-  router: any;
+  userRole: string | null = null;
 
-  constructor(private authService: AuthService, @Inject(LOCAL_STORAGE) private localStorage: Storage | null) {}
+  constructor(private authService: AuthService, private router: Router,@Inject(LOCAL_STORAGE) private localStorage: Storage | null) {}
 
   ngOnInit(): void {
+    this.userRole = this.authService.getRoleFromToken();
   }
 
   menuOption: string = '';
@@ -34,8 +35,11 @@ export class NavComponent implements OnInit {
 
   logout() {
     if (this.localStorage) { // Verifica si `localStorage` está disponible
-      this.localStorage.removeItem('token')}; // Elimina el token del `localStorage
+      this.localStorage.removeItem('token');} // Elimina el token del `localStorage
     // Redirige al usuario si es necesario
-    this.router.navigate(['/login']);
+    this.router.navigate(['/login'], {replaceUrl: true});
+    setTimeout(() => {
+      window.location.reload();
+    }, 10);
   }
 }

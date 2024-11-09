@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { catchError, Observable, pipe, tap, throwError } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
 
@@ -9,6 +9,7 @@ import { jwtDecode } from 'jwt-decode';
 export class AuthService {
   private apiUrl1 = 'http://localhost:3000/auth/login';
   private apiUrl2 = 'http://localhost:3000/auth/register';
+  private apiUrl3 = 'http://localhost:3000/clothes';
 
   constructor(private http: HttpClient) {}
 
@@ -40,6 +41,18 @@ export class AuthService {
   
     const decodedToken: any = jwtDecode(token);
     return decodedToken.rol; // Devuelve el rol del token
+  }
+
+  newItem(description: string, size: string, typeCl: string, stock: number, image: string): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+        'Authorization': `Bearer ${token}`
+    });
+    
+    return this.http.post(this.apiUrl3, 
+        { description, size, typeCl, stock, image },
+        { headers }
+    )
   }
 
 }

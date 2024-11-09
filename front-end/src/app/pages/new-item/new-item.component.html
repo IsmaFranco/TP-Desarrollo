@@ -1,1 +1,42 @@
-<p>new-item works!</p>
+<div class="my-form">
+    <form [formGroup]="loginForm" novalidate (ngSubmit)="onSubmit()" >
+        <h1>Add new clothe</h1>
+        <div class="text-field">
+            <label for="description">Description</label>
+            <input type="text" id="description" name="description" placeholder="White pants" autocomplete="off" formControlName="description" ngClass="{is-invalid: hasError('description', 'required')}">
+            @if (hasError('description', 'required')){
+                <span class="error-message" >description is required</span>}
+            <label for="size">Size</label>
+            <select type="text" id="size" name="size" placeholder="XL" autocomplete="off" formControlName="size" ngClass="{is-invalid: hasError('size', 'required')}">
+                <option value="" disabled selected>Choose...</option>
+                <option value="XS">XS</option>
+                <option value="S">S</option>
+                <option value="M">M</option>
+                <option value="L">L</option>
+                <option value="XL">XL</option>
+            </select>
+            <label for="typeCl">TypeCl</label>
+            <select type="text" id="typeCl" name="typeCl" placeholder="T-shirt" autocomplete="off" formControlName="typeCl" ngClass="{is-invalid: hasError('typeCl', 'required')}">
+                <option value="" disabled selected>Choose...</option>
+                <option value="T-shirt">T-shirt</option>
+                <option value="Pants">Pants</option>
+                <option value="Shoes">Shoes</option>
+            </select>
+            @if (hasError('typeCl', 'required')){
+                <span class="error-message" >typeCl is required</span>}
+            <label for="stock">Stock</label>
+            <input type="number" min="0" id="stock" name="stock" placeholder="10" autocomplete="off" formControlName="stock" ngClass="{is-invalid: hasError('stock', 'required')}">
+            @if (hasError('stock', 'required')){
+                <span class="error-message" >stock is required</span>}
+            <label for="image">Image</label>
+            <input type="text" id="image" name="image" placeholder="https://www.google.com" autocomplete="off" formControlName="image" ngClass="{is-invalid: hasError('image', 'required')}">
+            @if (hasError('image', 'required')){
+                <span class="error-message" >image is required</span>}
+        </div>
+        <button type="submit" class="my-form__button" >Add</button>
+    </form>
+    <div class="my-form__actions">
+        <div class="my-form__row">
+        </div>
+    </div>
+</div>

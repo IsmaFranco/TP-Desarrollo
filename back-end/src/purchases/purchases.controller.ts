@@ -28,7 +28,7 @@ export class PurchasesController {
 
   @Get()
   findAllByUser(@ActiveUser() users: UserActiveInterface): Promise<Purchase[]> {
-    return this.purchasesService.findAll(users.idUs);
+    return this.purchasesService.findAll(users.idUs, users);
   }
 
   @Get(':idPu')

@@ -7,6 +7,7 @@ import {
   Column,
   ManyToOne,
   OneToMany,
+  CreateDateColumn,
 } from 'typeorm';
 @Entity()
 export class Purchase {
@@ -22,7 +23,7 @@ export class Purchase {
   /* @Column({type: 'varchar', default: 'ENPROCESO', length:15;})
   status: string: */
 
-  @Column({ type: 'timestamp', name: 'datePurchase' })
+  @CreateDateColumn({ type: 'timestamp', name: 'datePurchase' })
   datePu: Date;
 
   /* @Column({type: 'timestamp', name:'updatedPurchase' })

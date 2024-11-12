@@ -6,6 +6,8 @@ import { LoginComponent } from './pages/login/login.component';
 import { SignUpComponent } from './pages/sign-up/sign-up.component';
 import { BagComponent } from './pages/bag/bag.component';
 import { NewItemComponent } from './pages/new-item/new-item.component';
+import { EditPriceComponent } from './pages/edit-price/edit-price.component';
+import { AddStockComponent } from './pages/add-stock/add-stock.component';
 
 export const routes: Routes = [
     {path: '', component: HomeComponent},
@@ -15,5 +17,7 @@ export const routes: Routes = [
     {path: 'sign-up', component: SignUpComponent},
     {path: 'bag', component: BagComponent},
     {path: 'new-item', component: NewItemComponent},
+    {path: 'edit-price/:id', component: EditPriceComponent},
+    {path: 'add-stock/:id', component: AddStockComponent},
     {path: '**', redirectTo: '', pathMatch: 'full'}
 ];

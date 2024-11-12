@@ -18,4 +18,13 @@ export class ClothesService {
   getProductById(id: number): Observable<any> {
     return this.http.get(`${this.urlBase}/${id}`);
   }
+
+  updateProductPrice(productId: number, newPrice: number): Observable<any> {
+    return this.http.put<any>(`${this.urlBase}/${productId}/new-price`, { price: newPrice });
+  }
+  
+  updateProductStock(productId: number, newStock: number): Observable<any> {
+    return this.http.put<any>(`${this.urlBase}/${productId}/add-stock`, { stock: newStock });
+  }
+
 }

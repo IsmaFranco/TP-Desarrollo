@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Put,
 } from '@nestjs/common';
 import { ClothesService } from './clothes.service';
 import { CreateClotheDto } from './dto/create-clothe.dto';
@@ -44,6 +45,16 @@ export class ClothesController {
   @Delete(':idCl')
   remove(@Param('idCl') idCl: number): Promise<void> {
     return this.clothesService.remove(idCl);
+  }
+
+  @Put(':idCl/new-price')
+  async updateProductPrice(@Param('idCl') id: number, @Body('price') price: number) {
+  return await this.clothesService.updateProductPrice(id, price);
+  }
+
+  @Put(':idCl/add-stock')
+  async updateProductStock(@Param('idCl') id: number, @Body('stock') stock: number) {
+  return await this.clothesService.updateProductStock(id, stock);
   }
 
 }

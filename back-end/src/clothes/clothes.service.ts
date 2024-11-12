@@ -25,16 +25,21 @@ export class ClothesService {
     return this.clotheRepository.findOne({ where: { idCl: idCl } });
   }
 
-  async update(
-    idCl: number,
-    updateClotheDto: UpdateClotheDto,
-  ): Promise<Clothe> {
+  async update(idCl: number, updateClotheDto: UpdateClotheDto,): Promise<Clothe> {
     await this.clotheRepository.update(idCl, updateClotheDto);
     return this.findOne(idCl);
   }
 
   async remove(idCl: number): Promise<void> {
     await this.clotheRepository.delete(idCl);
+  }
+
+  async updateProductPrice(id: number, newPrice: number): Promise<void> {
+    await this.clotheRepository.update(id, { price: newPrice });
+  }
+
+  async updateProductStock(id: number, newStock: number): Promise<void> {
+    await this.clotheRepository.update(id, { stock: newStock });
   }
 
 }

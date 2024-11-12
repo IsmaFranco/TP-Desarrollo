@@ -1,8 +1,9 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { ApiService } from '../../services/api.service';
-import { Product } from '../../models/product.model';
+import { ClothesService } from '../../services/clothes.service';
+import { Cloth } from '../../models/clothes.model';
+import { BagService } from '../../services/bag.service';
 
 
 @Component({
@@ -15,18 +16,28 @@ import { Product } from '../../models/product.model';
 export class ProductDetailComponent implements OnInit {
 
   loading:boolean = true;
-  public product?: Product;
+  public cloth?: Cloth;
+  @Input() product: any;
 
   private _route = inject(ActivatedRoute);
-  private _apiService = inject(ApiService);
+  private _clothesService = inject(ClothesService);
+  private _bagService = inject(BagService);
 
   ngOnInit(): void {
     this._route.params.subscribe(params => {
-      this._apiService.getProduct(params['id']).subscribe((data: Product) => {
+      this._clothesService.getProductById(params['id']).subscribe((data: Cloth) => {
         console.log(data);
-        this.product = data;
+        this.cloth = data;
         this.loading = false;
       });
     });
+  }
+
+  addToBag(product: any) {
+    this._bagService.addToBag(product);
+  }
+
+  changeSize(size: string) {
+    this.product.size = size;
   }
 }

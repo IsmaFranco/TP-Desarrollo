@@ -36,4 +36,5 @@ export class ClothesService {
   async remove(idCl: number): Promise<void> {
     await this.clotheRepository.delete(idCl);
   }
+
 }

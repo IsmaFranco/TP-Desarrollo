@@ -2,6 +2,10 @@
     <form [formGroup]="loginForm" novalidate (ngSubmit)="onSubmit()" >
         <h1>Add new clothe</h1>
         <div class="text-field">
+            <label for="nameCl">Name</label>
+            <input type="text" id="nameCl" name="nameCl" placeholder="Vans Knu" autocomplete="off" formControlName="nameCl" ngClass="{is-invalid: hasError('nameCl', 'required')}">
+            @if (hasError('nameCl', 'required')){
+                <span class="error-message" >name is required</span>}
             <label for="description">Description</label>
             <input type="text" id="description" name="description" placeholder="White pants" autocomplete="off" formControlName="description" ngClass="{is-invalid: hasError('description', 'required')}">
             @if (hasError('description', 'required')){
@@ -28,6 +32,10 @@
             <input type="number" min="0" id="stock" name="stock" placeholder="10" autocomplete="off" formControlName="stock" ngClass="{is-invalid: hasError('stock', 'required')}">
             @if (hasError('stock', 'required')){
                 <span class="error-message" >stock is required</span>}
+            <label for="price">Price</label>
+            <input type="number" min="0" id="price" name="price" placeholder="100" autocomplete="off" formControlName="price" ngClass="{is-invalid: hasError('price', 'required')}">
+            @if (hasError('price', 'required')){
+                <span class="error-message" >price is required</span>}
             <label for="image">Image</label>
             <input type="text" id="image" name="image" placeholder="https://www.google.com" autocomplete="off" formControlName="image" ngClass="{is-invalid: hasError('image', 'required')}">
             @if (hasError('image', 'required')){

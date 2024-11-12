@@ -19,17 +19,19 @@ export class NewItemComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router) {
     this.loginForm = this.formBuilder.group({
+      nameCl: ['', [Validators.required, Validators.maxLength(70)]],
       description: ['', [Validators.required, Validators.maxLength(250)]],
       size: ['', [Validators.required, Validators.maxLength(3)]],
       typeCl: ['', [Validators.required, Validators.maxLength(200)]],
       stock: ['', [Validators.required]],
+      price: ['', [Validators.required]],
       image: ['', [Validators.required, Validators.maxLength(200)]]
     });
   }
 
   onSubmit() {
-    const { description, size, typeCl, stock, image } = this.loginForm.value;
-    this.authService.newItem(description, size, typeCl, stock, image).subscribe(
+    const { nameCl, description, size, typeCl, stock, price, image } = this.loginForm.value;
+    this.authService.newItem(nameCl, description, size, typeCl, stock, price, image).subscribe(
       (response) => {
         console.log('Item creado:', response);
         this.router.navigate(['/']);

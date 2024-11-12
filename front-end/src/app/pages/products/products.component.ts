@@ -1,8 +1,8 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { ApiService } from '../../services/api.service';
 import {CommonModule} from '@angular/common';
-import { Product } from '../../models/product.model';
 import { Router } from '@angular/router';
+import { Cloth } from '../../models/clothes.model';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-products',
@@ -12,17 +12,19 @@ import { Router } from '@angular/router';
   styleUrl: './products.component.scss'
 })
 export class ProductsComponent implements OnInit {
+  products= [];
+  productList: Cloth[] = [];
 
-  productList: Product[] = [];
+  private _router = inject(Router);
+  private _http = inject(HttpClient);
 
-  private _apiService = inject(ApiService);
-  private _router = inject(Router); 
 
   ngOnInit(): void {
-    this._apiService.getProducts().subscribe((data: Product[]) => {
+    this._http.get<Cloth[]>('http://localhost:3000/clothes').subscribe((data: Cloth[]) => {
       console.log(data);
       this.productList = data;
-    });
+    }
+    );
   }
 
   navegate(id: number): void {

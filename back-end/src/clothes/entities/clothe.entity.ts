@@ -7,6 +7,9 @@ export class Clothe {
   @PrimaryGeneratedColumn('increment')
   idCl: number;
 
+  @Column({ type: 'varchar', nullable: false, length: 70 })
+  nameCl: string;
+
   @Column({ type: 'varchar', length: 200, nullable: true })
   description: string;
 
@@ -19,8 +22,11 @@ export class Clothe {
   @Column({ type: 'integer', nullable: false })
   stock: number;
 
-  @Column({ type: 'varchar', nullable: false, length: 200 })
+  @Column({ type: 'varchar', nullable: false, length: 500 })
   image: string; //ver bien el tipo de string osea no se si estaria bien que sea tipo string
+
+  @Column({ type: 'integer', nullable: false })
+  price: number;
 
   @ManyToOne(() => Purchase, (purchase) => purchase.clothes)
   purchase: Purchase;

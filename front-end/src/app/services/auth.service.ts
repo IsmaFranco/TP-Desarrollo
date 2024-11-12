@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { catchError, Observable, pipe, tap, throwError } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, tap } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
 
 @Injectable({
@@ -43,14 +43,14 @@ export class AuthService {
     return decodedToken.rol; // Devuelve el rol del token
   }
 
-  newItem(description: string, size: string, typeCl: string, stock: number, image: string): Observable<any> {
+  newItem(nameCl: string, description: string, size: string, typeCl: string, stock: number, price: number, image: string): Observable<any> {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({
         'Authorization': `Bearer ${token}`
     });
     
     return this.http.post(this.apiUrl3, 
-        { description, size, typeCl, stock, image },
+        { nameCl, description, size, typeCl, stock, price, image },
         { headers }
     )
   }

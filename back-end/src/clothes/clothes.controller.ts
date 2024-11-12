@@ -14,7 +14,6 @@ import { Clothe } from './entities/clothe.entity'; // Añadimos esta línea para
 import { Auth } from 'src/auth/decorators/auth.decorators';
 import { Rol } from 'src/common/enums/rol.enum';
 
-@Auth(Rol.ADMIN)
 @Controller('clothes')
 export class ClothesController {
   constructor(private readonly clothesService: ClothesService) {}
@@ -46,4 +45,5 @@ export class ClothesController {
   remove(@Param('idCl') idCl: number): Promise<void> {
     return this.clothesService.remove(idCl);
   }
+
 }

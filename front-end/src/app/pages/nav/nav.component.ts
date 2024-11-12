@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, Inject, OnInit } from '@angular/core';
-import { RouterLink, RouterOutlet, Routes, Router } from '@angular/router';
+import { Component, inject, OnInit } from '@angular/core';
+import { RouterLink, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { LOCAL_STORAGE } from '../../services/local-storage.provider.service';
+import { BagService } from '../../services/bag.service';
 
 @Component({
   selector: 'app-nav',
@@ -14,7 +15,9 @@ import { LOCAL_STORAGE } from '../../services/local-storage.provider.service';
 export class NavComponent implements OnInit {
   userRole: string | null = null;
 
-  constructor(private authService: AuthService, private router: Router,@Inject(LOCAL_STORAGE) private localStorage: Storage | null) {}
+  private _localStorage = inject(LOCAL_STORAGE);
+  private _bagService = inject(BagService);
+  constructor(private authService: AuthService, private router: Router,) {}
 
   ngOnInit(): void {
     this.userRole = this.authService.getRoleFromToken();
@@ -26,20 +29,22 @@ export class NavComponent implements OnInit {
   }
 
   isAuthenticated(): boolean {
-    if (this.localStorage) { // Verifica si `localStorage` está disponible
-      const token = this.localStorage.getItem('token');
+    if (this._localStorage) { // Verifica si `localStorage` está disponible
+      const token = this._localStorage.getItem('token');
       return token !== null;
     }
     return false; // Si `localStorage` es `null`, retorna `false`
   }
 
   logout() {
-    if (this.localStorage) { // Verifica si `localStorage` está disponible
-      this.localStorage.removeItem('token');} // Elimina el token del `localStorage
+    if (this._localStorage) { // Verifica si `localStorage` está disponible
+      this._localStorage.removeItem('token');} // Elimina el token del `localStorage
     // Redirige al usuario si es necesario
+    this._bagService.clearBag();  // Vacía el carrito al cerrar sesión
     this.router.navigate(['/login'], {replaceUrl: true});
     setTimeout(() => {
       window.location.reload();
     }, 10);
   }
+
 }

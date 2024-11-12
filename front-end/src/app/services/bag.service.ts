@@ -1,63 +1,14 @@
 import { Injectable } from '@angular/core';
+import { User } from '../models/clothes.model';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BagService {
-/*private bagItems = new BehaviorSubject<any[]>([]);
-currentBagItems = this.bagItems.asObservable();
-
-addToBag(product: any) {
-  const currentItems = this.bagItems.getValue();
-  
-  // Buscar si el producto con el mismo ID ya está en el carrito
-  const itemInCart = currentItems.find(clothes => clothes.idCl === product.idCl);
-  
-  if (itemInCart) {
-    // Si el producto ya está en el carrito, aumentar solo su cantidad
-    if (itemInCart.quantity < product.stock) {
-      itemInCart.quantity += 1;
-    }
-    else{
-      alert("No puedes añadir más, stock insuficiente");
-    }
-  } else {
-    // Si no está, hacer una copia del producto con una cantidad inicial
-    currentItems.push({ ...product, quantity: 1 });
-  }
-  
-  // Actualizar la lista de productos en el carrito
-  this.bagItems.next([...currentItems]);
-}
-
-clearBag() {
-  this.bagItems.next([]);  // Reinicia el carrito a un array vacío
-}
-
-removeFromBag(productId: number) {
-  const currentItems = this.bagItems.getValue();
-  
-  // Encuentra el producto a eliminar o decrementar
-  const itemInCart = currentItems.find(clothes => clothes.idCl === productId);
-
-  if (itemInCart) {
-    // Si la cantidad es mayor a 1, solo decrementar la cantidad
-    if (itemInCart.quantity > 1) {
-      itemInCart.quantity -= 1;
-    } else {
-      // Si la cantidad es 1, eliminar el producto del carrito
-      const updatedItems = currentItems.filter(clothes => clothes.idCl !== productId);
-      this.bagItems.next(updatedItems);
-    }
-  }
-}
-
-showMessage(message: string) {
-  console.log(message);}
-*/
 private bagItems: any[] = [];
 
-constructor() {
+constructor(private http: HttpClient) {
   if (this.isLocalStorageAvailable()) {
     this.loadBagFromLocalStorage();
   }
@@ -117,6 +68,11 @@ removeFromBag(productId: number) {
 // Obtener todos los productos del carrito
 getBagItems(): any[] {
   return this.bagItems;
+}
+
+processOrder(products: any[], user: number, totalAmount: number) {
+  const orderData = { products, user, totalAmount };
+  return this.http.post('http://localhost:3000/purchases', orderData); // Ruta a tu endpoint del backend
 }
 
 // Vaciar el carrito al cerrar sesión

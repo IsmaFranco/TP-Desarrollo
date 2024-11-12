@@ -42,10 +42,6 @@ export class ProductDetailComponent implements OnInit {
     this._bagService.addToBag(product);
   }
 
-  changeSize(size: string) {
-    this.product.size = size;
-  }
-
   navegate(direc: string, id: number | undefined): void {
     this._router.navigate([direc, id]);
   }

@@ -43,6 +43,17 @@ export class AuthService {
     return decodedToken.rol; // Devuelve el rol del token
   }
 
+  getCurrentUser(): any {
+    if (typeof window === 'undefined' || !localStorage.getItem('token')) {
+      return null;
+    }
+    const token = localStorage.getItem('token');
+    if (!token) return null;
+  
+    const decodedToken: any = jwtDecode(token);
+    return decodedToken.idUs; // Devuelve los datos del usuario
+  }
+
   newItem(nameCl: string, description: string, size: string, typeCl: string, stock: number, price: number, image: string): Observable<any> {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BagService } from '../../services/bag.service';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-bag',
@@ -12,7 +13,7 @@ import { CommonModule } from '@angular/common';
 export class BagComponent implements OnInit {
     bagItems: any[] = [];
 
-    constructor(private bagService: BagService) {}
+    constructor(private bagService: BagService, private router: Router) {}
   
     ngOnInit() {
       this.bagItems = this.bagService.getBagItems();
@@ -25,4 +26,13 @@ export class BagComponent implements OnInit {
     calculateTotalPrice() {
       return this.bagItems.reduce((total, item) => total + (item.price * item.quantity), 0);
     }
+
+    hasItemsInBag() {
+      return this.bagItems.length > 0;
+    }
+
+    navegate(direc: string): void {
+      this.router.navigate([direc]);
+    }
+
 }

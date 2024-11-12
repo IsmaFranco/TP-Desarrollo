@@ -6,18 +6,19 @@
             <img [src]="product.image" alt="{{ product.description }}" class="bag-item-image" />
             <div class="bag-item-details">
                 <h3>{{ product.nameCl }}</h3>
-                <h4>{{ product.description }}</h4>
-                <p>Precio: ${{ product.price }}</p>
-                <p>Talla: {{ product.size }}</p>
-                <p>Cantidad: {{ product.quantity }}</p>
+                <p>Precio: ${{ product.price }} ---- Cantidad: {{ product.quantity }} ---- Talle: {{ product.size }}</p>
             </div>
             <button (click)="removeProduct(product.idCl)" class="remove-button">Eliminar</button>
         </div>
-    <div class="total-price">
-        <p>Total: ${{ calculateTotalPrice() }}</p>
+        <div class="total-pay-container">
+            <div class="total-price">
+                <p>Total: ${{ calculateTotalPrice() }}</p>
+            </div>
+            <div class="pay-container">
+                <button class="pay" *ngIf="hasItemsInBag()" (click)="navegate('/pay')">Pay</button>
+            </div>
+        </div>
     </div>
-    </div>
-  
     <ng-template #emptyBag>
       <p>El carrito está vacío.</p>
     </ng-template>

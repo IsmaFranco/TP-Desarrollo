@@ -16,14 +16,13 @@ import { Rol } from 'src/common/enums/rol.enum';
 import { UserActiveInterface } from 'src/common/interfaces/user-active.interface';
 import { ActiveUser } from 'src/common/decorators/active-user.decorator';
 
-@Auth(Rol.USER)
 @Controller('purchases')
 export class PurchasesController {
   constructor(private readonly purchasesService: PurchasesService) {}
 
   @Post()
-  create(@Body() createPurchaseDto: CreatePurchaseDto, @ActiveUser() users: UserActiveInterface): Promise<Purchase> {
-    return this.purchasesService.create(createPurchaseDto, users);
+  create(@Body() createPurchaseDto: CreatePurchaseDto): Promise<Purchase> {
+    return this.purchasesService.create(createPurchaseDto);
   }
 
   @Get()
@@ -48,5 +47,10 @@ export class PurchasesController {
   @Delete(':idPu')
   remove(@Param('idPu') idPu: number, @Body('users') users: UserActiveInterface): Promise<void> {
     return this.purchasesService.remove(idPu);
+  }
+
+  @Get(':idPu/clothes')
+  findOneCloth(@Param('idPu') idPu: number): Promise<Purchase> {
+    return this.purchasesService.findOneCloth(+idPu);
   }
 }

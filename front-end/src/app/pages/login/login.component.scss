@@ -1,13 +1,3 @@
-:root {
-    --primary: #605DFF;
-    --primary-dark: #4a00e0;
-    --secondary: #1D1D1D;
-    --text: #1F2346;
-    --white: #FFFFFF;
-    --bg: #F8F9FD;
-    --border: #F4F4F6;
-}
-
 * {
     margin: 0;
     padding: 0;
@@ -103,7 +93,6 @@ h1{
     color: rgb(219, 219, 219);
 }
 
-/* my form actions */
 .my-form__actions {
     display: flex;
     flex-direction: column;

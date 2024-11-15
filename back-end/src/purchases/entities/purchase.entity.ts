@@ -8,14 +8,14 @@ import {
   ManyToOne,
   OneToMany,
   CreateDateColumn,
+  JoinColumn,
+  JoinTable,
+  ManyToMany,
 } from 'typeorm';
 @Entity()
 export class Purchase {
   @PrimaryGeneratedColumn('increment')
   idPu: number;
-
-  @Column({ type: 'varchar', length: 200, nullable: true })
-  observation: string;
 
   @Column({ type: 'integer', nullable: false })
   amount: number;
@@ -29,12 +29,19 @@ export class Purchase {
   /* @Column({type: 'timestamp', name:'updatedPurchase' })
   updatedPu:Date; cuando cambia el estado */
 
-  @ManyToOne(() => Shipment, (shipment) => shipment.purchases)
+  @ManyToOne(() => Shipment, { eager: true })
+  @JoinColumn({ name: 'idSh' })
   shipment: Shipment;
 
-  @OneToMany(() => Clothe, (clothe) => clothe.purchase)
+  @ManyToMany(() => Clothe, { eager: true })
+  @JoinTable({
+    name: 'purchase_clothes',
+    joinColumn: { name: 'purchase', referencedColumnName: 'idPu' },
+    inverseJoinColumn: { name: 'clothe', referencedColumnName: 'idCl' }
+  })
   clothes: Clothe[];
 
-  @ManyToOne(() => User, (user) => user.purchases)
+  @ManyToOne(() => User, { eager: true })
+  @JoinColumn({ name: 'idUs' })
   user: User;
 }

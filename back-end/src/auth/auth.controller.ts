@@ -22,9 +22,9 @@ import { UserActiveInterface } from 'src/common/interfaces/user-active.interface
 
 interface RequestWithUser extends Request {
   user: {
-    // id: number; ver si es necesario agregarlo
     emailUs: string;
     rol: string[];
+    idUs: number;
   };
 }
 @Controller('auth')

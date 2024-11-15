@@ -70,11 +70,6 @@ getBagItems(): any[] {
   return this.bagItems;
 }
 
-processOrder(products: any[], user: number, totalAmount: number) {
-  const orderData = { products, user, totalAmount };
-  return this.http.post('http://localhost:3000/purchases', orderData); // Ruta a tu endpoint del backend
-}
-
 // Vaciar el carrito al cerrar sesión
 clearBag() {
   this.bagItems = [];

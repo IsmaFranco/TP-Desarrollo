@@ -18,26 +18,10 @@ export class PurchasesService {
     private userRepository: Repository<User>,
   ) {}
 
-  /* async create(createPurchaseDto: CreatePurchaseDto): Promise<Purchase> {
+  async create (createPurchaseDto: CreatePurchaseDto): Promise<Purchase> {
     const purchase = this.purchaseRepository.create(createPurchaseDto);
     return this.purchaseRepository.save(purchase);
-  } */ 
-  async create (createPurchaseDto: CreatePurchaseDto, users: UserActiveInterface): Promise<Purchase> {
-    const user = await this.userRepository.findOneBy({
-      emailUs: createPurchaseDto.user,
-    });
-    
-    if (!user) {
-      throw new BadRequestException('User not found');
-    }
-
-    return await this.purchaseRepository.save({
-      ...createPurchaseDto,
-      user,
-    });
-
-    //return this.purchaseRepository.save(purchase);
-  } // esto sirve para que el usuario pueda hacer una compra y se guarde en la base de datos y se asocie con el usuario que la hizo
+  }
 
   async findAll(idUs: number, users: UserActiveInterface): Promise<Purchase[]> {
     if (users.rol.includes(Rol.ADMIN)) { // si el usuario es admin, puede ver todas las compras
@@ -65,5 +49,13 @@ export class PurchasesService {
 
   async remove(idPu: number): Promise<void> {
     await this.purchaseRepository.delete(idPu);
+  }
+
+  async findOneCloth(idPu: number) {
+    // Esta consulta recupera la compra con todas las "clothes" asociadas
+    return this.purchaseRepository.findOne({
+      where: { idPu: idPu },
+      relations: ['clothes'], // Esta opción carga la relación desde la tabla de unión
+    });
   }
 }

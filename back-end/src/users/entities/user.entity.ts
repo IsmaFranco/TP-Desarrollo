@@ -36,10 +36,10 @@ export abstract class User {
   @Column({ type: 'enum', default: Rol.USER, enum: Rol })
   rol: Rol; //tendria que haber sido role, pero ya avanzamos bastante y no quiero cambiarlo
 
-  @ManyToOne(() => Locality, (locality) => locality.users)
-  locality: Locality;
+  @Column({ type: 'int', nullable: false })
+  postalCode: number;
 
-  @OneToMany(() => Clothe, (clothe) => clothe.user)
+  @ManyToOne(() => Clothe, (clothe) => clothe.user)
   clothes: Clothe[];
 
   @OneToMany(() => Purchase, (purchase) => purchase.user)

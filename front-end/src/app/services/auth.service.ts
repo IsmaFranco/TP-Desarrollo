@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
+import { User } from '../models/clothes.model';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,8 @@ export class AuthService {
   private apiUrl1 = 'http://localhost:3000/auth/login';
   private apiUrl2 = 'http://localhost:3000/auth/register';
   private apiUrl3 = 'http://localhost:3000/clothes';
+  private apiUrl4 = 'http://localhost:3000/shipments';
+  private apiUrl5 = 'http://localhost:3000/purchases';
 
   constructor(private http: HttpClient) {}
 
@@ -43,15 +46,16 @@ export class AuthService {
     return decodedToken.rol; // Devuelve el rol del token
   }
 
-  getCurrentUser(): any {
+  getCurrentUser() {
     if (typeof window === 'undefined' || !localStorage.getItem('token')) {
       return null;
     }
     const token = localStorage.getItem('token');
     if (!token) return null;
   
-    const decodedToken: any = jwtDecode(token);
-    return decodedToken.idUs; // Devuelve los datos del usuario
+    const decodedToken = jwtDecode<{ idUs: number }>(token);
+    console.log('ID del usuario:', decodedToken.idUs); // Verifica si se recibe el ID del usuario
+    return this.http.get(`http://localhost:3000/users/${decodedToken.idUs}`)  // Devuelve los datos del usuario
   }
 
   newItem(nameCl: string, description: string, size: string, typeCl: string, stock: number, price: number, image: string): Observable<any> {
@@ -64,6 +68,16 @@ export class AuthService {
         { nameCl, description, size, typeCl, stock, price, image },
         { headers }
     )
+  }
+
+  // Crear Shipment
+  createShipment(shipmentData: any): Observable<any> {
+    return this.http.post<any>(this.apiUrl4, shipmentData);
+  }
+  
+  // Crear Purchase
+  createPurchase(purchaseData: any) {
+    return this.http.post(this.apiUrl5, purchaseData);
   }
 
 }

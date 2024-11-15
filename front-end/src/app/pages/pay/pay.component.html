@@ -1,11 +1,13 @@
-<div class="pay-container">
-    <h2>Resumen de tu compra</h2>
-    
-    <div *ngFor="let product of productsInBag">
-        <p>{{ product.nameCl }} - Cantidad: {{ product.quantity }} - Precio: ${{ product.price }}</p>
+<div class="my-form">
+    <div class="text-field">
+        <h1>Resumen de tu compra</h1>
+        <div class="texto">
+            <div *ngFor="let product of productsInBag">
+                <p>{{ product.nameCl }} - Cantidad: {{ product.quantity }} - Precio: ${{ product.price }}</p>
+            </div>
+
+            <p>Total a pagar: ${{ totalAmount }}</p>
+        </div>
+        <button (click)="aceptarCompra()">Confirmar pago</button>
     </div>
-
-    <p>Total a pagar: ${{ totalAmount }}</p>
-
-    <button (click)="confirmPayment()">Confirmar pago</button>
 </div>

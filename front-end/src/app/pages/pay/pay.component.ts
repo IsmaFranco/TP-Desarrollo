@@ -2,6 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { BagService } from '../../services/bag.service';
 import { AuthService } from '../../services/auth.service';
+import { User } from '../../models/clothes.model';
+import { Locality } from '../../models/localities.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-pay',
@@ -12,11 +15,10 @@ import { AuthService } from '../../services/auth.service';
 })
 export class PayComponent implements OnInit {
   productsInBag: any[] = [];
-  totalAmount: number = 0;
-  user: any = {}; // Usuario actual
-  router: any;
+  totalAmount: number = 0; // Total a pagar
+  user!: User; // Usuario actual
 
-  constructor(private bagService: BagService, private authService: AuthService) {}
+  constructor(private bagService: BagService, private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     // Cargar productos del carrito
@@ -24,25 +26,40 @@ export class PayComponent implements OnInit {
     this.calculateTotal();
 
     // Obtener datos del usuario
-    this.user = this.authService.getCurrentUser();
+    this.authService.getCurrentUser()?.subscribe(user => {
+      this.user = user as User});
+
   }
 
   calculateTotal(): void {
-    this.totalAmount = this.productsInBag.reduce((total, product) => total + (product.price * product.quantity), 0);
+    this.totalAmount = this.productsInBag.reduce((total, product) => total + (product.price * product.quantity), 0) as number;
   }
 
-  confirmPayment(): void {
-    // Llamar al servicio para procesar el pago
-    console.log(this.productsInBag, this.user, this.totalAmount);
-    this.bagService.processOrder(this.productsInBag, this.user, this.totalAmount).subscribe(
-      (response: any) => {
-        console.log('Pago exitoso:', response);
+  aceptarCompra() {
+    // Datos del carrito y usuario
+    const shipmentData = {
+      dateSh: new Date(),
+      postalCode: this.user.postalCode
+    };
+
+    // Crear Shipment primero
+    this.authService.createShipment(shipmentData).subscribe(shipment => {
+      const shipmentId = shipment; 
+
+      const purchaseData = {
+        amount: this.totalAmount, 
+        shipment: shipmentId,
+        clothes: this.productsInBag, 
+        user: this.user, 
+        postalCode: this.user.postalCode
+      };
+
+      this.authService.createPurchase(purchaseData).subscribe(purchase => {
+        alert('Compra realizada con éxito');
         this.bagService.clearBag();
         this.router.navigate(['/']);
-      },
-      (error: any) => {
-        console.error('Error al procesar el pago:', error);
-      }
-    );
+      });
+    });
   }
+
 }

@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { PurchasesService } from './purchases.service';
 import { CreatePurchaseDto } from './dto/create-purchase.dto';
@@ -26,8 +27,8 @@ export class PurchasesController {
   }
 
   @Get()
-  findAllByUser(@ActiveUser() users: UserActiveInterface): Promise<Purchase[]> {
-    return this.purchasesService.findAll(users.idUs, users);
+  findAllByUser(): Promise<Purchase[]> {
+    return this.purchasesService.findAll();
   }
 
   @Get(':idPu')

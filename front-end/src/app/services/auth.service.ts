@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
 import { User } from '../models/clothes.model';
@@ -78,6 +78,10 @@ export class AuthService {
   // Crear Purchase
   createPurchase(purchaseData: any) {
     return this.http.post(this.apiUrl5, purchaseData);
+  }
+
+  getPurchases(): Observable<any> {
+    return this.http.get(this.apiUrl5);
   }
 
 }

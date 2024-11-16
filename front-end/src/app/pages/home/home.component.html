@@ -1,14 +1,18 @@
+<div class="category-buttons">
+    <a (click)="filterByCategory('T-shirt')" class="category-button" [ngClass]="{'selected': isCategorySelected('T-shirt')}">T-Shirts</a>
+    <a (click)="filterByCategory('Pants')" class="category-button" [ngClass]="{'selected': isCategorySelected('Pants')}">Pants</a>
+    <a (click)="filterByCategory('Shoes')" class="category-button" [ngClass]="{'selected': isCategorySelected('Shoes')}">Shoes</a>
+</div>
 <div class="product-grid">
-    <div class="product-card" *ngFor="let product of productList">
+    <div class="product-card" *ngFor="let product of filteredProducts">
         <img [src]="product.image" alt="{{ product.description }}" class="product-image" />
         <h2>{{ product.nameCl }}</h2>
-        <h3>{{ product.description }}</h3>
+        <p>{{ product.description }}</p>
         <p class="product-price">${{ product.price }}</p>
-        <p class="product-size">Size:  {{ product.size }}</p>
-        @if (product.stock < 0){
-            <p class="product-stock">Out of stock</p>}
+        @if (product.stock == 0){
+            <p class="product-stock">Size:  {{ product.size }} --- Out of stock</p>}
         @else {
-            <p class="product-stock">Stock: {{ product.stock }}</p>
+            <p class="product-stock">Size:  {{ product.size }} --- Stock: {{ product.stock }}</p>
             <button (click)="navegate(product.idCl)" class="view-button">Ver producto</button>
         }
     </div>

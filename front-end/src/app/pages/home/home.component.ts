@@ -14,19 +14,40 @@ import { CommonModule } from '@angular/common';
 })
 export class HomeComponent implements OnInit {
 
-  productList: Cloth[] = [];
+  products: Cloth[] = []; // Lista original de productos
+  filteredProducts: Cloth[] = [];
+  selectedCategory: string = '';
 
-  private _clothesService = inject(ClothesService);
-  private _router = inject(Router); 
+  private clothesService = inject(ClothesService);
+  private router = inject(Router); 
 
   ngOnInit(): void {
-    this._clothesService.getProducts().subscribe((data: Cloth[]) => {
-      console.log(data);
-      this.productList = data;
+    this.loadProducts();
+  }
+
+  loadProducts() {
+    this.clothesService.getProducts().subscribe((data: any[]) => {
+      this.products = data;
+      this.filteredProducts = data; // Inicialmente muestra todos los productos
     });
   }
 
   navegate(id: number): void {
-    this._router.navigate(['/products/', id]);
+    this.router.navigate(['/products/', id]);
+  }
+
+  filterByCategory(category: string){
+    if (this.selectedCategory === category) {
+      this.selectedCategory = '';
+      this.filteredProducts = this.products; // Muestra todos los productos
+    } else {
+      this.selectedCategory = category;
+      this.filteredProducts = this.products.filter(product => product.typeCl=== category);
+    
+    }
+  }
+
+  isCategorySelected(category: string): boolean {
+    return this.selectedCategory === category;
   }
 }

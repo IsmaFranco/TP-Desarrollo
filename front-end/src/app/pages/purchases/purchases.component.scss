@@ -1,0 +1,28 @@
+/* Estilo del formulario de filtrado */
+.filter {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  
+  .filter form {
+    display: flex;
+    gap: 10px;
+  }
+  
+  /* Lista de compras */
+  .purchases-list {
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #363636;
+  }
+  
+  .purchase-item {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+  }
+  

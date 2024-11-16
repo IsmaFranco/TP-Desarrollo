@@ -1,23 +1,9 @@
-:root {
-    --primary: #605DFF;
-    --primary-dark: #4a00e0;
-    --secondary: #1D1D1D;
-    --text: #1F2346;
-    --white: #FFFFFF;
-    --bg: #F8F9FD;
-    --border: #F4F4F6;
-}
-
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-*::selection {
-    background: blue;
-    color: white;
-}
 
 h1{
     text-align: center;
@@ -58,7 +44,7 @@ h1{
 }
 
 .text-field label {
-    color: var(--text);
+    color: rgb(197, 197, 197);
 }
 
 .error-message {

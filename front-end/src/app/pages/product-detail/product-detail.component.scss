@@ -3,3 +3,19 @@
     justify-content: center;
     margin-top: 20px;
 }
+
+.card-title {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.total-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.price {
+  display: flex;
+  justify-content: flex-end;
+}

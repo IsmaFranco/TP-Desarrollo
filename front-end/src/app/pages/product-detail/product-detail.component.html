@@ -1,17 +1,23 @@
 <div class="container">
-        <div class="card" style="width: 18rem;">
-            <img src="{{cloth?.image}}" class="card-img-top" alt="{{cloth?.description}}">
+        <div class="card" style="width: 20rem;">
+            <img src="{{cloth?.image}}" class="card-img-top">
             <div class="card-body">
                 <p class="card-title">{{cloth?.nameCl}}</p>
-                <p>Size:  {{cloth?.size}}</p>
-                <p></p>
-                <p>${{cloth?.price}}</p> 
+                <p class="card-text">{{cloth?.description}}</p>
+                <div class="total-container">
+                    <div class="size">
+                        <p>Size:  {{cloth?.size}}</p>
+                    </div>
+                    <p></p>
+                    <div class="price">
+                        <p>${{cloth?.price}}</p> 
+                    </div>
+                </div>
             </div>
-            <button type="button" *ngIf="userRole==='user'" class="btn btn-primary" (click)="addToBag(cloth)">Add to bag</button>
-            <p></p>
             <button type="button" *ngIf="userRole==='admin'" class="btn btn-primary" (click)="navegate('/edit-price/', cloth?.idCl)">Edit Price</button>
             <p></p>
             <button type="button" *ngIf="userRole==='admin'" class="btn btn-primary" (click)="navegate('/add-stock/', cloth?.idCl)">Add Stock</button>
             <p></p>
+            <button type="button" *ngIf="userRole==='user'" class="btn btn-primary" (click)="addToBag(cloth)">Add to bag</button>
         </div>
 </div>

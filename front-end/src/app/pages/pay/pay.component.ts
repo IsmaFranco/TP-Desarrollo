@@ -5,6 +5,7 @@ import { AuthService } from '../../services/auth.service';
 import { User } from '../../models/clothes.model';
 import { Locality } from '../../models/localities.model';
 import { Router } from '@angular/router';
+import { ClothesService } from '../../services/clothes.service';
 
 @Component({
   selector: 'app-pay',
@@ -18,7 +19,7 @@ export class PayComponent implements OnInit {
   totalAmount: number = 0; // Total a pagar
   user!: User; // Usuario actual
 
-  constructor(private bagService: BagService, private authService: AuthService, private router: Router) {}
+  constructor(private bagService: BagService, private authService: AuthService, private router: Router, private clothesService: ClothesService) {}
 
   ngOnInit(): void {
     // Cargar productos del carrito
@@ -58,6 +59,11 @@ export class PayComponent implements OnInit {
         alert('Compra realizada con éxito');
         this.bagService.clearBag();
         this.router.navigate(['/']);
+        for (let i = 0; i < this.productsInBag.length; i++) {
+          this.clothesService.updateProductStock(this.productsInBag[i].idCl, this.productsInBag[i].stock - this.productsInBag[i].quantity).subscribe(() => {
+            console.log('Stock actualizado');
+          });
+        }
       });
     });
   }

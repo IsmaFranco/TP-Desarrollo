@@ -1,6 +1,6 @@
 import { Purchase } from 'src/purchases/entities/purchase.entity';
 import { User } from 'src/users/entities/user.entity';
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, ManyToMany } from 'typeorm';
 
 @Entity()
 export class Clothe {
@@ -28,7 +28,7 @@ export class Clothe {
   @Column({ type: 'integer', nullable: false })
   price: number;
 
-  @OneToMany(() => Purchase, (purchase) => purchase.clothes)
+  @ManyToMany(() => Purchase, (purchase) => purchase.clothes)
   purchase: Purchase;
 
   @OneToMany(() => User, (user) => user.clothes)

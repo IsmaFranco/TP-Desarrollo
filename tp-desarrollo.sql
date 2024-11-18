@@ -57,7 +57,7 @@ INSERT INTO `clothe` (`idCl`, `nameCl`, `description`, `size`, `typeCl`, `stock`
 (7, 'Vans Knu', 'Zapatillas Vans negras', 'M', 'Shoes', 45, 'https://acdn.mitiendanube.com/stores/001/987/365/products/whatsapp-image-2024-07-26-at-15-40-05-a58f63afc34b93902b17220192592055-1024-1024.jpeg', 7500),
 (8, 'Shorts Deportivos', 'Shorts negros para gimnasio', 'M', 'Pants', 60, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcK1vzTiv27vQOlGk03lrbmlj11pVRgaGWWw&s', 3000),
 (9, 'Adidas Campus 2000', 'Zapatillas Adidas beige', 'L', 'Shoes', 30, 'https://acdn.mitiendanube.com/stores/001/240/717/products/eph_3358-51296c3f09a04d2c9d17000533997853-1024-1024.jpg', 9000),
-(10, 'Jean Mom', 'Jean mom celeste hombre', 'XL', 'T-shirt', 20, 'https://vcp.com.ar/cdn/shop/files/SHELBYCELESTE1.jpg?v=1713470797', 6500);
+(10, 'Jean Mom', 'Jean mom celeste hombre', 'XL', 'Pants', 20, 'https://vcp.com.ar/cdn/shop/files/SHELBYCELESTE1.jpg?v=1713470797', 6500);
 
 -- --------------------------------------------------------
 

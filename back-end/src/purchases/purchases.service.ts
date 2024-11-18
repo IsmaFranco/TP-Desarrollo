@@ -1,12 +1,13 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Between, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { CreatePurchaseDto } from './dto/create-purchase.dto';
 import { UpdatePurchaseDto } from './dto/update-purchase.dto';
 import { Purchase } from './entities/purchase.entity';
 import { User } from '../users/entities/user.entity';
 import { UserActiveInterface } from 'src/common/interfaces/user-active.interface';
 import { Rol } from 'src/common/enums/rol.enum'; // Adjust the import path as necessary
+
 
 
 @Injectable()
@@ -27,22 +28,31 @@ export class PurchasesService {
       return await this.purchaseRepository.find({
         relations: ['shipment', 'clothes', 'user'], // Incluye las relaciones necesarias
       });
+  }
+
+  async findOne(idPu: number, user: UserActiveInterface): Promise<Purchase> {
+    const purchase = await this.purchaseRepository.findOneBy({ idPu });
+
+    if (!purchase) {
+      throw new BadRequestException('La compra no existe');
     }
 
-  findOne(idPu: number): Promise<Purchase> {
-    return this.purchaseRepository.findOne({ where: { idPu: idPu } });
+    this.validateOwnership(purchase, user);
+
+    return purchase;
   }
 
-  async update(
-    idPu: number,
-    updatePurchaseDto: UpdatePurchaseDto,
-  ): Promise<Purchase> {
-    await this.purchaseRepository.update(idPu, updatePurchaseDto);
-    return this.findOne(idPu);
-  }
+  async update(idPu: number,updatePurchaseDto: UpdatePurchaseDto, user: UserActiveInterface): Promise<Purchase> {
+    await this.findOne(idPu, user);
 
-  async remove(idPu: number): Promise<void> {
-    await this.purchaseRepository.delete(idPu);
+    await this.purchaseRepository.update(idPu, {...updatePurchaseDto});
+    return this.findOne(idPu, user); // Devuelve la compra actualizada
+  }// Este método actualiza la compra y devuelve la compra actualizada
+
+  async remove(idPu: number, user: UserActiveInterface): Promise<void> {
+    await this.findOne(idPu, user);
+    await this.purchaseRepository.delete({ idPu });
+    return;
   }
 
   async findOneCloth(idPu: number) {
@@ -53,4 +63,9 @@ export class PurchasesService {
     });
   }
 
+  private validateOwnership(purchase: Purchase, user: UserActiveInterface) {
+    if (!user.rol.includes(Rol.ADMIN) && purchase.user.idUs !== user.idUs) {
+      throw new UnauthorizedException('No tienes permisos para ver esta compra');
+    }
+  } // Este método valida si el usuario tiene permisos para ver la compra
 }

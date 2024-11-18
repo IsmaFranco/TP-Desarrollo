@@ -22,7 +22,7 @@ export class ProvincesService {
     });
 
     if (existingProvince) {
-      throw new BadRequestException('Province with this name already exists');
+      throw new BadRequestException('Ya existe una provincia con ese nombre');
     }
 
     const province = this.provinceRepository.create(createProvinceDto);

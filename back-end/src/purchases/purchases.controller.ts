@@ -16,7 +16,7 @@ import { Auth } from 'src/auth/decorators/auth.decorators';
 import { Rol } from 'src/common/enums/rol.enum';
 import { UserActiveInterface } from 'src/common/interfaces/user-active.interface';
 import { ActiveUser } from 'src/common/decorators/active-user.decorator';
-
+@Auth(Rol.USER || Rol.ADMIN)
 @Controller('purchases')
 export class PurchasesController {
   constructor(private readonly purchasesService: PurchasesService) {}
@@ -33,25 +33,22 @@ export class PurchasesController {
 
   @Get(':idPu')
   findOne(@Param('idPu') idPu: number, @ActiveUser() users: UserActiveInterface): Promise<Purchase> {
-    return this.purchasesService.findOne(idPu);
-  }
+      return this.purchasesService.findOne(idPu, users);
+    }
 
   @Patch(':idPu')
-  update(
-    @Param('idPu') idPu: number,
-    @Body() updatePurchaseDto: UpdatePurchaseDto,
-    @ActiveUser() users: UserActiveInterface,
+  update(@Param('idPu') idPu: number, @Body() updatePurchaseDto: UpdatePurchaseDto, @ActiveUser() users: UserActiveInterface,
   ): Promise<Purchase> {
-    return this.purchasesService.update(idPu, updatePurchaseDto);
+    return this.purchasesService.update(idPu, updatePurchaseDto, users);
   }
 
   @Delete(':idPu')
   remove(@Param('idPu') idPu: number, @Body('users') users: UserActiveInterface): Promise<void> {
-    return this.purchasesService.remove(idPu);
+    return this.purchasesService.remove(idPu, users);
   }
 
   @Get(':idPu/clothes')
   findOneCloth(@Param('idPu') idPu: number): Promise<Purchase> {
-    return this.purchasesService.findOneCloth(+idPu);
+    return this.purchasesService.findOneCloth(idPu);
   }
 }

@@ -23,7 +23,7 @@ Regularidad:
 |---                 |---       |
 | CRUD simple        | 1. CRUD Prendas <br> 2. CRUD Proovedores <br> 3. CRUD Clientes <br> 4. CRUD Localidad|
 | CRUD dependiente   | 1. CRUP Pedido <br> 2. CRUD Envio|
-| Listado <br> + <br> detalle  |1. Listado de Prendas, filtrado por tipo de prenda, muestra=> idPrendas, descripcion, precio, talleDiponible <br> 2. Listado de Pedidos, filtrador por fecha pedidos, muesta=> idPedido, cantidad, idPrendas, descripcionPrendas, monto|
+| Listado <br> + <br> detalle  |1. Listado de Prendas, filtrado por tipo de prenda, muestra=> Nombre, descripcion, precio, talleDiponible <br> 2. Listado de Pedidos, filtrador por fecha pedidos, muestra=> idPedido, fecha, idUsuario, idEnvío, idPrendas, descripcionPrendas, monto|
 | CUU/Epic           |1. Registrar un pedido <br> 2. Registrar un nuevo cliente|
 
 Adicionales para Aprobación

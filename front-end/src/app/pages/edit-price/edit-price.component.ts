@@ -14,7 +14,6 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 })
 export class EditPriceComponent implements OnInit {
 
-  loading:boolean = true;
   @Input() cloth!: Cloth;
   editPriceForm!: FormGroup;
 
@@ -25,11 +24,10 @@ export class EditPriceComponent implements OnInit {
     this.clothesService.getProductById(params['id']).subscribe((data: Cloth) => {
       console.log(data);
       this.cloth = data;
-      this.loading = false;
     });
   });
   this.editPriceForm = this.fb.group({
-    price: ['', [Validators.required, Validators.min(0)]], // Agregar validaciones
+    price: ['', [Validators.required, Validators.min(0)]],
   });
 }
 

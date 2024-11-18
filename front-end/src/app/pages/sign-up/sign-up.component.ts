@@ -3,7 +3,6 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { RouterLink, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { last } from 'rxjs';
 
 @Component({
   selector: 'app-sign-up',

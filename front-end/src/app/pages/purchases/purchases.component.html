@@ -1,27 +1,30 @@
-<div>
-  <form [formGroup]="filterForm" (ngSubmit)="filterPurchases()">
-    <label for="startDate">Fecha inicial:</label>
-    <input type="date" id="startDate" formControlName="startDate" />
+<div class="container">
+  <div class="filtro-fechas">
+    <form [formGroup]="filterForm" (ngSubmit)="filterPurchases()">
+      <label for="startDate">Fecha inicial:</label>
+      <input type="date" id="startDate" formControlName="startDate" />
 
-    <label for="endDate">Fecha final:</label>
-    <input type="date" id="endDate" formControlName="endDate" />
+      <label for="endDate">Fecha final:</label>
+      <input type="date" id="endDate" formControlName="endDate" />
 
-    <button type="submit">Filtrar</button>
-  </form>
-</div>
+      <button type="submit">Filtrar</button>
+    </form>
+  </div>
 
-<div class="purchases-list">
-  <h2>Compras realizadas</h2>
-  <div *ngFor="let purchase of filteredPurchases">
-    <div class="purchase-item">
-      <p>ID: {{ purchase.idPu }}</p>
-      <p>Fecha: {{ purchase.datePu | date }}</p>
-      <p>Usuario: {{ purchase.user.idUs }}</p>
-      <p>Total: {{ purchase.amount | currency }}</p>
-      <p>Envío: {{purchase.shipment.idSh}}</p>
-      <p>Productos:</p>
-      <li *ngFor="let product of purchase.clothes">
-        {{ product.nameCl }} - {{ product.lenght }} - {{ product.price | currency }}
+  <div class="purchases-list">
+    <h2>Compras realizadas</h2>
+    <div *ngIf="filteredPurchases.length === 0">No se realizaron compras entre las fechas seleccionadas</div>
+    <div *ngFor="let purchase of filteredPurchases">
+      <div class="purchase-item">
+        <p>ID: {{ purchase.idPu }}</p>
+        <p>Fecha: {{ purchase.datePu | date }}</p>
+        <p>Usuario: {{purchase.user.nameUs}} - ID: {{ purchase.user.idUs }}</p>
+        <p>Total: {{ purchase.amount | currency }}</p>
+        <p>Número de Envío: {{purchase.shipment.idSh}}</p>
+        <p>Productos:</p>
+        <li *ngFor="let product of purchase.clothes">
+          ID: {{product.idCl}} - {{ product.nameCl }} - {{ product.price | currency }}
+      </div>
     </div>
   </div>
 </div>

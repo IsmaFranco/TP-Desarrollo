@@ -1,6 +1,6 @@
 import { Component, inject, Input, OnInit } from '@angular/core';
 import {CommonModule} from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ClothesService } from '../../services/clothes.service';
 import { Cloth } from '../../models/clothes.model';
 import { BagService } from '../../services/bag.service';
@@ -23,7 +23,6 @@ export class ProductDetailComponent implements OnInit {
   @Input() product: any;
 
   private _route = inject(ActivatedRoute);
-  private _router = inject(Router);
   private _clothesService = inject(ClothesService);
   private _bagService = inject(BagService);
 
@@ -42,7 +41,4 @@ export class ProductDetailComponent implements OnInit {
     this._bagService.addToBag(product);
   }
 
-  navegate(direc: string, id: number | undefined): void {
-    this._router.navigate([direc, id]);
-  }
 }

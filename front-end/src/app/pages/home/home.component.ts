@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Cloth } from '../../models/clothes.model';
 import { ClothesService } from '../../services/clothes.service';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -14,32 +15,35 @@ import { CommonModule } from '@angular/common';
 })
 export class HomeComponent implements OnInit {
 
-  products: Cloth[] = []; // Lista original de productos
+  products: Cloth[] = []; 
   filteredProducts: Cloth[] = [];
   selectedCategory: string = '';
+  userRole: string | null = null;
 
   private clothesService = inject(ClothesService);
   private router = inject(Router); 
+  private authService = inject(AuthService);
 
   ngOnInit(): void {
+    this.userRole = this.authService.getRoleFromToken();
     this.loadProducts();
   }
 
   loadProducts() {
     this.clothesService.getProducts().subscribe((data: any[]) => {
       this.products = data;
-      this.filteredProducts = data; // Inicialmente muestra todos los productos
+      this.filteredProducts = data; 
     });
   }
 
-  navegate(id: number): void {
-    this.router.navigate(['/products/', id]);
+  navegate(route: string, id: number): void {
+    this.router.navigate([route, id]);
   }
 
   filterByCategory(category: string){
     if (this.selectedCategory === category) {
       this.selectedCategory = '';
-      this.filteredProducts = this.products; // Muestra todos los productos
+      this.filteredProducts = this.products;
     } else {
       this.selectedCategory = category;
       this.filteredProducts = this.products.filter(product => product.typeCl=== category);

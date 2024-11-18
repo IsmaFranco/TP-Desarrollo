@@ -12,6 +12,6 @@ html, body {
 .main-container {
     display: flex;
     flex-direction: column;
-    min-height: 100vh; // Se asegura de que el contenedor ocupe la pantalla completa
+    min-height: calc(100vh - 56px); //el body ocupe la pantalla completa abajo del navbar
 }
 

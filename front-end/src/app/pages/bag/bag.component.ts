@@ -24,7 +24,7 @@ export class BagComponent implements OnInit {
     }
   
     calculateTotalPrice() {
-      return this.bagItems.reduce((total, item) => total + (item.price * item.quantity), 0);
+      return this.bagItems.reduce((total, item) => total + item.price , 0);
     }
 
     hasItemsInBag() {

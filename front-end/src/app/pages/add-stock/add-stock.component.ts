@@ -14,7 +14,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class AddStockComponent implements OnInit {
 
-  loading:boolean = true;
   @Input() cloth!: Cloth;
   editStockForm!: FormGroup;
 
@@ -25,11 +24,10 @@ export class AddStockComponent implements OnInit {
     this.clothesService.getProductById(params['id']).subscribe((data: Cloth) => {
       console.log(data);
       this.cloth = data;
-      this.loading = false;
     });
   });
   this.editStockForm = this.fb.group({
-    stock: ['', [Validators.required, Validators.min(0)]], // Agregar validaciones
+    stock: ['', [Validators.required, Validators.min(0)]], 
   });
 }
 

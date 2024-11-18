@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
-import { User } from '../models/clothes.model';
 
 @Injectable({
   providedIn: 'root'
@@ -20,8 +19,7 @@ export class AuthService {
     return this.http.post<{token: string}>(this.apiUrl1, { emailUs: email, passwordUs: password })
     .pipe(
       tap((response: { token: string }) => {
-        localStorage.setItem('token', response.token); // Guarda el token en el local storage
-        console.log('Token recibido:', response.token); // Verifica si se recibe el token
+        localStorage.setItem('token', response.token); 
       })
     );
   }
@@ -43,7 +41,7 @@ export class AuthService {
     if (!token) return null;
   
     const decodedToken: any = jwtDecode(token);
-    return decodedToken.rol; // Devuelve el rol del token
+    return decodedToken.rol; // devuelve el rol del token
   }
 
   getCurrentUser() {
@@ -54,8 +52,7 @@ export class AuthService {
     if (!token) return null;
   
     const decodedToken = jwtDecode<{ idUs: number }>(token);
-    console.log('ID del usuario:', decodedToken.idUs); // Verifica si se recibe el ID del usuario
-    return this.http.get(`http://localhost:3000/users/${decodedToken.idUs}`)  // Devuelve los datos del usuario
+    return this.http.get(`http://localhost:3000/users/${decodedToken.idUs}`)  // devuelve los datos del usuario
   }
 
   newItem(nameCl: string, description: string, size: string, typeCl: string, stock: number, price: number, image: string): Observable<any> {
@@ -70,12 +67,10 @@ export class AuthService {
     )
   }
 
-  // Crear Shipment
   createShipment(shipmentData: any): Observable<any> {
     return this.http.post<any>(this.apiUrl4, shipmentData);
   }
-  
-  // Crear Purchase
+
   createPurchase(purchaseData: any) {
     return this.http.post(this.apiUrl5, purchaseData);
   }

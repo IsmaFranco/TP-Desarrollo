@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import { User } from '../models/clothes.model';
-import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 export class BagService {
 private bagItems: any[] = [];
 
-constructor(private http: HttpClient) {
+constructor() {
   if (this.isLocalStorageAvailable()) {
     this.loadBagFromLocalStorage();
   }
@@ -33,24 +31,22 @@ private saveBagToLocalStorage() {
   }
 }
 
-// Añadir producto con control de stock
 addToBag(product: any) {
   const existingProduct = this.bagItems.find(clothes => clothes.idCl === product.idCl);
-  if (existingProduct) {
-    // Verificar stock antes de añadir
+  /*if (existingProduct) {
     if (existingProduct.quantity < product.stock) {
       existingProduct.quantity += 1;
     } else {
       alert(`Stock insuficiente para el producto ${product.nameCl}`);
-    }
+    }*/
+  if (existingProduct) {
+    alert(`El producto ${product.nameCl} ya está en la bolsa`);
   } else {
-    // Añadir producto nuevo con cantidad inicial de 1
-    this.bagItems.push({ ...product, quantity: 1 });
+    this.bagItems.push(product);
   }
   this.saveBagToLocalStorage(); 
 }
 
-// Eliminar una unidad del producto específico
 removeFromBag(productId: number) {
   const productIndex = this.bagItems.findIndex(clothes => clothes.idCl === productId);
   if (productIndex !== -1) {
@@ -58,19 +54,16 @@ removeFromBag(productId: number) {
     if (product.quantity > 1) {
       product.quantity -= 1;
     } else {
-      // Eliminar si la cantidad es 1
       this.bagItems.splice(productIndex, 1);
     }
     this.saveBagToLocalStorage(); 
   }
 }
 
-// Obtener todos los productos del carrito
 getBagItems(): any[] {
   return this.bagItems;
 }
 
-// Vaciar el carrito al cerrar sesión
 clearBag() {
   this.bagItems = [];
   if (this.isLocalStorageAvailable()) {

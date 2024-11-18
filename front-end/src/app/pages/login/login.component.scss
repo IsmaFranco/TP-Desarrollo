@@ -4,11 +4,6 @@
     box-sizing: border-box;
 }
 
-*::selection {
-    background: blue;
-    color: white;
-}
-
 h1{
     text-align: center;
 }
@@ -23,7 +18,7 @@ h1{
     color: rgb(25, 25, 25);
     max-width: 100%;
     width: 100%;
-    border: 1px solid var#F4F4F6;
+    border: 1px solid #F4F4F6;
     min-height: 3rem;
     letter-spacing: 0.3rem;
     outline: none;
@@ -34,7 +29,7 @@ h1{
 }
 
 .text-field label {
-    color: var(--text);
+    color: rgb(195, 195, 195);
 }
 
 .error-message {

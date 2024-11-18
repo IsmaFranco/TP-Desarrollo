@@ -17,10 +17,11 @@ export class NavComponent implements OnInit {
 
   private _localStorage = inject(LOCAL_STORAGE);
   private _bagService = inject(BagService);
-  constructor(private authService: AuthService, private router: Router,) {}
+  private _router = inject(Router);
+  private _authService = inject(AuthService);
 
   ngOnInit(): void {
-    this.userRole = this.authService.getRoleFromToken();
+    this.userRole = this._authService.getRoleFromToken();
   }
 
   menuOption: string = '';
@@ -41,7 +42,7 @@ export class NavComponent implements OnInit {
       this._localStorage.removeItem('token');} // Elimina el token del `localStorage
     // Redirige al usuario si es necesario
     this._bagService.clearBag();  // Vacía el carrito al cerrar sesión
-    this.router.navigate(['/login'], {replaceUrl: true});
+    this._router.navigate(['/login'], {replaceUrl: true});
     setTimeout(() => {
       window.location.reload();
     }, 10);

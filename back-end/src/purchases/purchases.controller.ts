@@ -49,6 +49,6 @@ export class PurchasesController {
 
   @Get(':idPu/clothes')
   findOneCloth(@Param('idPu') idPu: number): Promise<Purchase> {
-    return this.purchasesService.findOneCloth(+idPu);
+    return this.purchasesService.findOneCloth(idPu);
   }
 }

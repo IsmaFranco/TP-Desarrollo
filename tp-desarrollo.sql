@@ -43,16 +43,16 @@ CREATE TABLE `clothe` (
 --
 
 INSERT INTO `clothe` (`idCl`, `nameCl`, `description`, `size`, `typeCl`, `stock`, `image`, `price`) VALUES
-(1, 'Remera Basica', 'Remera de algodon color blanco', 'M', 'Remera', 50, 'remera-blanca.jpg', 2500),
-(2, 'Jean Slim', 'Jean azul ajustado', '42', 'Jean', 30, 'jean-azul.jpg', 5000),
-(3, 'Campera de Cuero', 'Campera de cuero negra', 'L', 'Campera', 20, 'campera-cuero.jpg', 12000),
-(4, 'Zapatillas Deportivas', 'Zapatillas Nike Running', '42', 'Calzado', 40, 'zapatillas-nike.jpg', 8000),
-(5, 'Camisa Formal', 'Camisa blanca de vestir', 'L', 'Camisa', 25, 'camisa-blanca.jpg', 4500),
-(6, 'Pantalon Chino', 'Pantalon casual color beige', '44', 'Pantalon', 35, 'pantalon-chino.jpg', 6000),
-(7, 'Buzo Deportivo', 'Buzo con capucha gris', 'M', 'Buzo', 45, 'buzo-gris.jpg', 7500),
-(8, 'Shorts Deportivos', 'Shorts negros para gimnasio', 'M', 'Shorts', 60, 'shorts-negros.jpg', 3000),
-(9, 'Campera Deportiva', 'Campera ligera para running', 'L', 'Campera', 30, 'campera-running.jpg', 9000),
-(10, 'Vestido Casual', 'Vestido estampado de verano', 'U', 'Vestido', 20, 'vestido-verano.jpg', 6500);
+(1, 'Remera Basica', 'Remera de algodon color blanco', 'M', 'T-shirt', 50, 'https://http2.mlstatic.com/D_NQ_NP_941334-MLA45331817955_032021-O.webp', 2500),
+(2, 'Jean Slim', 'Jean azul ajustado', 'L', 'Pants', 30, 'https://m.media-amazon.com/images/I/711uyEkzZUL.jpg', 5000),
+(3, 'Remera Devil Angel', 'Remera oversize gris', 'L', 'T-shirt', 20, 'https://acdn.mitiendanube.com/stores/985/934/products/main65401-fb91790ae4a5094cb516952172985974-640-0.jpg', 12000),
+(4, 'Zapatillas Deportivas', 'Zapatillas Nike Running', 'L', 'Shoes', 40, 'https://www.dexter.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dwd6cdfdfe/products/NIFJ7765-001/NIFJ7765-001-6.JPG', 8000),
+(5, 'Remera Zero', 'Remera Oversize azul', 'L', 'T-shirt', 25, 'https://con-actitud.com.ar/wp-content/uploads/2024/03/1-remera-negra-atras.jpg', 4500),
+(6, 'Pantalon Chino', 'Pantalon casual color beige', 'M', 'Pants', 35, 'https://acdn.mitiendanube.com/stores/004/034/002/products/16091-08-4-250e3d84c12ecb4ea617109435663253-1024-1024.jpg', 6000),
+(7, 'Vans Knu', 'Zapatillas Vans negras', 'M', 'Shoes', 45, 'https://acdn.mitiendanube.com/stores/001/987/365/products/whatsapp-image-2024-07-26-at-15-40-05-a58f63afc34b93902b17220192592055-1024-1024.jpeg', 7500),
+(8, 'Shorts Deportivos', 'Shorts negros para gimnasio', 'M', 'Pants', 60, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcK1vzTiv27vQOlGk03lrbmlj11pVRgaGWWw&s', 3000),
+(9, 'Adidas Campus 2000', 'Zapatillas Adidas beige', 'L', 'Shoes', 30, 'https://acdn.mitiendanube.com/stores/001/240/717/products/eph_3358-51296c3f09a04d2c9d17000533997853-1024-1024.jpg', 9000),
+(10, 'Jean Mom', 'Jean mom celeste hombre', 'XL', 'T-shirt', 20, 'https://vcp.com.ar/cdn/shop/files/SHELBYCELESTE1.jpg?v=1713470797', 6500);
 
 -- --------------------------------------------------------
 
@@ -155,14 +155,26 @@ CREATE TABLE `purchase_clothes` (
 
 INSERT INTO `purchase_clothes` (`purchase`, `clothe`) VALUES
 (1, 1),
+(1, 3),
+(1, 7),
 (2, 3),
+(2, 9),
 (3, 2),
 (4, 4),
+(4, 10),
+(4, 5),
 (5, 5),
+(5, 2),
 (6, 6),
+(6, 1),
+(6, 8),
 (7, 7),
+(7, 9),
 (8, 8),
 (9, 9),
+(9, 4),
+(9, 6),
+(9, 3),
 (10, 10);
 
 -- --------------------------------------------------------
@@ -218,7 +230,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`idUs`, `nameUs`, `lastNameUs`, `emailUs`, `phoneUs`, `addressUs`, `passwordUs`, `rol`, `postalCode`, `clothesIdCl`) VALUES
-(1, 'Admin', 'Admin', 'admin@admin.com', '000000000', 'el rio 203', '$2a$10$zOwxOaJ9jDogCIUDpESQOu2salkW0uE5ZY/gWlGWENZc6PWrgdELS', 'user', 2000, NULL),
+(1, 'Admin', 'Admin', 'admin@admin.com', '000000000', 'el rio 203', '$2a$10$zOwxOaJ9jDogCIUDpESQOu2salkW0uE5ZY/gWlGWENZc6PWrgdELS', 'admin', 2000, NULL),
 (2, 'Juan', 'Perez', 'juan.perez@example.com', '3414567890', 'San Martin 456', '$2a$10$zOwxOaJ9jDogCIUDpESQOu2salkW0uE5ZY/gWlGWENZc6PWrgdELS', 'user', 2000, NULL),
 (3, 'Maria', 'Gomez', 'maria.gomez@example.com', '3415678901', 'Cordoba 789', '$2a$10$zOwxOaJ9jDogCIUDpESQOu2salkW0uE5ZY/gWlGWENZc6PWrgdELS', 'user', 5000, NULL),
 (4, 'Carlos', 'Rodriguez', 'carlos.rodriguez@example.com', '3416789012', 'Entre Rios 234', '$2a$10$zOwxOaJ9jDogCIUDpESQOu2salkW0uE5ZY/gWlGWENZc6PWrgdELS', 'user', 3000, NULL),

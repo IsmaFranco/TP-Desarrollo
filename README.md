@@ -1,5 +1,8 @@
 # Propuesta TP Desarrollo de SoftWare
 
+## Link Pull Request
+https://github.com/IsmaFranco/TP-Desarrollo/pull/1
+
 ## Grupo
 
 ### Integrantes 

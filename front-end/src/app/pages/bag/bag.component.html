@@ -1,0 +1,25 @@
+<div class="bag-container">
+    <h2>Tu Carrito</h2>
+    
+    <div *ngIf="bagItems.length > 0; else emptyBag">
+        <div *ngFor="let product of bagItems" class="bag-item">
+            <img [src]="product.image" alt="{{ product.description }}" class="bag-item-image" />
+            <div class="bag-item-details">
+                <h3>{{ product.nameCl }}</h3>
+                <p>Precio: ${{ product.price }} ---- Talle: {{ product.size }}</p>
+            </div>
+            <button (click)="removeProduct(product.idCl)" class="remove-button">Eliminar</button>
+        </div>
+        <div class="total-pay-container">
+            <div class="total-price">
+                <p>Total: ${{ calculateTotalPrice() }}</p>
+            </div>
+            <div class="pay-container">
+                <button class="pay" *ngIf="hasItemsInBag()" (click)="navegate('/pay')">Pay</button>
+            </div>
+        </div>
+    </div>
+    <ng-template #emptyBag>
+        <p>El carrito está vacío.</p>
+    </ng-template>
+</div>

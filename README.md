@@ -1,5 +1,11 @@
 # Propuesta TP Desarrollo de SoftWare
 
+## Link video de presentación
+https://youtu.be/OaGAMsiD4-k?feature=shared
+
+## Link Pull Request
+https://github.com/IsmaFranco/TP-Desarrollo/pull/1
+
 ## Grupo
 
 ### Integrantes 

@@ -26,7 +26,6 @@ export class AuthService {
   }
 
   async register(registerDto: RegisterDto) {
-    console.log(registerDto);
     const user = await this.usersService.findOneByEmail(registerDto.emailUs);
 
     if (user) {

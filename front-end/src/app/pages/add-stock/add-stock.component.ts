@@ -22,7 +22,6 @@ export class AddStockComponent implements OnInit {
   ngOnInit(): void{
   this.route.params.subscribe(params => {
     this.clothesService.getProductById(params['id']).subscribe((data: Cloth) => {
-      console.log(data);
       this.cloth = data;
     });
   });
@@ -34,15 +33,13 @@ export class AddStockComponent implements OnInit {
 onSubmit() {
   if (this.editStockForm.valid) {
     const updatedStock = this.cloth.stock + this.editStockForm.value.stock;
-    console.log(updatedStock);
     this.clothesService.updateProductStock(this.cloth.idCl, updatedStock).subscribe(
-      () => alert('Stock actualizado exitosamente'),
+      () => console.log('Stock actualizado correctamente'),
       (error: any) => console.error('Error al actualizar el precio:', error)
     );
-    this.router.navigate(['/']);
-    setTimeout(() => {
-      window.location.reload();
-    }, 10);
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate(['/']);
+    });
   }
 }
 }

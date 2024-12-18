@@ -22,7 +22,6 @@ export class PayComponent implements OnInit {
 
   ngOnInit(): void {
     this.productsInBag = this.bagService.getBagItems();
-    console.log(this.productsInBag);
     this.calculateTotal();
 
     this.authService.getCurrentUser()?.subscribe(user => {
@@ -50,18 +49,17 @@ export class PayComponent implements OnInit {
         postalCode: this.user.postalCode
       };
 
-      this.authService.createPurchase(purchaseData).subscribe(purchase => {
-        alert('Compra realizada con éxito');
+      this.authService.createPurchase(purchaseData).subscribe(() => {
+        console.log('Compra realizada con éxito');
         this.bagService.clearBag();
         for (let i = 0; i < this.productsInBag.length; i++) {
           this.clothesService.updateProductStock(this.productsInBag[i].idCl, this.productsInBag[i].stock - 1).subscribe(() => {
             console.log('Stock actualizado');
           });
         }
-        this.router.navigate(['/']);
-        setTimeout(() => {
-          window.location.reload();
-      }, 10);
+        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+          this.router.navigate(['/']);
+        });
     });
   });
   }

@@ -23,7 +23,7 @@ export class Clothe {
   stock: number;
 
   @Column({ type: 'varchar', nullable: false, length: 500 })
-  image: string; //ver bien el tipo de string osea no se si estaria bien que sea tipo string
+  image: string; 
 
   @Column({ type: 'integer', nullable: false })
   price: number;

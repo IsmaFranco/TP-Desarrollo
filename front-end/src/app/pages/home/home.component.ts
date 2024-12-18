@@ -5,6 +5,7 @@ import { Cloth } from '../../models/clothes.model';
 import { ClothesService } from '../../services/clothes.service';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-home',
@@ -23,9 +24,11 @@ export class HomeComponent implements OnInit {
   private clothesService = inject(ClothesService);
   private router = inject(Router); 
   private authService = inject(AuthService);
+  private cdRef = inject(ChangeDetectorRef);
 
   ngOnInit(): void {
     this.userRole = this.authService.getRoleFromToken();
+    this.cdRef.detectChanges();
     this.loadProducts();
   }
 

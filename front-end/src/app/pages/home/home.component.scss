@@ -12,15 +12,14 @@
     flex-direction: column;
     width: 300px;  
     height: 550px;  
-    color:#131313;
-    border: 2px solid #000000;
+    color: var(--text-home-color);
     border-radius: 8px;
     padding: 16px;
     box-shadow: 5px 6px 8px rgba(168, 165, 165, 0.275);
     text-align: center;
     transition: transform 0.3s;
     overflow: hidden; 
-    background: rgb(196, 196, 196);
+    background: var(--back-home-color);
   }
   
   .product-card:hover {
@@ -36,7 +35,7 @@
   
   .product-price {
     font-size: 1.3em;
-    color: #131313;
+    color: var(--text-home-color);
     margin: 10px 0;
     font-weight: bold;
   }
@@ -51,8 +50,8 @@
 }
 
 .category-button {
-  background-color: #0a6fda; 
-  color: rgb(221, 221, 221); 
+  background-color: var(--pay-color); 
+  color: var(--back-home-color); 
   border: none; 
   border-radius: 5px; 
   padding: 10px 20px; 
@@ -63,14 +62,10 @@
 }
 
 .category-button:hover {
-  background-color: #0056b3; 
+  background-color: var(--pay-color-selected); 
   transform: translateY(-2px); 
 }
 
-.category-button:active {
-  background-color: #004494; 
-  transform: translateY(0); 
-}
 
 .category-button.selected {
   background-color: #28a745; 
@@ -78,8 +73,8 @@
   font-weight: bold;
 }
 
-button{
-  background-color: #0a6fda; 
+.button{
+  background-color: var(--pay-color); 
   color: rgb(221, 221, 221); 
   border: none; 
   border-radius: 5px; 

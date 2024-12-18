@@ -11,7 +11,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.scss'
 })
-export class SignUpComponent implements OnInit {
+export class SignUpComponent {
   loginForm!: FormGroup;
   menuOption: string = '';
 
@@ -28,9 +28,6 @@ export class SignUpComponent implements OnInit {
     });
   }
   
-  ngOnInit(): void {
-  }
-
   onSubmit() {
     const { nameUs, lastNameUs, emailUs, passwordUs, dni, phoneUs, addressUs, postalCode } = this.loginForm.value;
     if (this.loginForm.invalid) {

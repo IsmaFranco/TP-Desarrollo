@@ -11,7 +11,7 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './new-item.component.html',
   styleUrl: './new-item.component.scss'
 })
-export class NewItemComponent implements OnInit {
+export class NewItemComponent {
 
   loginForm!: FormGroup;
   menuOption: string = '';
@@ -39,9 +39,6 @@ export class NewItemComponent implements OnInit {
         console.log('Error al crear el item:', error);
       }
     );
-  }
-  
-  ngOnInit(): void {
   }
 
   hasError(field: string, typeError: string){

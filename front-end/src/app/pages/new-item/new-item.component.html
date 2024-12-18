@@ -1,6 +1,6 @@
 <div class="my-form">
     <form [formGroup]="loginForm" novalidate (ngSubmit)="onSubmit()" >
-        <h1>Add new clothe</h1>
+        <h1 class="title">Add new clothe</h1>
         <div class="text-field">
             <label for="nameCl">Name</label>
             <input type="text" id="nameCl" name="nameCl" placeholder="Vans Knu" autocomplete="off" formControlName="nameCl" ngClass="{is-invalid: hasError('nameCl', 'required')}">

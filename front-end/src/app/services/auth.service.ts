@@ -45,7 +45,7 @@ export class AuthService {
   }
 
   getCurrentUser() {
-    if (typeof window === 'undefined' || !localStorage.getItem('token')) {
+    if (!localStorage.getItem('token')) {
       return null;
     }
     const token = localStorage.getItem('token');

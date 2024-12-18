@@ -16,14 +16,15 @@ export class EditPriceComponent implements OnInit {
 
   @Input() cloth!: Cloth;
   editPriceForm!: FormGroup;
+  loading = true;
 
   constructor(private fb: FormBuilder ,private clothesService: ClothesService, private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void{
   this.route.params.subscribe(params => {
     this.clothesService.getProductById(params['id']).subscribe((data: Cloth) => {
-      console.log(data);
       this.cloth = data;
+      this.loading = false;
     });
   });
   this.editPriceForm = this.fb.group({
@@ -35,13 +36,12 @@ onSubmit() {
   if (this.editPriceForm.valid) {
     const updatedPrice = this.editPriceForm.value.price;
     this.clothesService.updateProductPrice(this.cloth.idCl, updatedPrice).subscribe(
-      () => alert('Precio actualizado exitosamente'),
+      () => console.log('Precio actualizado exitosamente'),
       (error: any) => console.error('Error al actualizar el precio:', error)
     );
-    this.router.navigate(['/']);
-    setTimeout(() => {
-      window.location.reload();
-    }, 10);
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate(['/']);
+    });
   }
 }
 }

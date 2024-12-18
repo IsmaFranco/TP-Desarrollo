@@ -4,7 +4,7 @@
     box-sizing: border-box;
 }
 
-h1{
+.title{
     text-align: center;
 }
 
@@ -15,32 +15,30 @@ h1{
 }
 
 .text-field input {
-    color: rgb(25, 25, 25);
     max-width: 100%;
     width: 100%;
-    border: 1px solid #F4F4F6;
+    border: 1px solid var(--border-color);
     min-height: 3rem;
     letter-spacing: 0.3rem;
     outline: none;
-    background: rgb(193, 193, 193);
+    background: var(--back-home-color);
     transition: .25s;
     border-radius: 0.5rem;
     text-indent: 1.25rem;
 }
 
 .text-field label {
-    color: var(--text);
+    color: var(--text-color);
 }
 
 .error-message {
     display: block;
     margin-top: 0.25rem;
     font-size: 13px;
-    color: red;
+    color: var(--delete-color);
 }
 
 .text-field input:focus {
-    border: 1px solid rgb(230, 230, 230);
     box-shadow: 4px 4px 4px rgba(219, 219, 219, 0.2);
 }
 
@@ -52,7 +50,9 @@ h1{
     justify-content: start;
     position: relative;
     gap: 1rem;
-    background: rgb(23, 23, 23);
+    background: var(--back-color);
+    border: var(--border-color) 1px solid;
+    margin-bottom: 30px;
     width: 100%;
     max-width: 32rem;
     padding: 3rem 2rem;
@@ -62,8 +62,7 @@ h1{
 }
 
 .my-form__button {
-    color: rgb(47, 47, 47);
-    white-space: nowrap;
+    color: var(--background-color);
     border: none;
     display: flex;
     justify-content: center;
@@ -84,18 +83,17 @@ h1{
 }
 
 .my-form__button:hover {
-    background: #484848;
-    color: rgb(219, 219, 219);
+    background: var(--background-color);
+    color: var(--text-color);
 }
 
-/* my form actions */
 .my-form__actions {
     display: flex;
     flex-direction: column;
     align-self: center;
     width: 100%;
     justify-content: space-between;
-    color: #d0d0d0;
+    color: var(--text-color);
     gap: 1rem;
     margin-top: 0.5rem;
 }

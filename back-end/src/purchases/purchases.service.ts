@@ -6,7 +6,7 @@ import { UpdatePurchaseDto } from './dto/update-purchase.dto';
 import { Purchase } from './entities/purchase.entity';
 import { User } from '../users/entities/user.entity';
 import { UserActiveInterface } from 'src/common/interfaces/user-active.interface';
-import { Rol } from 'src/common/enums/rol.enum'; // Adjust the import path as necessary
+import { Rol } from 'src/common/enums/rol.enum'; 
 
 
 
@@ -47,7 +47,7 @@ export class PurchasesService {
 
     await this.purchaseRepository.update(idPu, {...updatePurchaseDto});
     return this.findOne(idPu, user); // Devuelve la compra actualizada
-  }// Este método actualiza la compra y devuelve la compra actualizada
+  }
 
   async remove(idPu: number, user: UserActiveInterface): Promise<void> {
     await this.findOne(idPu, user);
@@ -56,10 +56,9 @@ export class PurchasesService {
   }
 
   async findOneCloth(idPu: number) {
-    // Esta consulta recupera la compra con todas las "clothes" asociadas
     return this.purchaseRepository.findOne({
       where: { idPu: idPu },
-      relations: ['clothes'], // Esta opción carga la relación desde la tabla de unión
+      relations: ['clothes'], 
     });
   }
 
@@ -67,5 +66,5 @@ export class PurchasesService {
     if (!user.rol.includes(Rol.ADMIN) && purchase.user.idUs !== user.idUs) {
       throw new UnauthorizedException('No tienes permisos para ver esta compra');
     }
-  } // Este método valida si el usuario tiene permisos para ver la compra
+  } // valida si el usuario tiene permisos para ver la compra
 }

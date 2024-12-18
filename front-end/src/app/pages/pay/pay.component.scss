@@ -4,7 +4,7 @@
     box-sizing: border-box;
 }
 
-h1{
+.title{
     text-align: center;
 }
 
@@ -16,7 +16,8 @@ h1{
     justify-content: start;
     position: relative;
     gap: 1rem;
-    background: rgb(23, 23, 23);
+    background: var(--back-color);
+    border: var(--border-color) 1px solid;
     width: 100%;
     max-width: 32rem;
     padding: 2rem 2rem;
@@ -38,8 +39,8 @@ h1{
     gap: 0.5rem;
 }
 
-button {
-    color: rgb(47, 47, 47);
+.button {
+    color: var(--background-color);
     margin-top: 10px;
     white-space: nowrap;
     border: none;

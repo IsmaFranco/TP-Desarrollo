@@ -4,6 +4,7 @@ import { RouterLink, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { LOCAL_STORAGE } from '../../services/local-storage.provider.service';
 import { BagService } from '../../services/bag.service';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-nav',
@@ -12,16 +13,19 @@ import { BagService } from '../../services/bag.service';
   templateUrl: './nav.component.html',
   styleUrl: './nav.component.scss'
 })
-export class NavComponent implements OnInit {
+export class NavComponent {
   userRole: string | null = null;
 
   private _localStorage = inject(LOCAL_STORAGE);
   private _bagService = inject(BagService);
   private _router = inject(Router);
   private _authService = inject(AuthService);
+  private _cdRef = inject(ChangeDetectorRef);
 
-  ngOnInit(): void {
+
+  ngDoCheck(): void {
     this.userRole = this._authService.getRoleFromToken();
+    this._cdRef.detectChanges();
   }
 
   menuOption: string = '';

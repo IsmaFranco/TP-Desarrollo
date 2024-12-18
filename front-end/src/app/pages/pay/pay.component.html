@@ -1,6 +1,6 @@
 <div class="my-form">
     <div class="text-field">
-        <h1>Resumen de tu compra</h1>
+        <h1 class="title">Resumen de tu compra</h1>
         <div class="texto">
             <div *ngFor="let product of productsInBag">
                 <p>{{ product.nameCl }} - Precio: ${{ product.price }}</p>
@@ -8,6 +8,6 @@
 
             <p>Total a pagar: ${{ totalAmount }}</p>
         </div>
-        <button (click)="aceptarCompra()">Confirmar pago</button>
+        <button class="button" (click)="aceptarCompra()">Confirmar pago</button>
     </div>
 </div>

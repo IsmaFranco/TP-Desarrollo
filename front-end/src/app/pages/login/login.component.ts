@@ -12,7 +12,7 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
 
   loginForm!: FormGroup;
   menuOption: string = '';
@@ -31,16 +31,13 @@ export class LoginComponent implements OnInit {
     this.authService.login(email, password).subscribe(
       response => {
         console.log('Login exitoso:', response);
-        this.router.navigate(['/'], {replaceUrl: true});
-        setTimeout(() => {
-          window.location.reload();
-        }, 10);
+        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+          this.router.navigate(['/']);
+        });
       }
     );
   }
   
-  ngOnInit(): void {
-  }
 
   onOption(menuOption: string){
     this.menuOption = menuOption;

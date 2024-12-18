@@ -1,5 +1,12 @@
 <div class="edit-price-container">
-    <h2>Actualizar Precio del Producto</h2>
+    @if (loading) {
+            <div class="spinner-border text-primary" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+    }
+
+    @if (!loading){
+    <h2 class="subtitle">Actualizar Precio del Producto</h2>
     <form [formGroup]="editPriceForm" (ngSubmit)="onSubmit()" >
         <div class="form-group">
             <label for="productName">Nombre del producto: {{cloth.nameCl}}</label>
@@ -10,4 +17,5 @@
         </div>
         <button type="submit" class="btn btn-primary" [disabled]="!editPriceForm.valid"> Actualizar Precio </button>
     </form>
+}
 </div>

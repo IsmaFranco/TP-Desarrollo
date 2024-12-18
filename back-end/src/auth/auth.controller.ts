@@ -37,7 +37,6 @@ export class AuthController {
     @Body()
     registerDto: RegisterDto,
   ) {
-    console.log(registerDto); //lo dejo para verlo dsp ya que no esta validando los datos (creo)
     return this.authService.register(registerDto);
   }
 

@@ -30,7 +30,6 @@ export class ProductDetailComponent implements OnInit {
     this.userRole = this.authService.getRoleFromToken();
     this._route.params.subscribe(params => {
       this._clothesService.getProductById(params['id']).subscribe((data: Cloth) => {
-        console.log(data);
         this.cloth = data;
         this.loading = false;
       });

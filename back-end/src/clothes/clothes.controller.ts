@@ -35,6 +35,11 @@ export class ClothesController {
     return this.clothesService.findOne(idCl);
   }
 
+  @Get('type/:typeCl')
+  findByCategory(@Param('typeCl') category: string): Promise<Clothe[]> {
+    return this.clothesService.findByCategory(category);
+  }
+
   @Auth(Rol.ADMIN)
   @Patch(':idCl')
   update(
@@ -44,7 +49,6 @@ export class ClothesController {
     return this.clothesService.update(+idCl, updateClotheDto);
   }
 
-  @Auth(Rol.ADMIN)
   @Delete(':idCl')
   remove(@Param('idCl') idCl: number): Promise<void> {
     return this.clothesService.remove(idCl);

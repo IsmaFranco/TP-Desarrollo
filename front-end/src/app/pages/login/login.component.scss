@@ -4,40 +4,6 @@
     box-sizing: border-box;
 }
 
-h1{
-    text-align: center;
-}
-
-.text-field {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-.text-field input {
-    max-width: 100%;
-    width: 100%;
-    border: 1px solid var(--border-color);
-    min-height: 3rem;
-    letter-spacing: 0.3rem;
-    outline: none;
-    background: var(--back-home-color);
-    transition: .25s;
-    border-radius: 0.5rem;
-    text-indent: 1.25rem;
-}
-
-.text-field label {
-    color: var(--text-color);
-}
-
-.error-message {
-    display: block;
-    margin-top: 0.25rem;
-    font-size: 13px;
-    color: var(--delete-color);
-}
-
 .my-form {
     display: flex;
     margin: auto;
@@ -57,8 +23,6 @@ h1{
 }
 
 .my-form__button {
-    color: var(--back-color);
-    white-space: nowrap;
     border: none;
     display: flex;
     justify-content: center;
@@ -76,36 +40,4 @@ h1{
     border-radius: 0.5rem;
     transition: all .3s ease;
     -webkit-transition: all .3s ease;
-}
-
-.my-form__button:hover {
-    background: var(--background-color);
-    color: var(--text-color);
-}
-
-.my-form__actions {
-    display: flex;
-    flex-direction: column;
-    align-self: center;
-    width: 100%;
-    justify-content: space-between;
-    color: var(--text-color);
-    gap: 1rem;
-    margin-top: 0.5rem;
-}
-
-.my-form__actions a {
-    font-weight: 600;
-    text-decoration: none;
-}
-
-.my-form__actions a:hover {
-    text-decoration: underline;
-    cursor: pointer;
-}
-
-.my-form__row {
-    display: flex;
-    gap: 0.5rem;
-    justify-content: space-between;
 }

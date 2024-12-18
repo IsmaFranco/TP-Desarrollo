@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ClothesService } from '../../services/clothes.service';
 import { Cloth } from '../../models/clothes.model';
 import { BagService } from '../../services/bag.service';
-import { AuthService } from '../../services/auth.service';
+import { TokenService } from '../../services/token.service';
 
 
 @Component({
@@ -16,7 +16,7 @@ import { AuthService } from '../../services/auth.service';
 })
 export class ProductDetailComponent implements OnInit {
   userRole: string | null = null;
-  private authService = inject(AuthService);
+  private tokenService = inject(TokenService);
 
   loading:boolean = true;
   public cloth?: Cloth;
@@ -27,7 +27,7 @@ export class ProductDetailComponent implements OnInit {
   private _bagService = inject(BagService);
 
   ngOnInit(): void {
-    this.userRole = this.authService.getRoleFromToken();
+    this.userRole = this.tokenService.getRoleFromToken();
     this._route.params.subscribe(params => {
       this._clothesService.getProductById(params['id']).subscribe((data: Cloth) => {
         this.cloth = data;

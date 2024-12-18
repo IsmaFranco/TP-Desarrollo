@@ -34,28 +34,6 @@ export class AuthService {
     );
   }
 
-  getRoleFromToken(): string | null {
-    if (typeof window === 'undefined' || !localStorage.getItem('token')) {
-      return null;
-    }
-    const token = localStorage.getItem('token');
-    if (!token) return null;
-  
-    const decodedToken: any = jwtDecode(token);
-    return decodedToken.rol; // devuelve el rol del token
-  }
-
-  getCurrentUser() {
-    if (!localStorage.getItem('token')) {
-      return null;
-    }
-    const token = localStorage.getItem('token');
-    if (!token) return null;
-  
-    const decodedToken = jwtDecode<{ idUs: number }>(token);
-    return this.http.get(`http://localhost:3000/users/${decodedToken.idUs}`)  // devuelve los datos del usuario
-  }
-
   newItem(nameCl: string, description: string, size: string, typeCl: string, stock: number, price: number, image: string): Observable<any> {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({
@@ -78,6 +56,10 @@ export class AuthService {
 
   getPurchases(): Observable<any> {
     return this.http.get(this.urlPurchases);
+  }
+
+  getPurchasesByDate(startDate: string, endDate: string): Observable<any> {
+    return this.http.get(`${this.urlPurchases}/dates/${startDate}/${endDate}`);
   }
 
 }

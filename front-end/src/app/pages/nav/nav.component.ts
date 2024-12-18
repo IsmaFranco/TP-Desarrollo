@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterLink, Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
-import { LOCAL_STORAGE } from '../../services/local-storage.provider.service';
 import { BagService } from '../../services/bag.service';
 import { ChangeDetectorRef } from '@angular/core';
+import Swal from 'sweetalert2';
+import { TokenService } from '../../services/token.service';
 
 @Component({
   selector: 'app-nav',
@@ -16,15 +16,14 @@ import { ChangeDetectorRef } from '@angular/core';
 export class NavComponent {
   userRole: string | null = null;
 
-  private _localStorage = inject(LOCAL_STORAGE);
   private _bagService = inject(BagService);
   private _router = inject(Router);
-  private _authService = inject(AuthService);
+  private _tokenService = inject(TokenService);
   private _cdRef = inject(ChangeDetectorRef);
 
 
   ngDoCheck(): void {
-    this.userRole = this._authService.getRoleFromToken();
+    this.userRole = this._tokenService.getRoleFromToken();
     this._cdRef.detectChanges();
   }
 
@@ -34,22 +33,22 @@ export class NavComponent {
   }
 
   isAuthenticated(): boolean {
-    if (this._localStorage) { // Verifica si `localStorage` está disponible
-      const token = this._localStorage.getItem('token');
-      return token !== null;
-    }
-    return false; // Si `localStorage` es `null`, retorna `false`
+    return this._tokenService.isAutenticated();
   }
 
   logout() {
-    if (this._localStorage) { // Verifica si `localStorage` está disponible
-      this._localStorage.removeItem('token');} // Elimina el token del `localStorage
-    // Redirige al usuario si es necesario
-    this._bagService.clearBag();  // Vacía el carrito al cerrar sesión
-    this._router.navigate(['/login'], {replaceUrl: true});
-    setTimeout(() => {
-      window.location.reload();
-    }, 10);
+    if (localStorage) { 
+      localStorage.removeItem('token');} 
+    this._bagService.clearBag();  
+    Swal.fire({
+      icon: 'success',
+      title: 'Sesión cerrada',
+      timer: 1000,
+      showConfirmButton: false,
+    });
+    this._router.navigateByUrl('/login', { skipLocationChange: true }).then(() => {
+      this._router.navigate(['/login']);
+    });
   }
 
 }

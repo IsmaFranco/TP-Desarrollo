@@ -2,6 +2,7 @@
     display: flex;
     justify-content: center;
     margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .card-title {
@@ -18,4 +19,8 @@
 .price {
   display: flex;
   justify-content: flex-end;
+}
+
+.button {
+  margin-bottom: 3px;
 }

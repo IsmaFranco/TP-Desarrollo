@@ -42,4 +42,8 @@ export class ClothesService {
     await this.clotheRepository.update(id, { stock: newStock });
   }
 
+  async findByCategory(category: string): Promise<Clothe[]> {
+    return this.clotheRepository.find({ where: { typeCl: category } });
+  }
+
 }

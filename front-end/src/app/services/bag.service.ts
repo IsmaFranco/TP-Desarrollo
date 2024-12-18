@@ -18,11 +18,9 @@ private isLocalStorageAvailable(): boolean {
 }
 
 private loadBagFromLocalStorage() {
-  if (this.isLocalStorageAvailable()) {
-    const storedBag = localStorage.getItem('bagItems');
-    if (storedBag) {
-      this.bagItems = JSON.parse(storedBag);
-    }
+  const storedBag = localStorage.getItem('bagItems');
+  if (storedBag) {
+    this.bagItems = JSON.parse(storedBag);
   }
 }
 

@@ -6,14 +6,13 @@
                 <p class="card-text">{{cloth?.description}}</p>
                 <div class="total-container">
                     <div class="size">
-                        <p>Size:  {{cloth?.size}}</p>
+                        Size:  {{cloth?.size}}
                     </div>
-                    <p></p>
                     <div class="price">
-                        <p>${{cloth?.price}}</p> 
+                        ${{cloth?.price}}
                     </div>
                 </div>
             </div>
-            <button type="button" *ngIf="userRole==='user'" class="btn btn-primary" (click)="addToBag(cloth)">Add to bag</button>
+            <button type="button" *ngIf="userRole==='user'" class="button btn btn-primary" (click)="addToBag(cloth)">Add to bag</button>
         </div>
 </div>

@@ -4,31 +4,6 @@
     box-sizing: border-box;
 }
 
-
-.title{
-    text-align: center;
-}
-
-.text-field {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-.text-field input {
-    color: rgb(25, 25, 25);
-    max-width: 100%;
-    width: 100%;
-    border: 1px solid var(--border-color);
-    min-height: 3rem;
-    letter-spacing: 0.3rem;
-    outline: none;
-    background: var(--back-home-color);
-    transition: .25s;
-    border-radius: 0.5rem;
-    text-indent: 1.25rem;
-}
-
 .text-field select {
     color: rgb(25, 25, 25);
     max-width: 100%;
@@ -43,24 +18,11 @@
     text-indent: 1.25rem;
 }
 
-.text-field label {
-    color: var(--text-color);
-}
-
-.error-message {
-    display: block;
-    margin-top: 0.25rem;
-    font-size: 13px;
-    color: var(--delete-color);
-}
-
-
 input[type=number]::-webkit-inner-spin-button, 
 input[type=number]::-webkit-outer-spin-button { 
     -webkit-appearance: none; 
     margin: 0; 
 }
-
 
 .my-form {
     display: flex;
@@ -101,36 +63,4 @@ input[type=number]::-webkit-outer-spin-button {
     border-radius: 0.5rem;
     transition: all .3s ease;
     -webkit-transition: all .3s ease;
-}
-
-.my-form__button:hover {
-    background-color: var(--background-color);
-    color: var(--text-color);
-}
-
-.my-form__actions {
-    display: flex;
-    flex-direction: column;
-    align-self: center;
-    width: 100%;
-    justify-content: space-between;
-    color: var(--text-color);
-    gap: 1rem;
-    margin-top: 0.5rem;
-}
-
-.my-form__actions a {
-    font-weight: 600;
-    text-decoration: none;
-}
-
-.my-form__actions a:hover {
-    text-decoration: underline;
-    cursor: pointer;
-}
-
-.my-form__row {
-    display: flex;
-    gap: 0.5rem;
-    justify-content: space-between;
 }

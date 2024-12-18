@@ -7,8 +7,7 @@
     <div class="product-card" *ngFor="let product of filteredProducts">
         <img [src]="product.image" alt="{{ product.description }}" class="product-image" />
         <h2>{{ product.nameCl }}</h2>
-        <p>{{ product.description }}</p>
-        <p class="product-price">${{ product.price }}</p>
+        <div class="product-price">${{ product.price }}</div>
         @if (product.stock == 0){
             <p class="product-stock">Size:  {{ product.size }} --- Out of stock</p>}
         @else {
@@ -18,5 +17,7 @@
         <button type="button" *ngIf="userRole==='admin'" class="button btn btn-primary" (click)="navegate('/edit-price/', product.idCl)">Edit Price</button>
         <p></p>
         <button type="button" *ngIf="userRole==='admin'" class="button btn btn-primary" (click)="navegate('/add-stock/', product.idCl)">Add Stock</button>
+        <p></p>
+        <button type="button" *ngIf="userRole==='admin'" class="button btn btn-primary" (click)="confirmAction(product.idCl)">Delete Product</button>
     </div>
 </div>

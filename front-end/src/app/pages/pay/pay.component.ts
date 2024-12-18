@@ -6,6 +6,7 @@ import { User } from '../../models/clothes.model';
 import { Router } from '@angular/router';
 import { ClothesService } from '../../services/clothes.service';
 import Swal from 'sweetalert2';
+import { TokenService } from '../../services/token.service';
 
 @Component({
   selector: 'app-pay',
@@ -19,13 +20,13 @@ export class PayComponent implements OnInit {
   totalAmount: number = 0; 
   user!: User;
 
-  constructor(private bagService: BagService, private authService: AuthService, private router: Router, private clothesService: ClothesService) {}
+  constructor(private bagService: BagService, private authService: AuthService, private router: Router, private clothesService: ClothesService, private tokenService: TokenService) {}
 
   ngOnInit(): void {
     this.productsInBag = this.bagService.getBagItems();
     this.calculateTotal();
 
-    this.authService.getCurrentUser()?.subscribe(user => {
+    this.tokenService.getCurrentUser()?.subscribe(user => {
       this.user = user as User});
   }
 
@@ -60,7 +61,6 @@ export class PayComponent implements OnInit {
         this.bagService.clearBag();
         for (let i = 0; i < this.productsInBag.length; i++) {
           this.clothesService.updateProductStock(this.productsInBag[i].idCl, this.productsInBag[i].stock - 1).subscribe(() => {
-            console.log('Stock actualizado');
           });
         }
         this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {

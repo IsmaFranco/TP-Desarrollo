@@ -4,9 +4,6 @@
     box-sizing: border-box;
 }
 
-.title{
-    text-align: center;
-}
 
 .my-form {
     display: flex;
@@ -26,11 +23,6 @@
     height: fit-content;
 }
 
-.text.field {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
 
 .texto {
     display: flex;
@@ -60,4 +52,9 @@
     border-radius: 0.5rem;
     transition: all .3s ease;
     -webkit-transition: all .3s ease;
+}
+
+.button:hover {
+    background-color: var(--background-color);
+    color: var(--text-color);
 }

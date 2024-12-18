@@ -1,11 +1,10 @@
 import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Between, Repository } from 'typeorm';
 import { CreatePurchaseDto } from './dto/create-purchase.dto';
 import { UpdatePurchaseDto } from './dto/update-purchase.dto';
 import { Purchase } from './entities/purchase.entity';
 import { User } from '../users/entities/user.entity';
-import { UserActiveInterface } from 'src/common/interfaces/user-active.interface';
 import { Rol } from 'src/common/enums/rol.enum'; 
 
 
@@ -15,8 +14,6 @@ export class PurchasesService {
   constructor(
     @InjectRepository(Purchase)
     private purchaseRepository: Repository<Purchase>,
-    @InjectRepository(User)
-    private userRepository: Repository<User>,
   ) {}
 
   async create (createPurchaseDto: CreatePurchaseDto): Promise<Purchase> {
@@ -30,27 +27,25 @@ export class PurchasesService {
       });
   }
 
-  async findOne(idPu: number, user: UserActiveInterface): Promise<Purchase> {
+  async findOne(idPu: number): Promise<Purchase> {
     const purchase = await this.purchaseRepository.findOneBy({ idPu });
 
     if (!purchase) {
       throw new BadRequestException('La compra no existe');
     }
 
-    this.validateOwnership(purchase, user);
-
     return purchase;
   }
 
-  async update(idPu: number,updatePurchaseDto: UpdatePurchaseDto, user: UserActiveInterface): Promise<Purchase> {
-    await this.findOne(idPu, user);
+  async update(idPu: number,updatePurchaseDto: UpdatePurchaseDto): Promise<Purchase> {
+    await this.findOne(idPu);
 
     await this.purchaseRepository.update(idPu, {...updatePurchaseDto});
-    return this.findOne(idPu, user); // Devuelve la compra actualizada
+    return this.findOne(idPu); // Devuelve la compra actualizada
   }
 
-  async remove(idPu: number, user: UserActiveInterface): Promise<void> {
-    await this.findOne(idPu, user);
+  async remove(idPu: number): Promise<void> {
+    await this.findOne(idPu);
     await this.purchaseRepository.delete({ idPu });
     return;
   }
@@ -62,9 +57,12 @@ export class PurchasesService {
     });
   }
 
-  private validateOwnership(purchase: Purchase, user: UserActiveInterface) {
-    if (!user.rol.includes(Rol.ADMIN) && purchase.user.idUs !== user.idUs) {
-      throw new UnauthorizedException('No tienes permisos para ver esta compra');
-    }
-  } // valida si el usuario tiene permisos para ver la compra
+  async findAllByDate(date1: string, date2: string): Promise<Purchase[]> {
+    return this.purchaseRepository.find({
+      where: {
+        datePu: Between(new Date(date1), new Date(date2)),
+      },
+    });
+  }
+
 }

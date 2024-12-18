@@ -2,21 +2,22 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
+import { API_CONFIG } from '../../environments';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl1 = 'http://localhost:3000/auth/login';
-  private apiUrl2 = 'http://localhost:3000/auth/register';
-  private apiUrl3 = 'http://localhost:3000/clothes';
-  private apiUrl4 = 'http://localhost:3000/shipments';
-  private apiUrl5 = 'http://localhost:3000/purchases';
+  private urlLogin = API_CONFIG.URL_LOGIN;
+  private urlRegister = API_CONFIG.URL_REGISTER;
+  private urlClothes = API_CONFIG.URL_CLOTHES;
+  private urlShipments = API_CONFIG.URL_SHIPMENTS;
+  private urlPurchases = API_CONFIG.URL_PURCHASES;
 
   constructor(private http: HttpClient) {}
 
   login(email: string, password: string): Observable<any> {
-    return this.http.post<{token: string}>(this.apiUrl1, { emailUs: email, passwordUs: password })
+    return this.http.post<{token: string}>(this.urlLogin, { emailUs: email, passwordUs: password })
     .pipe(
       tap((response: { token: string }) => {
         localStorage.setItem('token', response.token); 
@@ -25,7 +26,7 @@ export class AuthService {
   }
 
   register(nameUs: string, lastNameUs: string, emailUs: string, passwordUs: string, dni: string, phoneUs: string, addressUs: string, postalCode: string): Observable<any> {
-    return this.http.post(this.apiUrl2, { nameUs, lastNameUs, emailUs, passwordUs, dni: Number(dni), phoneUs, addressUs, postalCode: Number(postalCode) })
+    return this.http.post(this.urlRegister, { nameUs, lastNameUs, emailUs, passwordUs, dni: Number(dni), phoneUs, addressUs, postalCode: Number(postalCode) })
     .pipe(
       tap((response: any) => {
         console.log('Registro exitoso:', response);
@@ -61,22 +62,22 @@ export class AuthService {
         'Authorization': `Bearer ${token}`
     });
     
-    return this.http.post(this.apiUrl3, 
+    return this.http.post(this.urlClothes, 
         { nameCl, description, size, typeCl, stock, price, image },
         { headers }
     )
   }
 
   createShipment(shipmentData: any): Observable<any> {
-    return this.http.post<any>(this.apiUrl4, shipmentData);
+    return this.http.post<any>(this.urlShipments, shipmentData);
   }
 
   createPurchase(purchaseData: any) {
-    return this.http.post(this.apiUrl5, purchaseData);
+    return this.http.post(this.urlPurchases, purchaseData);
   }
 
   getPurchases(): Observable<any> {
-    return this.http.get(this.apiUrl5);
+    return this.http.get(this.urlPurchases);
   }
 
 }

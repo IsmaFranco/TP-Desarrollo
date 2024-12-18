@@ -3,6 +3,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { RouterLink, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-sign-up',
@@ -35,7 +36,12 @@ export class SignUpComponent {
     }
     this.authService.register(nameUs, lastNameUs, emailUs, passwordUs, dni, phoneUs, addressUs, postalCode).subscribe(
       (response: any) => {
-        console.log('Registro exitoso:', response);
+        Swal.fire({
+          icon: 'success',
+          title: 'Registro exitoso',
+          timer: 2000,
+          showConfirmButton: false,
+        });
         this.router.navigate(['/login']);
       }
     );

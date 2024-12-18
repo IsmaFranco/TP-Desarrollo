@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
@@ -33,16 +34,21 @@ private saveBagToLocalStorage() {
 
 addToBag(product: any) {
   const existingProduct = this.bagItems.find(clothes => clothes.idCl === product.idCl);
-  /*if (existingProduct) {
-    if (existingProduct.quantity < product.stock) {
-      existingProduct.quantity += 1;
-    } else {
-      alert(`Stock insuficiente para el producto ${product.nameCl}`);
-    }*/
   if (existingProduct) {
-    alert(`El producto ${product.nameCl} ya está en la bolsa`);
+    Swal.fire({
+      icon: 'error',
+      title: 'Producto ya añadido',
+      timer: 1000,
+      showConfirmButton: false,
+    });
   } else {
     this.bagItems.push(product);
+    Swal.fire({
+      icon: 'success',
+      title: 'Producto añadido al carrito',
+      timer: 1000,
+      showConfirmButton: false,
+    });
   }
   this.saveBagToLocalStorage(); 
 }

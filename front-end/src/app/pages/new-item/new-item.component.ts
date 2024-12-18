@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-new-item',
@@ -32,7 +33,12 @@ export class NewItemComponent {
     const { nameCl, description, size, typeCl, stock, price, image } = this.loginForm.value;
     this.authService.newItem(nameCl, description, size, typeCl, stock, price, image).subscribe(
       (response) => {
-        console.log('Item creado:', response);
+        Swal.fire({
+          icon: 'success',
+          title: 'Ítem creado correctamente',
+          timer: 2000,
+          showConfirmButton: false,
+        });
         this.router.navigate(['/']);
       },
       (error) => {

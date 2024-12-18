@@ -5,6 +5,7 @@ import { AuthService } from '../../services/auth.service';
 import { User } from '../../models/clothes.model';
 import { Router } from '@angular/router';
 import { ClothesService } from '../../services/clothes.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-pay',
@@ -50,7 +51,12 @@ export class PayComponent implements OnInit {
       };
 
       this.authService.createPurchase(purchaseData).subscribe(() => {
-        console.log('Compra realizada con éxito');
+        Swal.fire({
+          icon: 'success',
+          title: 'Compra realizada',
+          timer: 2000,
+          showConfirmButton: false,
+        });
         this.bagService.clearBag();
         for (let i = 0; i < this.productsInBag.length; i++) {
           this.clothesService.updateProductStock(this.productsInBag[i].idCl, this.productsInBag[i].stock - 1).subscribe(() => {

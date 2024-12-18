@@ -4,6 +4,7 @@ import { ClothesService } from '../../services/clothes.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Cloth } from '../../models/clothes.model';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-edit-price',
@@ -36,8 +37,14 @@ onSubmit() {
   if (this.editPriceForm.valid) {
     const updatedPrice = this.editPriceForm.value.price;
     this.clothesService.updateProductPrice(this.cloth.idCl, updatedPrice).subscribe(
-      () => console.log('Precio actualizado exitosamente'),
-      (error: any) => console.error('Error al actualizar el precio:', error)
+      (response) => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Precio actualizado correctamente',
+          timer: 2000,
+          showConfirmButton: false,
+        });
+      },
     );
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
       this.router.navigate(['/']);

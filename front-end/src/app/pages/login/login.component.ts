@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { Router, RouterLink} from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,7 @@ export class LoginComponent {
   loginForm!: FormGroup;
   menuOption: string = '';
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router) {
+  constructor(private formBuilder: FormBuilder, @Inject(AuthService) private authService: AuthService, private router: Router) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
@@ -30,7 +31,12 @@ export class LoginComponent {
       return;}
     this.authService.login(email, password).subscribe(
       response => {
-        console.log('Login exitoso:', response);
+        Swal.fire({
+          icon: 'success',
+          title: 'Sesion iniciada',
+          timer: 1000,
+          showConfirmButton: false,
+        });
         this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
           this.router.navigate(['/']);
         });

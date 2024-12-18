@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ClothesService } from '../../services/clothes.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-add-stock',
@@ -34,8 +35,14 @@ onSubmit() {
   if (this.editStockForm.valid) {
     const updatedStock = this.cloth.stock + this.editStockForm.value.stock;
     this.clothesService.updateProductStock(this.cloth.idCl, updatedStock).subscribe(
-      () => console.log('Stock actualizado correctamente'),
-      (error: any) => console.error('Error al actualizar el precio:', error)
+      (response) => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Stock añadido correctamente',
+          timer: 2000,
+          showConfirmButton: false,
+        });
+      },
     );
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
       this.router.navigate(['/']);
@@ -43,4 +50,5 @@ onSubmit() {
   }
 }
 }
+
 

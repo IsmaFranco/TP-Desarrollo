@@ -14,17 +14,16 @@ import { TokenService } from '../../services/token.service';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.scss'
+  styleUrl: './home.component.scss',
 })
 export class HomeComponent implements OnInit {
-
-  products: Cloth[] = []; 
+  products: Cloth[] = [];
   filteredProducts: Cloth[] = [];
   selectedCategory: string = '';
   userRole: string | null = null;
 
   private clothesService = inject(ClothesService);
-  private router = inject(Router); 
+  private router = inject(Router);
   private tokenService = inject(TokenService);
   private cdRef = inject(ChangeDetectorRef);
 
@@ -37,7 +36,7 @@ export class HomeComponent implements OnInit {
   loadProducts() {
     this.clothesService.getProducts().subscribe((data: any[]) => {
       this.products = data;
-      this.filteredProducts = data; 
+      this.filteredProducts = data;
     });
   }
 
@@ -45,16 +44,18 @@ export class HomeComponent implements OnInit {
     this.router.navigate([route, id]);
   }
 
-  filterByCategory(category: string){ //Inicialmente se muestran todos los prod, al elegir un tipo de prenda se filtran los productos desde el back
+  filterByCategory(category: string) {
+    //Inicialmente se muestran todos los prod, al elegir un tipo de prenda se filtran los productos desde el back
     if (this.selectedCategory === category) {
       this.selectedCategory = '';
       this.filteredProducts = this.products;
     } else {
       this.selectedCategory = category;
-      this.clothesService.getProductsByType(category).subscribe((data: Cloth[]) => {
-        this.filteredProducts = data;
-      });
-    
+      this.clothesService
+        .getProductsByType(category)
+        .subscribe((data: Cloth[]) => {
+          this.filteredProducts = data;
+        });
     }
   }
 
@@ -74,12 +75,11 @@ export class HomeComponent implements OnInit {
       if (result.isConfirmed) {
         this.clothesService.deleteProduct(id).subscribe(() => {
           this.loadProducts();
-        });       
+        });
         Swal.fire('¡Hecho!', 'Se eliminó el producto.', 'success');
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire('Cancelado', 'No se eliminó el producto', 'error');
       }
     });
-
   }
 }

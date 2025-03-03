@@ -3,21 +3,21 @@
 }
 
 .purchases-list {
-    margin-top: 20px;
-    padding: 10px;
-    border-radius: 5px;
-    background-color: var(--back-color);
-  }
-  
+  margin-top: 20px;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: var(--back-color);
+}
+
 .purchase-item {
-    border: 1px solid var(--border-color);
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-  }
-  
+  border: 1px solid var(--border-color);
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
 .filtro-fechas {
-  background-color: var(--back-color); 
+  background-color: var(--back-color);
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
@@ -30,8 +30,8 @@
 }
 
 .filtro-fechas input {
-  background-color: var(--background-color); 
-  color: #ffffff; 
+  background-color: var(--background-color);
+  color: #ffffff;
   border: 1px solid var(--border-color);
   border-radius: 5px;
   padding: 10px;
@@ -41,7 +41,7 @@
 }
 
 .filtro-fechas input:hover {
-  border-color: var(--pay-color); 
+  border-color: var(--pay-color);
   box-shadow: 0 0 5px var(--pay-color);
   outline: none;
 }
@@ -61,7 +61,7 @@
 }
 
 .filtro-fechas button:hover {
-  background-color: var(--pay-color-selected); 
+  background-color: var(--pay-color-selected);
   transform: scale(1.05);
 }
 

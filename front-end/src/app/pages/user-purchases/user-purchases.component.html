@@ -1,0 +1,50 @@
+@if (isLoading == true) {
+<div class="container">
+  <div class="purchases-list">
+    <h2>Compras realizadas</h2>
+    <div class="loading">Cargando...</div>
+  </div>
+</div>
+}
+
+@else {
+<div class="container">
+  <div class="purchases-list">
+    <h2>Compras realizadas</h2>
+    <div class="sort-options">
+      <button class="sort-button" (click)="isDropdownOpen = !isDropdownOpen">
+        <span>Ordenar por</span>
+        <i class="fas fa-sort-down"></i>
+      </button>
+
+      <div class="dropdown-menu" [class.open]="isDropdownOpen">
+        <div class="dropdown-item" (click)="sortPurchases('date', 'desc'); isDropdownOpen = false">
+          Fecha (más reciente primero)
+        </div>
+        <div class="dropdown-item" (click)="sortPurchases('date', 'asc'); isDropdownOpen = false">
+          Fecha (más antigua primero)
+        </div>
+        <div class="dropdown-item" (click)="sortPurchases('amount', 'desc'); isDropdownOpen = false">
+          Importe (mayor a menor)
+        </div>
+        <div class="dropdown-item" (click)="sortPurchases('amount', 'asc'); isDropdownOpen = false">
+          Importe (menor a mayor)
+        </div>
+      </div>
+    </div>
+    <div *ngIf="purchases.length === 0">No se realizaron compras.</div>
+    <div *ngFor="let purchase of purchases" class="purchase-item">
+      <p>Compra: {{ purchase.idPu }} --- Fecha: {{ purchase.datePu | date }} --- Envío: {{purchase.shipment.idSh}} ---
+        Usuario: {{purchase.user.nameUs | uppercase}} --- Total: {{ purchase.amount | currency }}</p>
+
+      <p>Productos:</p>
+      <div *ngFor="let product of purchase.products" class="product-item">
+        ID: {{product.clothe?.idCl}} - {{ product.clothe?.nameCl }} -
+        Talla: {{ product.clothe?.size }} -
+        Cantidad: {{ product.quantity }} -
+        Precio: {{ product.unitPrice | currency }}
+      </div>
+    </div>
+  </div>
+</div>
+}

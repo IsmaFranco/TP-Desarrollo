@@ -4,14 +4,13 @@ import { Observable } from 'rxjs';
 import { API_CONFIG } from '../../environments';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ClothesService {
-
   private urlBase = API_CONFIG.URL_CLOTHES;
 
-  constructor(private http: HttpClient) { }
-  
+  constructor(private http: HttpClient) {}
+
   getProducts(): Observable<any> {
     return this.http.get(this.urlBase);
   }
@@ -25,15 +24,18 @@ export class ClothesService {
   }
 
   updateProductPrice(productId: number, newPrice: number): Observable<any> {
-    return this.http.put<any>(`${this.urlBase}/${productId}/new-price`, { price: newPrice });
+    return this.http.put<any>(`${this.urlBase}/${productId}/new-price`, {
+      price: newPrice,
+    });
   }
-  
+
   updateProductStock(productId: number, newStock: number): Observable<any> {
-    return this.http.put<any>(`${this.urlBase}/${productId}/add-stock`, { stock: newStock });
+    return this.http.put<any>(`${this.urlBase}/${productId}/add-stock`, {
+      stock: newStock,
+    });
   }
 
   deleteProduct(id: number): Observable<any> {
     return this.http.delete(`${this.urlBase}/${id}`);
   }
-
 }

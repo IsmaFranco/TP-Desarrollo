@@ -1,18 +1,30 @@
 <div class="container">
-        <div class="card" style="width: 20rem;">
-            <img src="{{cloth?.image}}" class="card-img-top">
-            <div class="card-body">
-                <p class="card-title">{{cloth?.nameCl}}</p>
-                <p class="card-text">{{cloth?.description}}</p>
-                <div class="total-container">
-                    <div class="size">
-                        Size:  {{cloth?.size}}
-                    </div>
-                    <div class="price">
-                        ${{cloth?.price}}
-                    </div>
+    <div class="card" style="width: 20rem;">
+        <img src="{{cloth?.image}}" class="card-img-top">
+        <div class="card-body">
+            <p class="card-title">{{cloth?.nameCl}}</p>
+            <p class="card-text">{{cloth?.description}}</p>
+            <div class="total-container">
+                <div class="size">
+                    Size: {{cloth?.size}}
+                </div>
+                <div class="size">
+                    Stock: {{cloth?.stock}}
+                </div>
+                <div class="price">
+                    ${{cloth?.price}}
                 </div>
             </div>
-            <button type="button" *ngIf="userRole==='user'" class="button btn btn-primary" (click)="addToBag(cloth)">Add to bag</button>
+            <div class="quantity-selector">
+                <p>Quantity:</p>
+                <div class="counter-container">
+                    <button type="button" class="btn-minus" (click)="decreaseQuantity()">-</button>
+                    <span class="quantity-display">{{quantity}}</span>
+                    <button type="button" class="btn-plus" (click)="increaseQuantity()">+</button>
+                </div>
+            </div>
         </div>
+        <button type="button" *ngIf="userRole==='user'" class="button btn btn-primary" (click)="addToBag(cloth)">Add to
+            bag</button>
+    </div>
 </div>

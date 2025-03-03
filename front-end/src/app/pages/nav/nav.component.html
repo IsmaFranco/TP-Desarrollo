@@ -1,29 +1,35 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">Venta de Ropa</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" routerLink="" [ngClass]="{active: menuOption == 'home'}" (click)="onOption('home')">Home</a>
-            </li>
-            <li class="nav-item" *ngIf="!isAuthenticated()">
-                <a class="nav-link" routerLink="login" [ngClass]="{active: menuOption == 'login'}" (click)="onOption('login')">Login</a>
-            </li>
-            <li class="nav-item" *ngIf="userRole==='user'">
-                <a class="nav-link" routerLink="bag" [ngClass]="{active: menuOption == 'bag'}" (click)="onOption('bag')">Bag</a>
-            </li>
-            <li class="nav-item" *ngIf="userRole==='admin'">
-                <a class="nav-link" routerLink="new-item" [ngClass]="{active: menuOption == 'new-item'}" (click)="onOption('new-item')">Add Item</a>
-            </li>
-            <li class="nav-item" *ngIf="userRole==='admin'">
-                <a class="nav-link" routerLink="purchases" [ngClass]="{active: menuOption == 'purchases'}" (click)="onOption('purchases')">View Purchases</a>
-            <li class="nav-item" *ngIf="isAuthenticated()">
-                <a class="nav-link close" (click)="logout()" >Close</a>
-            </li>
-        </ul>
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" (click)="navigate('')">Home</a>
+                </li>
+                <li class="nav-item" *ngIf="!isAuthenticated()">
+                    <a class="nav-link" (click)="navigate('login')">Login</a>
+                </li>
+                <li class="nav-item" *ngIf="userRole==='user'">
+                    <a class="nav-link" (click)="navigate('bag')">Bag</a>
+                </li>
+                <li class="nav-item" *ngIf="userRole==='user'">
+                    <a class="nav-link" (click)="navigate('user-purchases')">View Purchases</a>
+                </li>
+                <li class="nav-item" *ngIf="userRole==='admin'">
+                    <a class="nav-link" (click)="navigate('new-item')">Add Item</a>
+                </li>
+                <li class="nav-item" *ngIf="userRole==='admin'">
+                    <a class="nav-link" (click)="navigate('purchases')">View Purchases</a>
+            </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item" *ngIf="isAuthenticated()">
+                    <a class="nav-link close" (click)="logout()">Close</a>
+                </li>
+            </ul>
         </div>
-    </div>  
+    </div>
 </nav>

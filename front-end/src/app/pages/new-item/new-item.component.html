@@ -1,17 +1,20 @@
 <div class="my-form">
-    <form [formGroup]="loginForm" novalidate (ngSubmit)="onSubmit()" >
+    <form [formGroup]="loginForm" novalidate (ngSubmit)="onSubmit()">
         <h1 class="title">Add new clothe</h1>
         <div class="text-field">
             <label for="nameCl">Name</label>
-            <input type="text" id="nameCl" name="nameCl" placeholder="Vans Knu" autocomplete="off" formControlName="nameCl" ngClass="{is-invalid: hasError('nameCl', 'required')}">
+            <input type="text" id="nameCl" name="nameCl" placeholder="Vans Knu" autocomplete="off"
+                formControlName="nameCl" ngClass="{is-invalid: hasError('nameCl', 'required')}">
             @if (hasError('nameCl', 'required')){
-                <span class="error-message" >name is required</span>}
+            <span class="error-message">name is required</span>}
             <label for="description">Description</label>
-            <input type="text" id="description" name="description" placeholder="White pants" autocomplete="off" formControlName="description" ngClass="{is-invalid: hasError('description', 'required')}">
+            <input type="text" id="description" name="description" placeholder="White pants" autocomplete="off"
+                formControlName="description" ngClass="{is-invalid: hasError('description', 'required')}">
             @if (hasError('description', 'required')){
-                <span class="error-message" >description is required</span>}
+            <span class="error-message">description is required</span>}
             <label for="size">Size</label>
-            <select type="text" id="size" name="size" placeholder="XL" autocomplete="off" formControlName="size" ngClass="{is-invalid: hasError('size', 'required')}">
+            <select type="text" id="size" name="size" placeholder="XL" autocomplete="off" formControlName="size"
+                ngClass="{is-invalid: hasError('size', 'required')}">
                 <option value="" disabled selected>Choose...</option>
                 <option value="XS">XS</option>
                 <option value="S">S</option>
@@ -20,28 +23,32 @@
                 <option value="XL">XL</option>
             </select>
             <label for="typeCl">TypeCl</label>
-            <select type="text" id="typeCl" name="typeCl" placeholder="T-shirt" autocomplete="off" formControlName="typeCl" ngClass="{is-invalid: hasError('typeCl', 'required')}">
+            <select type="text" id="typeCl" name="typeCl" placeholder="T-shirt" autocomplete="off"
+                formControlName="typeCl" ngClass="{is-invalid: hasError('typeCl', 'required')}">
                 <option value="" disabled selected>Choose...</option>
                 <option value="T-shirt">T-shirt</option>
                 <option value="Pants">Pants</option>
                 <option value="Shoes">Shoes</option>
             </select>
             @if (hasError('typeCl', 'required')){
-                <span class="error-message" >typeCl is required</span>}
+            <span class="error-message">typeCl is required</span>}
             <label for="stock">Stock</label>
-            <input type="number" min="0" id="stock" name="stock" placeholder="10" autocomplete="off" formControlName="stock" ngClass="{is-invalid: hasError('stock', 'required')}">
+            <input type="number" min="0" id="stock" name="stock" placeholder="10" autocomplete="off"
+                formControlName="stock" ngClass="{is-invalid: hasError('stock', 'required')}">
             @if (hasError('stock', 'required')){
-                <span class="error-message" >stock is required</span>}
+            <span class="error-message">stock is required</span>}
             <label for="price">Price</label>
-            <input type="number" min="0" id="price" name="price" placeholder="100" autocomplete="off" formControlName="price" ngClass="{is-invalid: hasError('price', 'required')}">
+            <input type="number" min="0" id="price" name="price" placeholder="100" autocomplete="off"
+                formControlName="price" ngClass="{is-invalid: hasError('price', 'required')}">
             @if (hasError('price', 'required')){
-                <span class="error-message" >price is required</span>}
+            <span class="error-message">price is required</span>}
             <label for="image">Image</label>
-            <input type="text" id="image" name="image" placeholder="https://www.google.com" autocomplete="off" formControlName="image" ngClass="{is-invalid: hasError('image', 'required')}">
+            <input type="text" id="image" name="image" placeholder="https://www.google.com" autocomplete="off"
+                formControlName="image" ngClass="{is-invalid: hasError('image', 'required')}">
             @if (hasError('image', 'required')){
-                <span class="error-message" >image is required</span>}
+            <span class="error-message">image is required</span>}
         </div>
-        <button type="submit" class="my-form__button" >Add</button>
+        <button type="submit" class="my-form__button">Add</button>
     </form>
     <div class="my-form__actions">
         <div class="my-form__row">

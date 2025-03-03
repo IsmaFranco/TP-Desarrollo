@@ -12,4 +12,4 @@ import { LocalitiesService } from 'src/localities/localities.service';
   providers: [UsersService, LocalitiesService, UsersService],
   exports: [UsersService],
 })
-export class UsersModule {}
+export class UsersModule { }

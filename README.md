@@ -1,5 +1,11 @@
 # Propuesta TP Desarrollo de SoftWare
 
+## Instrucciones
+1- En una terminal, situarse en la carpeta "back-end" e introducir 'nest start'.
+2- En otra terminal, situarse en la carpeta "front-end" e introducir 'ng serve'.
+3- Agregar un puerto 3000, y poner si visibilidad en "público".
+4- Para el pago de una compra, utilizar la cuenta de MercadoPago de usuario "TESTUSER1361635941" y contraseña "cGuyn7tIUs".
+
 ## Link video de presentación
 https://youtu.be/OaGAMsiD4-k?feature=shared
 

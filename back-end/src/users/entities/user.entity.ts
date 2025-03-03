@@ -2,12 +2,9 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  ManyToOne,
   OneToMany,
 } from 'typeorm';
-import { Locality } from '../../localities/entities/locality.entity';
 import { Rol } from '../../common/enums/rol.enum';
-import { Clothe } from 'src/clothes/entities/clothe.entity';
 import { Purchase } from 'src/purchases/entities/purchase.entity';
 
 @Entity()
@@ -38,9 +35,6 @@ export abstract class User {
 
   @Column({ type: 'int', nullable: false })
   postalCode: number;
-
-  @ManyToOne(() => Clothe, (clothe) => clothe.user)
-  clothes: Clothe[];
 
   @OneToMany(() => Purchase, (purchase) => purchase.user)
   purchases: Purchase[];

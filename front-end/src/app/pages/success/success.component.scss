@@ -1,0 +1,107 @@
+.container {
+  margin-top: 20px;
+}
+
+.purchases-list {
+  margin-top: 20px;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: var(--back-color);
+}
+
+.purchase-item {
+  margin-top: 20px;
+  border: 1px solid var(--border-color);
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  gap: 15px;
+}
+
+.filtro-fechas {
+  background-color: var(--back-color);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  max-width: 300px;
+  margin: auto;
+}
+
+.filtro-fechas input {
+  background-color: var(--background-color);
+  color: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  padding: 10px;
+  width: 100%;
+  font-size: 14px;
+  transition: var(--border-color) 0.3s ease, box-shadow 0.3s ease;
+}
+
+.filtro-fechas input:hover {
+  border-color: var(--pay-color);
+  box-shadow: 0 0 5px var(--pay-color);
+  outline: none;
+}
+
+.filtro-fechas button {
+  background-color: var(--pay-color);
+  color: #ffffff;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: var(--background-color) 0.3s ease, transform 0.2s ease;
+}
+
+.filtro-fechas button:hover {
+  background-color: var(--pay-color-selected);
+  transform: scale(1.05);
+}
+
+.filtro-fechas button:active {
+  transform: scale(1);
+}
+
+.filtro-fechas label {
+  color: var(--text-color);
+  font-size: 14px;
+  margin-bottom: 5px;
+  align-self: flex-start;
+}
+
+.button {
+  color: var(--background-color);
+  margin-top: 10px;
+  white-space: nowrap;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+  line-height: 3.125rem;
+  outline: none;
+  font-size: 1.125rem;
+  letter-spacing: 0.25rem;
+  text-decoration: none;
+  cursor: pointer;
+  font-weight: 800;
+  min-height: 3.125rem;
+  width: 100%;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+  -webkit-transition: all 0.3s ease;
+}
+
+.button:hover {
+  background-color: var(--back-color);
+  color: var(--text-color);
+}

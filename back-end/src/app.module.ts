@@ -16,6 +16,12 @@ import { User } from './users/entities/user.entity';
 import { Province } from './provinces/entities/province.entity';
 import { Locality } from './localities/entities/locality.entity';
 import { AuthModule } from './auth/auth.module';
+import { PaymentModule } from './payment/payment.module';
+import { WebhookController } from './webhook/webhook.controller';
+import { WebhookModule } from './webhook/webhook.module';
+import { PurchaseClotheController } from './purchase-clothe/purchase-clothe.controller';
+import { PurchaseClotheModule } from './purchase-clothe/purchase-clothe.module';
+import { PurchaseClothe } from './purchase-clothe/entities/purchase-clothe.entity';
 
 @Module({
   imports: [
@@ -25,7 +31,7 @@ import { AuthModule } from './auth/auth.module';
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
-        type: configService.get<"mysql">('DB_TYPE'),
+        type: configService.get<'mysql'>('DB_TYPE'),
         host: configService.get<string>('DB_HOST'),
         port: configService.get<number>('DB_PORT'),
         username: configService.get<string>('DB_USERNAME'),
@@ -38,6 +44,7 @@ import { AuthModule } from './auth/auth.module';
           User,
           Province,
           Locality,
+          PurchaseClothe,
         ],
         autoLoadEntities: true,
         synchronize: true,
@@ -51,8 +58,11 @@ import { AuthModule } from './auth/auth.module';
     LocalitiesModule,
     UsersModule,
     AuthModule,
+    PaymentModule,
+    WebhookModule,
+    PurchaseClotheModule,
   ],
-  controllers: [AppController],
+  controllers: [AppController, WebhookController, PurchaseClotheController],
   providers: [AppService],
 })
 export class AppModule {}

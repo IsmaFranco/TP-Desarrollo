@@ -9,6 +9,8 @@ import { EditPriceComponent } from './pages/edit-price/edit-price.component';
 import { AddStockComponent } from './pages/add-stock/add-stock.component';
 import { PayComponent } from './pages/pay/pay.component';
 import { PurchasesComponent } from './pages/purchases/purchases.component';
+import { UserPurchasesComponent } from './pages/user-purchases/user-purchases.component';
+import { SuccessComponent } from './pages/success/success.component';
 
 export const routes: Routes = [
     {path: '', component: HomeComponent},
@@ -21,5 +23,7 @@ export const routes: Routes = [
     {path: 'add-stock/:id', component: AddStockComponent},
     {path: 'pay', component: PayComponent},
     {path: 'purchases', component: PurchasesComponent},
+    {path: 'user-purchases', component: UserPurchasesComponent},
+    {path: 'success', component: SuccessComponent},
     {path: '**', redirectTo: '', pathMatch: 'full'}
 ];

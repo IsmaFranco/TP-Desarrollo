@@ -1,7 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Cloth } from '../../models/clothes.model';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { ClothesService } from '../../services/clothes.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
@@ -11,44 +16,52 @@ import Swal from 'sweetalert2';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './add-stock.component.html',
-  styleUrl: './add-stock.component.scss'
+  styleUrl: './add-stock.component.scss',
 })
 export class AddStockComponent implements OnInit {
-
   @Input() cloth!: Cloth;
   editStockForm!: FormGroup;
 
-  constructor(private fb: FormBuilder ,private clothesService: ClothesService, private route: ActivatedRoute, private router: Router) {}
+  constructor(
+    private fb: FormBuilder,
+    private clothesService: ClothesService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
-  ngOnInit(): void{
-  this.route.params.subscribe(params => {
-    this.clothesService.getProductById(params['id']).subscribe((data: Cloth) => {
-      this.cloth = data;
-    });
-  });
-  this.editStockForm = this.fb.group({
-    stock: ['', [Validators.required, Validators.min(0)]], 
-  });
-}
-
-onSubmit() {
-  if (this.editStockForm.valid) {
-    const updatedStock = this.cloth.stock + this.editStockForm.value.stock;
-    this.clothesService.updateProductStock(this.cloth.idCl, updatedStock).subscribe(
-      (response) => {
-        Swal.fire({
-          icon: 'success',
-          title: 'Stock añadido correctamente',
-          timer: 2000,
-          showConfirmButton: false,
+  ngOnInit(): void {
+    this.route.params.subscribe((params) => {
+      this.clothesService
+        .getProductById(params['id'])
+        .subscribe((data: Cloth) => {
+          this.cloth = data;
         });
-      },
-    );
-    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-      this.router.navigate(['/']);
+    });
+    this.editStockForm = this.fb.group({
+      stock: ['', [Validators.required, Validators.min(1)]],
     });
   }
-}
-}
 
+  onSubmit() {
+    if (this.editStockForm.valid) {
+      const updatedStock = this.cloth.stock + this.editStockForm.value.stock;
+      this.clothesService
+        .updateProductStock(this.cloth.idCl, updatedStock)
+        .subscribe((response) => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Stock añadido correctamente',
+            timer: 1000,
+            showConfirmButton: false,
+          });
+        });
+      setTimeout(() => {
+        this.router.navigate(['/']);
+      }, 300);
+    }
+  }
 
+  navigate() {
+    this.router.navigate(['/']);
+  }
+}

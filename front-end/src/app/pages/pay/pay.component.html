@@ -3,7 +3,7 @@
         <h1 class="title">Resumen de tu compra</h1>
         <div class="texto">
             <div *ngFor="let product of productsInBag">
-                <p>{{ product.nameCl }} - Precio: ${{ product.price }}</p>
+                <p>{{ product.nameCl }} - Precio: ${{ product.price }} - Unidades: {{product.quantity}}</p>
             </div>
 
             <p>Total a pagar: ${{ totalAmount }}</p>

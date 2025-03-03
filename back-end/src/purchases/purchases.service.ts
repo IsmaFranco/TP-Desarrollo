@@ -1,11 +1,9 @@
-import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Between, Repository } from 'typeorm';
 import { CreatePurchaseDto } from './dto/create-purchase.dto';
 import { UpdatePurchaseDto } from './dto/update-purchase.dto';
 import { Purchase } from './entities/purchase.entity';
-import { User } from '../users/entities/user.entity';
-import { Rol } from 'src/common/enums/rol.enum'; 
 
 
 
@@ -13,18 +11,16 @@ import { Rol } from 'src/common/enums/rol.enum';
 export class PurchasesService {
   constructor(
     @InjectRepository(Purchase)
-    private purchaseRepository: Repository<Purchase>,
-  ) {}
+    private purchaseRepository: Repository<Purchase>
+  ) { }
 
-  async create (createPurchaseDto: CreatePurchaseDto): Promise<Purchase> {
+  async create(createPurchaseDto: CreatePurchaseDto): Promise<Purchase> {
     const purchase = this.purchaseRepository.create(createPurchaseDto);
-    return this.purchaseRepository.save(purchase);
+    return await this.purchaseRepository.save(purchase);
   }
 
   async findAll(): Promise<Purchase[]> {
-      return await this.purchaseRepository.find({
-        relations: ['shipment', 'clothes', 'user'], // Incluye las relaciones necesarias
-      });
+    return await this.purchaseRepository.find();
   }
 
   async findOne(idPu: number): Promise<Purchase> {
@@ -37,10 +33,10 @@ export class PurchasesService {
     return purchase;
   }
 
-  async update(idPu: number,updatePurchaseDto: UpdatePurchaseDto): Promise<Purchase> {
+  async update(idPu: number, updatePurchaseDto: UpdatePurchaseDto): Promise<Purchase> {
     await this.findOne(idPu);
 
-    await this.purchaseRepository.update(idPu, {...updatePurchaseDto});
+    await this.purchaseRepository.update(idPu, { ...updatePurchaseDto });
     return this.findOne(idPu); // Devuelve la compra actualizada
   }
 
@@ -53,7 +49,7 @@ export class PurchasesService {
   async findOneCloth(idPu: number) {
     return this.purchaseRepository.findOne({
       where: { idPu: idPu },
-      relations: ['clothes'], 
+      relations: ['clothes'],
     });
   }
 
@@ -62,6 +58,19 @@ export class PurchasesService {
       where: {
         datePu: Between(new Date(date1), new Date(date2)),
       },
+    });
+  }
+
+  findAllByUser(idUs: number): Promise<Purchase[]> {
+    return this.purchaseRepository.find({
+      where: { user: { idUs } },
+      relations: ['user'],
+    });
+  }
+
+  findOneByPayment(paymentId: string): Promise<Purchase> {
+    return this.purchaseRepository.findOne({
+      where: { paymentId: paymentId }
     });
   }
 

@@ -1,7 +1,6 @@
-@if (loading == true){
+@if (!purchaseClothes){
 <div class="container">
     <div class="purchases-list">
-        <h2>Compra realizada:</h2>
         <div class="loading">Cargando...</div>
     </div>
 </div>
@@ -13,7 +12,7 @@
         <h2>Compra realizada:</h2>
         <div class="purchase-item">
             <p>Compra: {{ purchase?.idPu }} --- Fecha: {{ purchase?.datePu | date }} --- Envío:
-                {{purchase?.shipment.idSh}} --- Usuario: {{purchase?.user.nameUs | uppercase}} --- Total: {{
+                {{purchase?.shipment.idSh}} --- Usuario: {{purchase?.user.lastNameUs | titlecase}}, {{purchase?.user.nameUs | titlecase}} --- Total: {{
                 purchase?.amount | currency }}</p>
             <p>Productos:</p>
             <p *ngFor="let product of purchaseClothes">

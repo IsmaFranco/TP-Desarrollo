@@ -4,24 +4,30 @@
 
 .purchases-list {
   margin-top: 20px;
+  margin-left: 200px;
+  margin-right: 200px;
   padding: 10px;
   border-radius: 5px;
   background-color: var(--back-color);
 }
 
+.purchases-list h2 {
+  text-align: center;
+}
+
 .purchase-item {
+  background-color: rgb(40, 40, 40);
   margin-top: 20px;
   border: 1px solid var(--border-color);
-  padding: 10px;
-  margin-bottom: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
   border-radius: 5px;
-  gap: 15px;
 }
 
 .dropdown-menu {
   display: none;
   position: absolute;
-  background-color: whitesmoke;
+  background-color: var(--border-color);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   z-index: 100;
   width: 250px;
@@ -40,7 +46,7 @@
   transition: all 0.5s ease;
 
   &:hover {
-    background-color: #d3d3d3;
+    background-color: #ababab;
   }
 }
 

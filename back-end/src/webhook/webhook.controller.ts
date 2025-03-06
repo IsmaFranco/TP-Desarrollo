@@ -42,7 +42,7 @@ export class WebhookController {
 
                     const shipmentData = {
                         dateSh: new Date(),
-                        postalCode: user.postal_code,
+                        idLocality: user.id_lo,
                     };
 
                     const shipment = await this.shipmentService.create(shipmentData);
@@ -51,7 +51,6 @@ export class WebhookController {
                         amount: total_amount,
                         shipment: shipment.idSh,
                         user: user.id,
-                        postalCode: user.postal_code,
                         paymentId: paymentId,
                     };
 

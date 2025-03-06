@@ -42,3 +42,23 @@
     transition: all .3s ease;
     -webkit-transition: all .3s ease;
 }
+
+.text-field select {
+    color: rgb(25, 25, 25);
+    max-width: 100%;
+    width: 100%;
+    border: 1px solid var(--border-color);
+    min-height: 3rem;
+    letter-spacing: 0.3rem;
+    outline: none;
+    background: var(--back-home-color);
+    transition: .25s;
+    border-radius: 0.5rem;
+    text-indent: 1.25rem;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none; 
+    margin: 0; 
+}

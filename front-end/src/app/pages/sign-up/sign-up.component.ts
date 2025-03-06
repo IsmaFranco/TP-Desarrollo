@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import {
@@ -9,6 +9,7 @@ import {
   Validators,
 } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { Locality } from '../../models/localities.model';
 
 @Component({
   selector: 'app-sign-up',
@@ -17,9 +18,9 @@ import Swal from 'sweetalert2';
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.scss',
 })
-export class SignUpComponent {
+export class SignUpComponent implements OnInit {
   loginForm!: FormGroup;
-  menuOption: string = '';
+  localities: Locality[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -34,7 +35,22 @@ export class SignUpComponent {
       dni: ['', [Validators.required, Validators.minLength(8)]],
       phoneUs: ['', [Validators.required, Validators.minLength(9)]],
       addressUs: ['', [Validators.required]],
-      postalCode: ['', Validators.required],
+      idLo: ['', Validators.required],
+    });
+  }
+
+  ngOnInit() {
+    this.loadLocalities();
+  }
+
+  loadLocalities() {
+    this.authService.getLocalities().subscribe({
+      next: (data: Locality[]) => {
+        this.localities = data;
+      },
+      error: (error: any) => {
+        console.error('Error al cargar las localidades', error);
+      }
     });
   }
 
@@ -47,8 +63,9 @@ export class SignUpComponent {
       dni,
       phoneUs,
       addressUs,
-      postalCode,
+      idLo,
     } = this.loginForm.value;
+    console.log(this.loginForm.value);
     if (this.loginForm.invalid) {
       return;
     }
@@ -61,7 +78,7 @@ export class SignUpComponent {
         dni,
         phoneUs,
         addressUs,
-        postalCode
+        idLo
       )
       .subscribe((response: any) => {
         Swal.fire({

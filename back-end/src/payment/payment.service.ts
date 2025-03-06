@@ -14,22 +14,31 @@ export class PaymentService {
     });
     const preference = await new Preference(mercadopago).create({
       body: {
-        items: items.map(item => ({
+        items: [...items.map(item => ({
           id: item.idCl,
           title: item.nameCl,
           quantity: item.quantity,
           currency_id: 'ARS',
           unit_price: item.price,
         })),
+        {
+          id: 'shipping',
+          title: `Envío a ${user.locality.nameLo}`,
+          quantity: 1,
+          currency_id: 'ARS',
+          unit_price: user.locality.cost,
+        }],
         back_urls: {
           success: 'http://localhost:4200/success',
           failure: 'http://localhost:4200/bag',
+          pending: 'http://localhost:4200/bag',
         },
         auto_return: 'approved',
         metadata: {
           user: {
             id: user.idUs,
-            postalCode: user.postalCode
+            idLo: user.locality.idLo,
+            cost: user.locality.cost,
           },
           products: items.map(item => ({
             idCl: item.idCl,
@@ -37,7 +46,7 @@ export class PaymentService {
             price: item.price,
             quantity: item.quantity
           })),
-          totalAmount: items.reduce((total, item) => total + (item.price * item.quantity), 0)
+          totalAmount: items.reduce((total, item) => total + (item.price * item.quantity), user.locality.cost)
         }
       }
     });

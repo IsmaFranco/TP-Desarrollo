@@ -1,3 +1,10 @@
+@if (!user) {
+    <div class="container">
+        <div>Cargando...</div>
+    </div>
+}
+
+@else {
 <div class="bag-container">
     <h2>Tu Carrito</h2>
 
@@ -12,6 +19,7 @@
         </div>
         <div class="total-pay-container">
             <div class="total-price">
+                <div class="shipment"> Costo de envío añadido al total: ${{user.locality.cost}}</div>
                 <p>Total: ${{ calculateTotalPrice() }}</p>
             </div>
             <div class="pay-container">
@@ -23,3 +31,4 @@
         <p>El carrito está vacío.</p>
     </ng-template>
 </div>
+}

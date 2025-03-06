@@ -10,14 +10,15 @@
 @else {
 <div class="container">
   <div class="purchases-list">
-    <h2>Compras realizadas</h2>
+    <h2 *ngIf="purchases.length !== 0" >Compras realizadas por {{user.lastNameUs | titlecase}}, {{user.nameUs | titlecase}}: {{purchases.length}}</h2>
+    <h2 *ngIf="purchases.length === 0" >No se realizaron compras.</h2>
     <div class="sort-options">
-      <button class="sort-button" (click)="isDropdownOpen = !isDropdownOpen">
+      <button class="sort-button" *ngIf="purchases.length !== 0" (click)="isDropdownOpen = !isDropdownOpen">
         <span>Ordenar por</span>
         <i class="fas fa-sort-down"></i>
       </button>
 
-      <div class="dropdown-menu" [class.open]="isDropdownOpen">
+      <div class="dropdown-menu"  [class.open]="isDropdownOpen">
         <div class="dropdown-item" (click)="sortPurchases('date', 'desc'); isDropdownOpen = false">
           Fecha (más reciente primero)
         </div>
@@ -32,10 +33,8 @@
         </div>
       </div>
     </div>
-    <div *ngIf="purchases.length === 0">No se realizaron compras.</div>
     <div *ngFor="let purchase of purchases" class="purchase-item">
-      <p>Compra: {{ purchase.idPu }} --- Fecha: {{ purchase.datePu | date }} --- Envío: {{purchase.shipment.idSh}} ---
-        Usuario: {{purchase.user.nameUs | uppercase}} --- Total: {{ purchase.amount | currency }}</p>
+      <p>Compra: {{ purchase.idPu }} --- Fecha: {{ purchase.datePu | date }} --- Envío: {{purchase.shipment.idSh}} (Estado: {{purchase.shipment.status}}) --- Total: {{ purchase.amount | currency }}</p>
 
       <p>Productos:</p>
       <div *ngFor="let product of purchase.products" class="product-item">

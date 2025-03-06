@@ -19,7 +19,6 @@ import Swal from 'sweetalert2';
 })
 export class NewItemComponent {
   loginForm!: FormGroup;
-  menuOption: string = '';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -43,7 +42,7 @@ export class NewItemComponent {
     this.authService
       .newItem(nameCl, description, size, typeCl, stock, price, image)
       .subscribe(
-        (response) => {
+        () => {
           Swal.fire({
             icon: 'success',
             title: 'Ítem creado correctamente',

@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { BagService } from '../../services/bag.service';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { TokenService } from '../../services/token.service';
+import { User } from '../../models/clothes.model';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-bag',
@@ -12,11 +15,15 @@ import { Router } from '@angular/router';
 })
 export class BagComponent implements OnInit {
   bagItems: any[] = [];
+  user!: User;
 
-  constructor(private bagService: BagService, private router: Router) {}
+  constructor(private bagService: BagService, private router: Router, private tokenService: TokenService) {}
 
   ngOnInit() {
     this.bagItems = this.bagService.getBagItems();
+    (this.tokenService.getCurrentUser() as Observable<User>).subscribe((user: User) => {
+      this.user = user;
+    });
   }
 
   removeProduct(productId: number) {
@@ -26,7 +33,7 @@ export class BagComponent implements OnInit {
   calculateTotalPrice() {
     return this.bagItems.reduce(
       (total, item) => total + item.price * item.quantity,
-      0
+      this.user.locality.cost
     );
   }
 

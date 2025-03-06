@@ -13,6 +13,7 @@ export class AuthService {
   private urlShipments = API_CONFIG.URL_SHIPMENTS;
   private urlPurchases = API_CONFIG.URL_PURCHASES;
   private urlPurchaseClothes = API_CONFIG.URL_PURCHASE_CLOTHES;
+  private urlLocalities = API_CONFIG.URL_LOCALITIES;
 
   constructor(private http: HttpClient) {}
 
@@ -37,7 +38,7 @@ export class AuthService {
     dni: string,
     phoneUs: string,
     addressUs: string,
-    postalCode: string
+    idLo: number
   ): Observable<any> {
     return this.http
       .post(this.urlRegister, {
@@ -48,7 +49,7 @@ export class AuthService {
         dni: Number(dni),
         phoneUs,
         addressUs,
-        postalCode: Number(postalCode),
+        idLo: Number(idLo),
       })
       .pipe(
         tap((response: any) => {
@@ -104,5 +105,13 @@ export class AuthService {
 
   getClotheByPurchaseId(purchaseId: number): Observable<any> {
     return this.http.get(`${this.urlPurchaseClothes}/${purchaseId}`);
+  }
+
+  getLocalities(): Observable<any> {
+    return this.http.get(this.urlLocalities);
+  }
+
+  newLocality(nameLo: string, postalCode: number, cost: number): Observable<any> {
+    return this.http.post(this.urlLocalities, { nameLo, postalCode, cost });
   }
 }

@@ -6,4 +6,5 @@ export const API_CONFIG = {
     URL_PURCHASES: 'http://localhost:3000/purchases',
     URL_PAYMENTS: 'http://localhost:3000/payment',
     URL_PURCHASE_CLOTHES: 'http://localhost:3000/purchase-clothe',
+    URL_LOCALITIES: 'http://localhost:3000/localities',
 }; 

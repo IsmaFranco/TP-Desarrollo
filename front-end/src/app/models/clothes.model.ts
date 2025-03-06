@@ -1,3 +1,5 @@
+import { Locality } from "./localities.model";
+
 export interface Cloth {
     idCl: number;
     nameCl: string;
@@ -25,6 +27,6 @@ export interface User {
     dni: string;
     phoneUs: string;
     addressUs: string;
-    postalCode: string;
+    locality: Locality;
     role: string;
 }

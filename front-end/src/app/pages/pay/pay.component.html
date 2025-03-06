@@ -1,13 +1,23 @@
+@if (!user) {
+    <div class="my-form">
+        <div class="text-field">
+            <h1 class="title">Cargando...</h1>
+        </div>
+    </div>
+}
+
+@else {
 <div class="my-form">
     <div class="text-field">
         <h1 class="title">Resumen de tu compra</h1>
         <div class="texto">
-            <div *ngFor="let product of productsInBag">
+            <div *ngFor="let product of bagItems">
                 <p>{{ product.nameCl }} - Precio: ${{ product.price }} - Unidades: {{product.quantity}}</p>
             </div>
-
-            <p>Total a pagar: ${{ totalAmount }}</p>
+            <p>Costo de envío: ${{user.locality.cost}}</p>
+            <p class="total" >Total a pagar: ${{ calculateTotalPrice() }}</p>
         </div>
         <button class="button" (click)="aceptarCompra()">Confirmar pago</button>
     </div>
 </div>
+}

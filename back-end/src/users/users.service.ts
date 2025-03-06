@@ -4,16 +4,25 @@ import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
+import { Locality } from 'src/localities/entities/locality.entity';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
+    @InjectRepository(Locality)
+    private localitiesRepository: Repository<Locality>,
   ) { }
 
   async create(createUserDto: CreateUserDto): Promise<User> {
-    const user = this.userRepository.create(createUserDto);
+    const locality = await this.localitiesRepository.findOne({ where: { idLo: createUserDto.idLo } });
+
+    if (!locality) {
+      throw new BadRequestException('Localidad no encontrada');
+    }
+    
+    const user = this.userRepository.create({...createUserDto, locality: locality});
     return await this.userRepository.save(user);
   }
 
@@ -31,6 +40,7 @@ export class UsersService {
   findAll(): Promise<User[]> {
     return this.userRepository.find();
   }
+  
   findOne(idUs: number): Promise<User> {
     return this.userRepository.findOne({ where: { idUs: idUs } });
   }

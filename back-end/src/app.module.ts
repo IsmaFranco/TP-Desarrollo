@@ -6,14 +6,12 @@ import { AppService } from './app.service';
 import { PurchasesModule } from './purchases/purchases.module';
 import { ClothesModule } from './clothes/clothes.module';
 import { ShipmentsModule } from './shipments/shipments.module';
-import { ProvincesModule } from './provinces/provinces.module';
 import { LocalitiesModule } from './localities/localities.module';
 import { UsersModule } from './users/users.module';
 import { Clothe } from './clothes/entities/clothe.entity';
 import { Purchase } from './purchases/entities/purchase.entity';
 import { Shipment } from './shipments/entities/shipment.entity';
 import { User } from './users/entities/user.entity';
-import { Province } from './provinces/entities/province.entity';
 import { Locality } from './localities/entities/locality.entity';
 import { AuthModule } from './auth/auth.module';
 import { PaymentModule } from './payment/payment.module';
@@ -42,7 +40,6 @@ import { PurchaseClothe } from './purchase-clothe/entities/purchase-clothe.entit
           Purchase,
           Shipment,
           User,
-          Province,
           Locality,
           PurchaseClothe,
         ],
@@ -54,7 +51,6 @@ import { PurchaseClothe } from './purchase-clothe/entities/purchase-clothe.entit
     PurchasesModule,
     ClothesModule,
     ShipmentsModule,
-    ProvincesModule,
     LocalitiesModule,
     UsersModule,
     AuthModule,

@@ -34,6 +34,16 @@ export class BagService {
     const existingProduct = this.bagItems.find(
       (clothes) => clothes.idCl === product.idCl
     );
+    if (!existingProduct && product.quantity === 0) {
+      Swal.fire({
+        title: 'Error',
+        text: 'Seleccione una cantidad',
+        icon: 'error',
+        timer: 1300,
+        showConfirmButton: false,
+      });
+      return;
+    }
     if (existingProduct) {
       if (
         product.quantity === 0 &&

@@ -53,10 +53,18 @@ export class PurchasesService {
     });
   }
 
-  async findAllByDate(date1: string, date2: string): Promise<Purchase[]> {
+  async findAllByDate(date1: string, date2: string): Promise<Purchase[]> { ///Tuve que armar las fechas manualmente porque las creaba con distinto huso horario
+    let localDate1: Date = null;
+    let localDate2: Date = null;
+    let parts1: string[] = null;
+    let parts2: string[] = null;
+    parts1 = date1.split('-'); 
+    localDate1 = new Date(Number(parts1[0]), Number(parts1[1]) - 1, Number(parts1[2]), 0, 0, 0);
+    parts2 = date2.split('-'); 
+    localDate2 = new Date(Number(parts2[0]), Number(parts2[1]) - 1, Number(parts2[2]), 23, 59, 59);
     return this.purchaseRepository.find({
       where: {
-        datePu: Between(new Date(date1), new Date(date2)),
+        datePu: Between(localDate1, localDate2),
       },
     });
   }

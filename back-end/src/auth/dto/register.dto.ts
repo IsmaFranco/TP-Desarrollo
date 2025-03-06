@@ -7,7 +7,6 @@ import {
   MaxLength,
   MinLength,
 } from 'class-validator';
-import { Rol } from 'src/common/enums/rol.enum';
 
 export class RegisterDto {
   @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value)) // esto sirve para que la contraseña no tenga espacios
@@ -43,8 +42,7 @@ export class RegisterDto {
   addressUs: string;
 
   @IsInt()
-  @IsPositive()
-  postalCode: number;
+  idLo: number;
 
   //rol: Rol;
 }

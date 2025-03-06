@@ -58,8 +58,6 @@ export class UserPurchasesComponent implements OnInit {
 
         this.purchases.push(purchaseWithProducts);
       }
-
-      console.log('Compras:', this.purchases);
     } catch (error) {
       console.error('Error:', error);
     } finally {
@@ -67,24 +65,21 @@ export class UserPurchasesComponent implements OnInit {
     }
   }
 
-  sortPurchases(criteria: string, direction: string): void {
+  sortPurchases(criterio: string, direction: string): void {
     if (!this.purchases || this.purchases.length === 0) return;
 
     this.purchases.sort((a, b) => {
       let comparison = 0;
 
-      if (criteria === 'date') {
+      if (criterio === 'date') {
         const dateA = new Date(a.datePu).getTime();
         const dateB = new Date(b.datePu).getTime();
         comparison = dateA - dateB;
-      } else if (criteria === 'amount') {
+      } else if (criterio === 'amount') {
         comparison = a.amount - b.amount;
       }
 
-      // si la dirección es descendente, invertir el resultado
       return direction === 'desc' ? -comparison : comparison;
     });
-
-    console.log(`Ordenado por ${criteria} en orden ${direction}`);
   }
 }

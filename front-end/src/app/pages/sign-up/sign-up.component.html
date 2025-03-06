@@ -48,11 +48,16 @@
                 formControlName="addressUs" ngClass="{is-invalid: hasError('address', 'required')}">
             @if (hasError('address', 'required')){
             <span class="error-message">Address is required</span>}
-            <label for="postalCode">Postal Code</label>
-            <input type="text" id="postalCode" name="postalCode" placeholder="1234" autocomplete="off"
-                formControlName="postalCode" ngClass="{is-invalid: hasError('postalCode', 'required')}">
-            @if (hasError('postalCode', 'required')){
-            <span class="error-message">Postal Code is required</span>}
+            <label for="idLo">Localidad</label>
+            <select id="idLo" name="idLo" formControlName="idLo"
+                ngClass="{is-invalid: hasError('idLo', 'required')}">
+                <option value="" disabled selected>Seleccione una localidad</option>
+                <option *ngFor="let locality of localities" [value]="locality.idLo">
+                    {{locality.nameLo}} (CP: {{locality.postalCode}})
+                </option>
+            </select>
+            @if (hasError('idLo', 'required')){
+            <span class="error-message">Debe seleccionar una localidad</span>}
         </div>
         <button type="submit" class="my-form__button">Sign Up</button>
     </form>

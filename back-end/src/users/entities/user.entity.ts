@@ -3,9 +3,12 @@ import {
   PrimaryGeneratedColumn,
   Column,
   OneToMany,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
 import { Rol } from '../../common/enums/rol.enum';
 import { Purchase } from 'src/purchases/entities/purchase.entity';
+import { Locality } from 'src/localities/entities/locality.entity';
 
 @Entity()
 export abstract class User {
@@ -28,13 +31,14 @@ export abstract class User {
   addressUs: string;
 
   @Column({ type: 'varchar', length: 200, nullable: false, select: false }) //nullabe false significa que no puede ser nulo
-  passwordUs: string; // ver bien como es lo de la contgraseña y si este atr esta bien pasado
+  passwordUs: string; 
 
   @Column({ type: 'enum', default: Rol.USER, enum: Rol })
   rol: Rol; //tendria que haber sido role, pero ya avanzamos bastante y no quiero cambiarlo
 
-  @Column({ type: 'int', nullable: false })
-  postalCode: number;
+  @ManyToOne(() => Locality, { eager: true })
+  @JoinColumn({ name: 'idLo' })
+  locality: Locality;
 
   @OneToMany(() => Purchase, (purchase) => purchase.user)
   purchases: Purchase[];

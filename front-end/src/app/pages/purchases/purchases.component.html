@@ -18,8 +18,8 @@
       <div *ngFor="let purchase of purchases">
         <div class="purchase-item">
           <p>ID Compra: {{ purchase.idPu }} - Fecha: {{ purchase.datePu | date }} - Número de Envío:
-            {{purchase.shipment.idSh}} (Estado: {{purchase.shipment.status}}) - Usuario: {{purchase.user.nameUs | titlecase}} {{purchase.user.lastNameUs | titlecase}} (ID: {{ purchase.user.idUs }}) -
-            Total: {{ purchase.amount | currency }}</p>
+            {{purchase.shipment.idSh}} (Estado: {{purchase.shipment.status}}) - Total: {{ purchase.amount | currency }}</p>
+            <p>Usuario: {{purchase.user.nameUs | titlecase}} {{purchase.user.lastNameUs | titlecase}} (ID: {{ purchase.user.idUs }}) - Dirección: {{purchase.user.addressUs | titlecase}}, {{purchase.user.locality.nameLo}}</p>
           <p>Productos:</p>
           <div *ngFor="let product of purchase.products">
             ID: {{product.clothe?.idCl}} - {{ product.clothe?.nameCl }} - Quantity: {{product.quantity}} - {{

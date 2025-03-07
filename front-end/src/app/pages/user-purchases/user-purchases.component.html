@@ -34,7 +34,7 @@
       </div>
     </div>
     <div *ngFor="let purchase of purchases" class="purchase-item">
-      <p>Compra: {{ purchase.idPu }} --- Fecha: {{ purchase.datePu | date }} --- Envío: {{purchase.shipment.idSh}} (Estado: {{purchase.shipment.status}}) --- Total: {{ purchase.amount | currency }}</p>
+      <p>Compra: {{ purchase.idPu }} - Fecha: {{ purchase.datePu | date }} - Envío: {{purchase.shipment.idSh}} (Estado: {{purchase.shipment.status}}) - Dirección: {{purchase.user.addressUs | titlecase}} - Total: {{ purchase.amount | currency }}</p>
 
       <p>Productos:</p>
       <div *ngFor="let product of purchase.products" class="product-item">

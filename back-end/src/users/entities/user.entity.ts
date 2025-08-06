@@ -24,13 +24,13 @@ export abstract class User {
   @Column({ type: 'varchar', length: 50, nullable: false })
   emailUs: string;
 
-  @Column({ type: 'varchar', length: 20, nullable: false })
+  @Column({ type: 'varchar', length: 20, nullable: false }) 
   phoneUs: string;
 
   @Column({ type: 'varchar', length: 50, nullable: false })
   addressUs: string;
 
-  @Column({ type: 'varchar', length: 200, nullable: false, select: false }) //nullabe false significa que no puede ser nulo
+  @Column({ type: 'varchar', length: 200, nullable: false }) //nullabe false significa que no puede ser nulo
   passwordUs: string; 
 
   @Column({ type: 'enum', default: Rol.USER, enum: Rol })

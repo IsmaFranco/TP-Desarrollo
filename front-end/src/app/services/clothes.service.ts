@@ -7,7 +7,7 @@ import { API_CONFIG } from '../../environments';
   providedIn: 'root',
 })
 export class ClothesService {
-  private urlBase = API_CONFIG.URL_CLOTHES;
+  private urlBase = `${API_CONFIG.API_URL}/clothes`;
 
   constructor(private http: HttpClient) {}
 

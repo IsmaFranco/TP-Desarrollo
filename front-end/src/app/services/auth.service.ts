@@ -7,13 +7,13 @@ import { API_CONFIG } from '../../environments';
   providedIn: 'root',
 })
 export class AuthService {
-  private urlLogin = API_CONFIG.URL_LOGIN;
-  private urlRegister = API_CONFIG.URL_REGISTER;
-  private urlClothes = API_CONFIG.URL_CLOTHES;
-  private urlShipments = API_CONFIG.URL_SHIPMENTS;
-  private urlPurchases = API_CONFIG.URL_PURCHASES;
-  private urlPurchaseClothes = API_CONFIG.URL_PURCHASE_CLOTHES;
-  private urlLocalities = API_CONFIG.URL_LOCALITIES;
+  private urlLogin = API_CONFIG.API_URL + '/auth/login';
+  private urlRegister = API_CONFIG.API_URL + '/auth/register';
+  private urlClothes = API_CONFIG.API_URL + '/clothes';
+  private urlShipments = API_CONFIG.API_URL + '/shipments';
+  private urlPurchases = API_CONFIG.API_URL + '/purchases';
+  private urlPurchaseClothes = API_CONFIG.API_URL + '/purchase-clothes';
+  private urlLocalities = API_CONFIG.API_URL + '/localities';
 
   constructor(private http: HttpClient) {}
 

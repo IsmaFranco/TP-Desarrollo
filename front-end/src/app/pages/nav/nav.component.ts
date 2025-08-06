@@ -13,7 +13,7 @@ import { TokenService } from '../../services/token.service';
   templateUrl: './nav.component.html',
   styleUrl: './nav.component.scss',
 })
-export class NavComponent implements OnInit {
+export class NavComponent {
   userRole: string | null = null;
   userName: string = '';
 
@@ -22,25 +22,9 @@ export class NavComponent implements OnInit {
   private _tokenService = inject(TokenService);
   private _cdRef = inject(ChangeDetectorRef);
 
-  ngOnInit(): void {
-    this.updateUserInfo();
-  }
-
   ngDoCheck(): void {
     this.userRole = this._tokenService.getRoleFromToken();
     this._cdRef.detectChanges();
-  }
-
-  private updateUserInfo(): void {
-    if (this.isAuthenticated()) {
-      (this._tokenService.getCurrentUser() as any).subscribe((user: { nameUs: string; }) => {
-        if (user && user.nameUs) {
-          this.userName = user.nameUs;
-        }
-      });
-    } else {
-      this.userName = '';
-    }
   }
 
   navigate(route: string) {

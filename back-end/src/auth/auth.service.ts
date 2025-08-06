@@ -42,7 +42,7 @@ export class AuthService {
   }
 
   async login({ emailUs, passwordUs }: Logindto) {
-    const user = await this.usersService.findByEmailWithPassword(emailUs);
+    const user = await this.usersService.findOneByEmail(emailUs);
     if (!user) {
       throw new UnauthorizedException('Email incorrecto');
     }
@@ -53,7 +53,7 @@ export class AuthService {
       throw new UnauthorizedException('Contraseña incorrecta');
     }
 
-    const payload = {emailUs: user.emailUs, rol: user.rol, idUs: user.idUs};
+    const payload = {user: user};
     const token = this.jwtService.sign(payload);
 
     return { token, emailUs };

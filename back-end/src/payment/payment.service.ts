@@ -30,8 +30,8 @@ export class PaymentService {
         }],
         back_urls: {
           success: 'http://localhost:4200/success',
-          failure: 'http://localhost:4200/bag',
-          pending: 'http://localhost:4200/bag',
+          failure: 'http://localhost:4200/failure',
+          pending: 'http://localhost:4200/pending',
         },
         auto_return: 'approved',
         metadata: {
@@ -53,7 +53,8 @@ export class PaymentService {
 
 
     try {
-      return { init_point: preference.init_point };
+      console.log('Preferencia creada:', preference);
+      return { sandbox_init_point: preference.sandbox_init_point };
     } catch (error) {
       throw new Error(`Error al crear el pago: ${error.message}`);
     }

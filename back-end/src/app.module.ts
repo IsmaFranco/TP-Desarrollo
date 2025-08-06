@@ -30,6 +30,7 @@ import { PurchaseClothe } from './purchase-clothe/entities/purchase-clothe.entit
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
         type: configService.get<'mysql'>('DB_TYPE'),
+        url: configService.get<string>('DB_URL'),
         host: configService.get<string>('DB_HOST'),
         port: configService.get<number>('DB_PORT'),
         username: configService.get<string>('DB_USERNAME'),

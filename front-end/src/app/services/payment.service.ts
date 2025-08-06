@@ -7,11 +7,11 @@ import { User } from '../models/clothes.model';
   providedIn: 'root',
 })
 export class PaymentService {
-  private apiUrl = API_CONFIG.URL_PAYMENTS;
-
+  private API_URL = `${API_CONFIG.API_URL}/payment`;
+  
   constructor(private http: HttpClient) {}
 
   createPayment(items: any[], user: User) {
-    return this.http.post<{ init_point: string }>(this.apiUrl, { items, user });
+    return this.http.post<{ sandbox_init_point: string }>(this.API_URL, { items, user });
   }
 }

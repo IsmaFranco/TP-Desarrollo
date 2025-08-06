@@ -17,7 +17,7 @@ export class TokenService {
     if (!token) return null;
 
     const decodedToken: any = jwtDecode(token);
-    return decodedToken.rol;
+    return decodedToken.user.rol;
   }
 
   isAutenticated(): boolean {
@@ -38,8 +38,8 @@ export class TokenService {
     if (!token) return of(null);
 
     try {
-      const decodedToken = jwtDecode<{ idUs: number }>(token);
-      return this.http.get(`http://localhost:3000/users/${decodedToken.idUs}`); // devuelve los datos del usuario
+      const decodedToken: any = jwtDecode(token);
+      return decodedToken; // devuelve el usuario
     } catch (error) {
       return of(null);
     }

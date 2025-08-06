@@ -26,9 +26,7 @@ export class PayComponent implements OnInit {
 
   async ngOnInit() {
     this.bagItems = this.bagService.getBagItems();
-    (this.tokenService.getCurrentUser() as Observable<User>).subscribe((user: User) => {
-      this.user = user;
-    });
+    this.user = this.tokenService.getCurrentUser().user;
   }
 
   calculateTotalPrice() {
@@ -41,8 +39,8 @@ export class PayComponent implements OnInit {
   aceptarCompra() {
     this.paymentService
       .createPayment(this.bagItems, this.user)
-      .subscribe((response: { init_point: string }) => {
-        window.location.href = response.init_point;
+      .subscribe((response: { sandbox_init_point: string }) => {
+        window.location.href = response.sandbox_init_point;
       });
   }
 }

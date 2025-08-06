@@ -32,9 +32,7 @@ export class UsersService {
 
   findByEmailWithPassword(emailUs: string): Promise<User> {
     return this.userRepository.findOne({
-      where: { emailUs },
-      select: ['idUs', 'nameUs', 'emailUs', 'passwordUs', 'rol'],
-    });
+      where: { emailUs: emailUs } });
   }
 
   findAll(): Promise<User[]> {

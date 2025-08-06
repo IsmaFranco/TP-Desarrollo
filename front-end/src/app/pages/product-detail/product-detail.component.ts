@@ -19,7 +19,7 @@ export class ProductDetailComponent implements OnInit {
   loading = true;
   public cloth?: Cloth;
   @Input() product: any;
-  quantity: number = 0;
+  quantity: number = 1;
 
   private tokenService = inject(TokenService);
   private route = inject(ActivatedRoute);

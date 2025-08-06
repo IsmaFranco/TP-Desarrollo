@@ -30,8 +30,8 @@ export class UserPurchasesComponent implements OnInit {
 
   private async loadUserPurchases(): Promise<void> {
     try {
-      const user = await firstValueFrom(this.tokenService.getCurrentUser());
-      this.user = user as User;
+      this.user = this.tokenService.getCurrentUser().user;
+
 
       if (!this.user || !this.user.idUs) {
         ///esto lo puse porque me daba unos errores en consola de que el usuario no estaba definido, pero porque tarda un pequeño tiempo en cargarlo

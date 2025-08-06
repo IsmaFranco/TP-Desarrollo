@@ -21,9 +21,7 @@ export class BagComponent implements OnInit {
 
   ngOnInit() {
     this.bagItems = this.bagService.getBagItems();
-    (this.tokenService.getCurrentUser() as Observable<User>).subscribe((user: User) => {
-      this.user = user;
-    });
+    this.user = this.tokenService.getCurrentUser().user;
   }
 
   removeProduct(productId: number) {

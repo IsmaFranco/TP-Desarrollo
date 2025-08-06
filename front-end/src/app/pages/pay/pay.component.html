@@ -11,7 +11,7 @@
     <div class="text-field">
         <h1 class="title">Resumen de tu compra</h1>
         <div class="texto">
-            <p>Dirección: {{user.addressUs | titlecase}}, {{user.locality.nameLo}}. Costo de envío: ${{user.locality.cost}}.</p>
+            <p>Dirección: {{user.addressUs | titlecase }}, {{user.locality.nameLo}}. Costo de envío: ${{user.locality.cost}}.</p>
             <div *ngFor="let product of bagItems">
                 <p>{{ product.nameCl }} - Precio: ${{ product.price }} - Unidades: {{product.quantity}}</p>
             </div>

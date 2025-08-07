@@ -41,7 +41,7 @@ export class NavComponent implements OnInit, OnDestroy {
     const userSub = this._tokenService.currentUser$.subscribe(
       (user) => {
         this.currentUser = user;
-        this.userRole = user?.user?.rol || null;
+        this.userRole = user?.rol || null;
         console.log('Nav: Usuario actual:', user); // Debug
       }
     );
@@ -83,7 +83,7 @@ export class NavComponent implements OnInit, OnDestroy {
 
   // Getter para obtener el nombre del usuario
   get userName(): string {
-    return this.currentUser?.user?.nameUs || 'Usuario';
+    return this.currentUser?.nameUs || 'Usuario';
   }
 
   // Métodos de compatibilidad (por si los usas en el template)

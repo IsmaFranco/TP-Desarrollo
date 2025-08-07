@@ -19,7 +19,7 @@ export class TokenService {
     // Verificar estado inicial al crear el servicio (con delay para SSR)
     setTimeout(() => {
       this.checkAuthStatus();
-    }, 0);
+    }, 400);
   }
 
   /**

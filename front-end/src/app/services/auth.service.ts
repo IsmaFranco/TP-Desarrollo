@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { API_CONFIG } from '../../environments';
+import { TokenService } from './token.service'; // Importar TokenService
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +16,10 @@ export class AuthService {
   private urlPurchaseClothes = API_CONFIG.API_URL + '/purchase-clothes';
   private urlLocalities = API_CONFIG.API_URL + '/localities';
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private tokenService: TokenService // Inyectar TokenService
+  ) {}
 
   login(email: string, password: string): Observable<any> {
     return this.http
@@ -25,7 +29,9 @@ export class AuthService {
       })
       .pipe(
         tap((response: { token: string }) => {
-          localStorage.setItem('token', response.token);
+          // CAMBIO IMPORTANTE: Usar el TokenService en lugar de localStorage directamente
+          this.tokenService.login(response.token);
+          console.log('Login exitoso, token guardado'); // Para debug
         })
       );
   }
@@ -56,6 +62,13 @@ export class AuthService {
           console.log('Registro exitoso:', response);
         })
       );
+  }
+
+  /**
+   * Método para hacer logout
+   */
+  logout(): void {
+    this.tokenService.logout();
   }
 
   newItem(

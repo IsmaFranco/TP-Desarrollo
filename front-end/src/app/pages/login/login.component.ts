@@ -20,7 +20,6 @@ import Swal from 'sweetalert2';
 })
 export class LoginComponent {
   loginForm!: FormGroup;
-  menuOption: string = '';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -38,7 +37,7 @@ export class LoginComponent {
     if (this.loginForm.invalid) {
       return;
     }
-    this.authService.login(email, password).subscribe((response) => {
+    this.authService.login(email, password).subscribe({next: (response) => {
       Swal.fire({
         icon: 'success',
         title: 'Sesion iniciada',
@@ -48,6 +47,13 @@ export class LoginComponent {
       this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
         this.router.navigate(['/']);
       });
+    }, error: (err) => {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error al iniciar sesión',
+        text: 'Datos incorrectos, intente nuevamente',
+      });
+    }
     });
   }
 

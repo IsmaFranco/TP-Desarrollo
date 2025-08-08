@@ -1,51 +1,76 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
-import { RouterLink, Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
-import { LOCAL_STORAGE } from '../../services/local-storage.provider.service';
+import { Component, inject, OnInit, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 import { BagService } from '../../services/bag.service';
+import { AuthService } from '../../services/auth.service';
+import { TokenService } from '../../services/token.service';
+import { Subscription } from 'rxjs';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-nav',
   standalone: true,
-  imports: [RouterLink, CommonModule],
+  imports: [CommonModule],
   templateUrl: './nav.component.html',
-  styleUrl: './nav.component.scss'
+  styleUrl: './nav.component.scss',
 })
-export class NavComponent implements OnInit {
+export class NavComponent implements OnInit, OnDestroy {
+  // Propiedades reactivas
+  isAuthenticated = false;
+  currentUser: any = null;
   userRole: string | null = null;
-
-  private _localStorage = inject(LOCAL_STORAGE);
+  
+  private subscriptions: Subscription[] = [];
+  
+  // Servicios inyectados
   private _bagService = inject(BagService);
   private _router = inject(Router);
+  private _tokenService = inject(TokenService);
   private _authService = inject(AuthService);
 
   ngOnInit(): void {
-    this.userRole = this._authService.getRoleFromToken();
+    const authSub = this._tokenService.isAuthenticated$.subscribe(
+      (isAuth) => {
+        this.isAuthenticated = isAuth;
+      }
+    );
+
+    const userSub = this._tokenService.currentUser$.subscribe(
+      (user) => {
+        this.currentUser = user?.user;
+        this.userRole = user?.user.rol || null;
+      }
+    );
+
+    this.subscriptions.push(authSub, userSub);
+
+    this._tokenService.checkAuthStatus();
   }
 
-  menuOption: string = '';
-  onOption(menuOption: string){
-    this.menuOption = menuOption;
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 
-  isAuthenticated(): boolean {
-    if (this._localStorage) { // Verifica si `localStorage` está disponible
-      const token = this._localStorage.getItem('token');
-      return token !== null;
-    }
-    return false; // Si `localStorage` es `null`, retorna `false`
+  navigate(route: string): void {
+    this._router.navigate([route]);
   }
 
-  logout() {
-    if (this._localStorage) { // Verifica si `localStorage` está disponible
-      this._localStorage.removeItem('token');} // Elimina el token del `localStorage
-    // Redirige al usuario si es necesario
-    this._bagService.clearBag();  // Vacía el carrito al cerrar sesión
-    this._router.navigate(['/login'], {replaceUrl: true});
-    setTimeout(() => {
-      window.location.reload();
-    }, 10);
+  logout(): void {
+    this._authService.logout();
+    this._bagService.clearBag();
+    
+    Swal.fire({
+      icon: 'success',
+      title: 'Sesión cerrada',
+      timer: 1000,
+      showConfirmButton: false,
+    });
+    
+    this._router.navigate(['/login']);
+  }
+
+  get userName(): string {
+    return this.currentUser?.nameUs || 'Usuario';
   }
 
 }

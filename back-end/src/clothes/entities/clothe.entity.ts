@@ -1,6 +1,5 @@
-import { Purchase } from 'src/purchases/entities/purchase.entity';
-import { User } from 'src/users/entities/user.entity';
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, ManyToMany } from 'typeorm';
+import { PurchaseClothe } from 'src/purchase-clothe/entities/purchase-clothe.entity';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 
 @Entity()
 export class Clothe {
@@ -23,14 +22,11 @@ export class Clothe {
   stock: number;
 
   @Column({ type: 'varchar', nullable: false, length: 500 })
-  image: string; //ver bien el tipo de string osea no se si estaria bien que sea tipo string
+  image: string; 
 
   @Column({ type: 'integer', nullable: false })
   price: number;
 
-  @ManyToMany(() => Purchase, (purchase) => purchase.clothes)
-  purchase: Purchase;
-
-  @OneToMany(() => User, (user) => user.clothes)
-  user: User;
+  @OneToMany(() => PurchaseClothe, purchaseClothe => purchaseClothe.clothe)
+  purchaseClothe: PurchaseClothe;
 }

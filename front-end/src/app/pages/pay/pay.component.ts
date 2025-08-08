@@ -48,8 +48,8 @@ export class PayComponent implements OnInit {
   aceptarCompra() {
     this.paymentService
       .createPayment(this.bagItems, this.user)
-      .subscribe((response: { sandbox_init_point: string }) => {
-        window.location.href = response.sandbox_init_point;
+      .subscribe((response: { init_point: string }) => {
+        window.location.href = response.init_point;
       });
   }
 }

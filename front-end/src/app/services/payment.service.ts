@@ -12,6 +12,6 @@ export class PaymentService {
   constructor(private http: HttpClient) {}
 
   createPayment(items: any[], user: User) {
-    return this.http.post<{ sandbox_init_point: string }>(this.API_URL, { items, user });
+    return this.http.post<{ init_point: string }>(this.API_URL, { items, user });
   }
 }

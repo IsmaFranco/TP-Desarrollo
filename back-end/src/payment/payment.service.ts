@@ -54,7 +54,7 @@ export class PaymentService {
 
     try {
       console.log('Preferencia creada:', preference);
-      return { sandbox_init_point: preference.sandbox_init_point };
+      return { init_point: preference.init_point };
     } catch (error) {
       throw new Error(`Error al crear el pago: ${error.message}`);
     }

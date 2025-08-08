@@ -2,7 +2,6 @@
     <h2>Tu Carrito</h2>
 
     <div *ngIf="bagItems.length > 0">
-        <div> tetas {{userLocality}} </div>
         <div *ngFor="let product of bagItems" class="bag-item">
             <img [src]="product.image" alt="{{ product.description }}" class="bag-item-image" />
             <div class="bag-item-details">

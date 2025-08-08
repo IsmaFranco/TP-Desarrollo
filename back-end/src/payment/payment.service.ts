@@ -34,6 +34,7 @@ export class PaymentService {
           pending: 'https://tp-desarrollo-sage.vercel.app/pending',
         },
         auto_return: 'approved',
+        notification_url: 'https://tp-desarrollo-sage.vercel.app/webhook/mercadopago',
         metadata: {
           user: {
             id: user.idUs,

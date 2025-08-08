@@ -29,31 +29,25 @@ export class NavComponent implements OnInit, OnDestroy {
   private _authService = inject(AuthService);
 
   ngOnInit(): void {
-    // Suscribirse al estado de autenticación
     const authSub = this._tokenService.isAuthenticated$.subscribe(
       (isAuth) => {
         this.isAuthenticated = isAuth;
-        console.log('Nav: Estado de autenticación:', isAuth); // Debug
       }
     );
 
-    // Suscribirse al usuario actual
     const userSub = this._tokenService.currentUser$.subscribe(
       (user) => {
-        this.currentUser = user;
-        this.userRole = user?.rol || null;
-        console.log('Nav: Usuario actual:', user); // Debug
+        this.currentUser = user?.user;
+        this.userRole = user?.user.rol || null;
       }
     );
 
     this.subscriptions.push(authSub, userSub);
 
-    // Verificar estado inicial
     this._tokenService.checkAuthStatus();
   }
 
   ngOnDestroy(): void {
-    // Limpiar suscripciones para evitar memory leaks
     this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 
@@ -62,7 +56,6 @@ export class NavComponent implements OnInit, OnDestroy {
   }
 
   logout(): void {
-    // Usar el AuthService para logout (que a su vez usa TokenService)
     this._authService.logout();
     this._bagService.clearBag();
     
@@ -76,18 +69,8 @@ export class NavComponent implements OnInit, OnDestroy {
     this._router.navigate(['/login']);
   }
 
-  // Getter para verificar si es admin
-  get isAdmin(): boolean {
-    return this.userRole === 'admin';
-  }
-
-  // Getter para obtener el nombre del usuario
   get userName(): string {
     return this.currentUser?.nameUs || 'Usuario';
   }
 
-  // Métodos de compatibilidad (por si los usas en el template)
-  isAuthenticatedSync(): boolean {
-    return this.isAuthenticated;
-  }
 }

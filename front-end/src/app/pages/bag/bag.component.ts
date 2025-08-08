@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { BagService } from '../../services/bag.service';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { TokenService } from '../../services/token.service';
 import { User } from '../../models/clothes.model';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-bag',
@@ -15,13 +16,24 @@ import { Observable } from 'rxjs';
 })
 export class BagComponent implements OnInit {
   bagItems: any[] = [];
-  user!: User;
+  user: User | null = null;
+  total: number = 0;
+  userLocality: any | null = null;
 
-  constructor(private bagService: BagService, private router: Router, private tokenService: TokenService) {}
+  private subs: Subscription[] = [];
 
-  ngOnInit() {
+  constructor(private bagService: BagService, private router: Router, private tokenService: TokenService, private cdRef: ChangeDetectorRef, private authService: AuthService) {}
+
+    ngOnInit(): void {
+    const userSub = this.tokenService.currentUser$.subscribe(user => {
+      this.user = user?.user || null;
+      this.cdRef.markForCheck();
+    });
+    this.subs.push(userSub);
+    
+    this.tokenService.checkAuthStatus();
+
     this.bagItems = this.bagService.getBagItems();
-    this.user = this.tokenService.getCurrentUser().user;
   }
 
   removeProduct(productId: number) {
@@ -31,7 +43,7 @@ export class BagComponent implements OnInit {
   calculateTotalPrice() {
     return this.bagItems.reduce(
       (total, item) => total + item.price * item.quantity,
-      this.user.locality.cost
+      this.user?.locality.cost
     );
   }
 

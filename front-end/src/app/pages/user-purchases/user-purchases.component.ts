@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { TokenService } from '../../services/token.service';
 import { User } from '../../models/clothes.model';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-user-purchases',
@@ -15,7 +15,8 @@ import { firstValueFrom } from 'rxjs';
 export class UserPurchasesComponent implements OnInit {
   constructor(
     private authService: AuthService,
-    private tokenService: TokenService
+    private tokenService: TokenService,
+    private cdRef: ChangeDetectorRef
   ) {}
 
   purchases: any[] = [];
@@ -23,21 +24,26 @@ export class UserPurchasesComponent implements OnInit {
   user!: User;
   products: any[] = [];
   isDropdownOpen = false;
+  private subs: Subscription[] = [];
 
   ngOnInit(): void {
+    const userSub = this.tokenService.currentUser$.subscribe(user => {
+      this.user = user?.user || null;
+      this.cdRef.markForCheck();
+    });
+    this.subs.push(userSub);
+
+    this.tokenService.checkAuthStatus();
     this.loadUserPurchases();
   }
 
   private async loadUserPurchases(): Promise<void> {
     try {
-      this.user = this.tokenService.getCurrentUser().user;
-
-
       if (!this.user || !this.user.idUs) {
         ///esto lo puse porque me daba unos errores en consola de que el usuario no estaba definido, pero porque tarda un pequeño tiempo en cargarlo
         return;
       }
-
+      
       const purchaseData = await firstValueFrom(
         this.authService.getUserPurchases(this.user.idUs)
       );

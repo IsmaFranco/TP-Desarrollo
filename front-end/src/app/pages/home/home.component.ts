@@ -8,6 +8,7 @@ import { AuthService } from '../../services/auth.service';
 import { ChangeDetectorRef } from '@angular/core';
 import Swal from 'sweetalert2';
 import { TokenService } from '../../services/token.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -27,9 +28,19 @@ export class HomeComponent implements OnInit {
   private tokenService = inject(TokenService);
   private cdRef = inject(ChangeDetectorRef);
 
+  private subs: Subscription[] = [];
+
   ngOnInit(): void {
-    this.userRole = this.tokenService.getRoleFromToken();
-    this.cdRef.detectChanges();
+    // 1) me suscribo al currentUser$ para detectar cambios
+    const userSub = this.tokenService.currentUser$.subscribe(user => {
+      this.userRole = user?.user.rol || null;
+      this.cdRef.markForCheck();
+    });
+    this.subs.push(userSub);
+
+    // 2) cargará de localStorage si ya había token
+    this.tokenService.checkAuthStatus();
+
     this.loadProducts();
   }
 

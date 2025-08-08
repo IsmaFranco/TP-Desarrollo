@@ -12,8 +12,9 @@
   </div>
 
   <div class="purchases-list">
-    <h2 *ngIf="filteredPurchases.length === 0">No se realizaron compras entre las fechas seleccionadas.</h2>
-    <div *ngIf="filteredPurchases.length !== 0">
+    <h2 *ngIf="!hasFiltered">Seleccione algun rango de fechas</h2>
+    <h2 *ngIf="hasFiltered && filteredPurchases.length === 0">No se realizaron compras entre las fechas seleccionadas.</h2>
+    <div *ngIf="filteredPurchases.length > 0">
       <h2>Compras realizadas: {{purchases.length}}</h2>
       <div *ngFor="let purchase of purchases">
         <div class="purchase-item">
@@ -22,7 +23,7 @@
             <p>Usuario: {{purchase.user.nameUs | titlecase}} {{purchase.user.lastNameUs | titlecase}} (ID: {{ purchase.user.idUs }}) - Dirección: {{purchase.user.addressUs | titlecase}}, {{purchase.user.locality.nameLo}}</p>
           <p>Productos:</p>
           <div *ngFor="let product of purchase.products">
-            ID: {{product.clothe?.idCl}} - {{ product.clothe?.nameCl }} - Quantity: {{product.quantity}} - {{
+            ID: {{product.clothe?.idCl}} - {{ product.clothe?.nameCl }} - Cantidad: {{product.quantity}} - {{
             product.unitPrice | currency }}
           </div>
         </div>

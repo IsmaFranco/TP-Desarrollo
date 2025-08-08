@@ -21,6 +21,7 @@ export class PurchasesComponent {
   purchases: any[] = [];
   filteredPurchases: any[] = [];
   filterForm: FormGroup;
+  hasFiltered = false;
 
   constructor(private authService: AuthService, private fb: FormBuilder) {
     this.filterForm = this.fb.group({
@@ -34,6 +35,7 @@ export class PurchasesComponent {
 
     this.purchases = [];
     this.filteredPurchases = [];
+    this.hasFiltered = true;
 
     if ((startDate && endDate === '') || (startDate === '' && endDate)) {
       //Si no se selecciona una fecha, se muestra un error

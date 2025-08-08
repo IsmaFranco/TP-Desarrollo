@@ -16,59 +16,41 @@ export class TokenService {
   public currentUser$ = this.currentUserSubject.asObservable();
 
   constructor(private http: HttpClient) {
-    // Verificar estado inicial al crear el servicio (con delay para SSR)
+    // Verificar estado inicial al crear el servicio (con delay por el servidor)
     setTimeout(() => {
       this.checkAuthStatus();
     }, 400);
   }
 
-  /**
-   * Verifica el estado de autenticación y actualiza los BehaviorSubjects
-   */
   checkAuthStatus(): void {
     if (typeof window !== 'undefined' && window.localStorage) {
       const token = localStorage.getItem('token');
       const isAuth = token !== null && token !== '';
-      
-      console.log('Verificando estado de auth:', { token: !!token, isAuth }); // Debug
       
       this.isAuthenticatedSubject.next(isAuth);
       
       if (isAuth && token) {
         try {
           const decodedToken: any = jwtDecode(token);
-          console.log('Token decodificado:', decodedToken); // Debug
           this.currentUserSubject.next(decodedToken);
         } catch (error) {
           console.error('Error decodificando token:', error);
-          this.logout(); // Token inválido, hacer logout
+          this.logout(); 
         }
       } else {
         this.currentUserSubject.next(null);
       }
-    } else {
-      // En el servidor (SSR), el usuario no está autenticado
-      this.isAuthenticatedSubject.next(false);
-      this.currentUserSubject.next(null);
     }
   }
 
-  /**
-   * Método para llamar después de un login exitoso
-   */
   login(token: string): void {
-    console.log('TokenService: Guardando token...'); // Debug
     if (typeof window !== 'undefined' && window.localStorage) {
       localStorage.setItem('token', token);
-      this.checkAuthStatus(); // Actualizar estado inmediatamente
+      this.checkAuthStatus(); 
     }
   }
 
-  /**
-   * Método para hacer logout
-   */
   logout(): void {
-    console.log('TokenService: Haciendo logout...'); // Debug
     if (typeof window !== 'undefined' && window.localStorage) {
       localStorage.removeItem('token');
       this.isAuthenticatedSubject.next(false);
@@ -76,9 +58,6 @@ export class TokenService {
     }
   }
 
-  /**
-   * Obtener el rol del token actual
-   */
   getRoleFromToken(): string | null {
     if (typeof window === 'undefined') return null;
     
@@ -92,37 +71,5 @@ export class TokenService {
       console.error('Error obteniendo rol del token:', error);
       return null;
     }
-  }
-
-  // Mantener métodos síncronos para compatibilidad (pero usar los reactivos cuando sea posible)
-  isAutenticated(): boolean {
-    if (typeof window !== 'undefined' && window.localStorage) {
-      const token = localStorage.getItem('token');
-      return token !== null && token !== '';
-    }
-    return false;
-  }
-
-  getCurrentUser(): any {
-    if (typeof window === 'undefined') return null;
-    
-    const token = localStorage.getItem('token');
-    if (!token) return null;
-
-    try {
-      const decodedToken: any = jwtDecode(token);
-      return decodedToken;
-    } catch (error) {
-      console.error('Error obteniendo usuario actual:', error);
-      return null;
-    }
-  }
-
-  /**
-   * Obtener el token actual
-   */
-  getToken(): string | null {
-    if (typeof window === 'undefined') return null;
-    return localStorage.getItem('token');
   }
 }

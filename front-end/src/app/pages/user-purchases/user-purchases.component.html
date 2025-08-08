@@ -1,8 +1,3 @@
-@if (isLoading == true) {
-
-}
-
-@else {
 <div class="container">
   <div class="purchases-list">
     <h2 *ngIf="purchases.length !== 0" >Compras realizadas por {{user.lastNameUs | titlecase}}, {{user.nameUs | titlecase}}: {{purchases.length}}</h2>
@@ -41,4 +36,3 @@
     </div>
   </div>
 </div>
-}

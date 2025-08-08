@@ -21,6 +21,7 @@ import Swal from 'sweetalert2';
 export class AddStockComponent implements OnInit {
   @Input() cloth!: Cloth;
   editStockForm!: FormGroup;
+  loading = true;
 
   constructor(
     private fb: FormBuilder,
@@ -35,6 +36,7 @@ export class AddStockComponent implements OnInit {
         .getProductById(params['id'])
         .subscribe((data: Cloth) => {
           this.cloth = data;
+          this.loading = false;
         });
     });
     this.editStockForm = this.fb.group({

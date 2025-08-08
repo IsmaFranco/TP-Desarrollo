@@ -1,0 +1,17 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.app-container {
+    background: var(--background-color);
+    color: rgb(210, 210, 210)
+}
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - 56px); //el body ocupe la pantalla completa abajo del navbar
+}
+

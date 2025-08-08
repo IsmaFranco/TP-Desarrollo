@@ -38,6 +38,7 @@ export class SuccessComponent implements OnInit {
       this.route.queryParams
         .pipe(
           switchMap((params) => {
+            console.log('Query params recibidos:', params); // <-- para depurar
             this.paymentId = params['payment_id'];
             return this.authService.getPurchaseByPaymentId(this.paymentId);
           }),

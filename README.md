@@ -1,11 +1,8 @@
 # Propuesta TP Desarrollo de SoftWare
 
 ## Instrucciones
-1) Importar la base de datos.
-2) Abrir una terminal, situarse en la carpeta "back-end" e introducir 'nest start'.
-3) Abrir otra terminal, situarse en la carpeta "front-end" e introducir 'ng serve'.
-4) Agregar un puerto 3000, y establecer su visibilidad en "público".
-5) Para el pago de una compra, utilizar la cuenta de MercadoPago de usuario "TESTUSER1361635941" y contraseña "cGuyn7tIUs".
+1) Ingresar al siguiente link: https://tp-desarrollo-sage.vercel.app
+2) Para el pago de una compra, utilizar la cuenta de MercadoPago de usuario "TESTUSER1361635941" y contraseña "cGuyn7tIUs".
 
 ## Link video de presentación
 https://youtu.be/OaGAMsiD4-k?feature=shared

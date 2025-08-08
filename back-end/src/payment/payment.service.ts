@@ -29,9 +29,9 @@ export class PaymentService {
           unit_price: user.locality.cost,
         }],
         back_urls: {
-          success: 'http://localhost:4200/success',
-          failure: 'http://localhost:4200/failure',
-          pending: 'http://localhost:4200/pending',
+          success: 'https://tp-desarrollo-sage.vercel.app/success',
+          failure: 'https://tp-desarrollo-sage.vercel.app/failure',
+          pending: 'https://tp-desarrollo-sage.vercel.app/pending',
         },
         auto_return: 'approved',
         metadata: {

@@ -7,10 +7,8 @@ import {
   MaxLength,
   MinLength,
 } from 'class-validator';
-import { Rol } from 'src/common/enums/rol.enum';
 
 export class RegisterDto {
-  //no estaria validando que cumpla con los datos
   @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value)) // esto sirve para que la contraseña no tenga espacios
   @IsString()
   @MinLength(2)
@@ -37,15 +35,14 @@ export class RegisterDto {
 
   @IsString()
   @MaxLength(50)
-  phoneUs: string; // ver como lo usaria con el +54 misma duda que con localidad y provincia
+  phoneUs: string; 
 
   @IsString()
   @MaxLength(50)
   addressUs: string;
 
   @IsInt()
-  @IsPositive()
-  postalCode: number;
+  idLo: number;
 
   //rol: Rol;
 }

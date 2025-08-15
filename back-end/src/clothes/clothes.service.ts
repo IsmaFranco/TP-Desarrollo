@@ -10,7 +10,7 @@ export class ClothesService {
   constructor(
     @InjectRepository(Clothe)
     private clotheRepository: Repository<Clothe>,
-  ) {}
+  ) { }
 
   create(createClotheDto: CreateClotheDto): Promise<Clothe> {
     const clothe = this.clotheRepository.create(createClotheDto);
@@ -40,6 +40,15 @@ export class ClothesService {
 
   async updateProductStock(id: number, newStock: number): Promise<void> {
     await this.clotheRepository.update(id, { stock: newStock });
+  }
+
+  async findByCategory(category: string): Promise<Clothe[]> {
+    return this.clotheRepository.find({ where: { typeCl: category } });
+  }
+
+  async decreaseStock(id: number, quantity: number): Promise<void> {
+    const product = await this.findOne(id);
+    await this.updateProductStock(id, product.stock - quantity);
   }
 
 }

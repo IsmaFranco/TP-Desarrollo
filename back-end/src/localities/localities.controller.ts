@@ -29,21 +29,21 @@ export class LocalitiesController {
     return this.localitiesService.findAll();
   }
 
-  @Get(':postalCode')
-  findOne(@Param('postalCode') postalCode: number): Promise<Locality> {
-    return this.localitiesService.findOne(+postalCode);
+  @Get(':idLo')
+  findOne(@Param('idLo') idLo: number): Promise<Locality> {
+    return this.localitiesService.findOne(+idLo);
   }
 
-  @Patch(':postalCode')
+  @Patch(':idLo')
   update(
-    @Param('postalCode') postalCode: number,
+    @Param('idLo') idLo: number,
     @Body() updateLocalityDto: UpdateLocalityDto,
   ): Promise<Locality> {
-    return this.localitiesService.update(+postalCode, updateLocalityDto);
+    return this.localitiesService.update(+idLo, updateLocalityDto);
   }
 
-  @Delete(':postalCode')
-  remove(@Param('postalCode') postalCode: number): Promise<void> {
-    return this.localitiesService.remove(+postalCode);
+  @Delete(':idLo')
+  remove(@Param('idLo') idLo: number): Promise<void> {
+    return this.localitiesService.remove(+idLo);
   }
 }

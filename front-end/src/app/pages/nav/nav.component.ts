@@ -6,27 +6,31 @@ import { AuthService } from '../../services/auth.service';
 import { TokenService } from '../../services/token.service';
 import { Subscription } from 'rxjs';
 import Swal from 'sweetalert2';
+import { ClothesService } from '../../services/clothes.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-nav',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './nav.component.html',
   styleUrl: './nav.component.scss',
 })
 export class NavComponent implements OnInit, OnDestroy {
-  // Propiedades reactivas
   isAuthenticated = false;
   currentUser: any = null;
   userRole: string | null = null;
-  
+  searchTerm: string = '';
+  searchResults: any[] = [];
+  searchTimeout: any;
+
   private subscriptions: Subscription[] = [];
-  
-  // Servicios inyectados
+
   private _bagService = inject(BagService);
   private _router = inject(Router);
   private _tokenService = inject(TokenService);
   private _authService = inject(AuthService);
+  private clothesService = inject(ClothesService);
 
   ngOnInit(): void {
     const authSub = this._tokenService.isAuthenticated$.subscribe(
@@ -58,19 +62,79 @@ export class NavComponent implements OnInit, OnDestroy {
   logout(): void {
     this._authService.logout();
     this._bagService.clearBag();
-    
+
     Swal.fire({
       icon: 'success',
-      title: 'Sesión cerrada',
+      title: 'Logout successful',
       timer: 1000,
       showConfirmButton: false,
     });
-    
+
     this._router.navigate(['/login']);
   }
 
   get userName(): string {
-    return this.currentUser?.nameUs || 'Usuario';
+    return this.currentUser?.nameUs || 'User';
+  }
+
+  onSearchChange(): void {
+    const term = this.searchTerm.trim();
+    if (term.length < 3) {
+      setTimeout(() => {
+        this.searchResults = [];
+      }, 100);
+      return;
+    }
+    if (term.length > 2) {
+      clearTimeout(this.searchTimeout);
+      this.searchTimeout = setTimeout(() => {
+        this.clothesService.searchProducts(term).subscribe({
+          next: (results) => this.searchResults = results
+        });
+      }, 100);
+    }
+  }
+
+  onSearchEnter(event: KeyboardEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+    const term = (this.searchTerm || '').trim();
+    if (!term) {
+      this._router.navigate(['/']);
+      return;
+    }
+    if (term.length < 3) {
+      Swal.fire({
+        title: 'Please enter at least 3 characters',
+        icon: 'info',
+        confirmButtonText: 'OK',
+        allowOutsideClick: false
+      });
+      return;
+    }
+    if (!this.searchResults || this.searchResults.length === 0) {
+      Swal.fire({
+        title: 'No results found',
+        text: 'Please try a different search term.',
+        icon: 'info',
+        confirmButtonText: 'OK',
+        allowOutsideClick: false
+      }).then(() => {
+        this.searchTerm = '';
+        this.searchResults = [];
+      });
+      return;
+    }
+    this._router.navigate(['/search', term]).then(() => {
+      this.searchTerm = '';
+      this.searchResults = [];
+    });
+  }
+
+  goToProduct(idCl: number): void {
+    this._router.navigate([`/products/${idCl}`]);
+    this.searchTerm = '';
+    this.searchResults = [];
   }
 
 }

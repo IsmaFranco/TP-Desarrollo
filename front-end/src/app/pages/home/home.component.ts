@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 import { inject, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Cloth } from '../../models/clothes.model';
 import { ClothesService } from '../../services/clothes.service';
 import { CommonModule } from '@angular/common';
-import { AuthService } from '../../services/auth.service';
 import { ChangeDetectorRef } from '@angular/core';
 import Swal from 'sweetalert2';
 import { TokenService } from '../../services/token.service';
@@ -22,11 +21,13 @@ export class HomeComponent implements OnInit {
   filteredProducts: Cloth[] = [];
   selectedCategory: string = '';
   userRole: string | null = null;
+  searchDesc: string = '';
 
   private clothesService = inject(ClothesService);
   private router = inject(Router);
   private tokenService = inject(TokenService);
   private cdRef = inject(ChangeDetectorRef);
+  private route = inject(ActivatedRoute)
 
   private subs: Subscription[] = [];
 
@@ -41,14 +42,24 @@ export class HomeComponent implements OnInit {
     // 2) cargará de localStorage si ya había token
     this.tokenService.checkAuthStatus();
 
-    this.loadProducts();
+    this.route.paramMap.subscribe(params => {
+      this.searchDesc = params.get('desc') || '';
+      this.loadProducts();
+    });
   }
 
-  loadProducts() {
-    this.clothesService.getProducts().subscribe((data: any[]) => {
-      this.products = data;
-      this.filteredProducts = data;
-    });
+  loadProducts(): void {
+    if (this.searchDesc) {
+      this.clothesService.searchProducts(this.searchDesc).subscribe(products => {
+        this.products = products;
+        this.filteredProducts = products;
+      });
+    } else {
+      this.clothesService.getProducts().subscribe(products => {
+        this.products = products;
+        this.filteredProducts = products;
+      });
+    }
   }
 
   navegate(route: string, id: number): void {
@@ -76,20 +87,20 @@ export class HomeComponent implements OnInit {
 
   confirmAction(id: number): void {
     Swal.fire({
-      title: '¿Estás seguro?',
-      text: 'Esta acción no se puede deshacer.',
+      title: '¿Are you sure?',
+      text: 'This action cannot be undone.',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Eliminar producto',
-      cancelButtonText: 'Cancelar',
+      confirmButtonText: 'Delete product',
+      cancelButtonText: 'Cancel',
     }).then((result) => {
       if (result.isConfirmed) {
         this.clothesService.deleteProduct(id).subscribe(() => {
           this.loadProducts();
         });
-        Swal.fire('¡Hecho!', 'Se eliminó el producto.', 'success');
+        Swal.fire('¡Done!', 'Product has been deleted.', 'success');
       } else if (result.dismiss === Swal.DismissReason.cancel) {
-        Swal.fire('Cancelado', 'No se eliminó el producto', 'error');
+        Swal.fire('Cancelled', 'Product was not deleted', 'error');
       }
     });
   }

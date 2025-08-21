@@ -1,26 +1,63 @@
 <div class="bag-container">
-    <h2>Tu Carrito</h2>
-
-    <div *ngIf="bagItems.length > 0">
-        <div *ngFor="let product of bagItems" class="bag-item">
-            <img [src]="product.image" alt="{{ product.description }}" class="bag-item-image" />
-            <div class="bag-item-details">
-                <h3>{{ product.nameCl }}</h3>
-                <p>Precio: ${{ product.price }} - Talle: {{ product.size }} - {{product.quantity}} unidades.</p>
-            </div>
-            <button (click)="removeProduct(product.idCl)" class="remove-button">Eliminar</button>
+    <div *ngIf="bagItems.length === 0" class="empty-bag">
+        <div class="empty-bag-content">
+            <h2>Your bag is empty</h2>
+            <p>Add some products to start your purchase</p>
         </div>
-        <div class="total-pay-container">
-            <div class="total-price">
-                <div class="shipment"> Costo de envío añadido al total: ${{user?.locality?.cost}}</div>
-                <p>Total: ${{ calculateTotalPrice() }}</p>
+    </div>
+
+    <div class="bag-header" *ngIf="bagItems.length > 0">
+        <h2>Your bag</h2>
+        <span class="items-count">{{ bagItems.length }} item(s)</span>
+    </div>
+    <div *ngIf="bagItems.length > 0" class="bag-content">
+        <div class="bag-items-container">
+            <div class="bag-items-section">
+                <div *ngFor="let product of bagItems" class="bag-item-card">
+                    <div class="item-image-container">
+                        <img [src]="product.image" [alt]="product.description" class="bag-item-image" />
+                    </div>
+
+                    <div class="item-details">
+                        <h3 class="item-title">{{ product.nameCl }}</h3>
+                        <div class="item-meta">
+                            <span class="item-price">${{ product.price }}</span>
+                            <span class="item-size">Size: {{ product.size }}</span>
+                            <span class="item-quantity">Quantity: {{ product.quantity }}</span>
+                        </div>
+                    </div>
+
+                    <div class="item-actions">
+                        <button (click)="removeProduct(product.idCl)" class="remove-btn">
+                            Remove
+                        </button>
+                    </div>
+                </div>
             </div>
-            <div class="pay-container">
-                <button class="pay" *ngIf="hasItemsInBag()" (click)="navigate()">Pay</button>
+        </div>
+
+        <div class="checkout-section">
+            <div class="summary-card">
+                <h3>Purchase Summary</h3>
+
+                <div class="summary-row">
+                    <span>Subtotal:</span>
+                    <span>${{ calculateTotalPrice() - (user?.locality?.cost || 0) }}</span>
+                </div>
+
+                <div class="summary-row">
+                    <span>Shipping to {{user?.addressUs}}, {{user?.locality?.nameLo}}:</span>
+                    <span>${{ user?.locality?.cost }}</span>
+                </div>
+
+                <div class="summary-row total-row">
+                    <span>Total:</span>
+                    <span class="total-amount">${{ calculateTotalPrice() }}</span>
+                </div>
+
+                <button class="checkout-btn" *ngIf="hasItemsInBag()" (click)="aceptarCompra()">
+                    Checkout
+                </button>
             </div>
         </div>
     </div>
-    <ng-template #emptyBag>
-        <p>El carrito está vacío.</p>
-    </ng-template>
-</div>

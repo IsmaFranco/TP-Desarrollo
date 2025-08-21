@@ -1,33 +1,59 @@
 <div class="container">
   <div class="filtro-fechas">
     <form [formGroup]="filterForm" (ngSubmit)="filterPurchases()">
-      <label for="startDate">Fecha inicial:</label>
+      <label for="startDate">Initial date:</label>
       <input type="date" id="startDate" formControlName="startDate" />
 
-      <label for="endDate">Fecha final:</label>
+      <label for="endDate">Final date:</label>
       <input type="date" id="endDate" formControlName="endDate" />
 
-      <button type="submit">Filtrar</button>
+      <button type="submit">Filter</button>
     </form>
   </div>
 
   <div class="purchases-list">
-    <h2 *ngIf="!hasFiltered">Seleccione algun rango de fechas</h2>
-    <h2 *ngIf="hasFiltered && filteredPurchases.length === 0">No se realizaron compras entre las fechas seleccionadas.</h2>
+    <h2 *ngIf="!hasFiltered">Please select a date range</h2>
+    <h2 *ngIf="hasFiltered && filteredPurchases.length === 0">No purchases found for the selected date range.</h2>
     <div *ngIf="filteredPurchases.length > 0">
-      <h2>Compras realizadas: {{purchases.length}}</h2>
+      <div class="header-container">
+        <h2>Purchases made: {{purchases.length}}</h2>
+        <div class="sort-options">
+          <button class="sort-button" *ngIf="purchases.length !== 0" (click)="isDropdownOpen = !isDropdownOpen">
+            <span>Sort by</span>
+          </button>
+
+          <div class="dropdown-menu" [class.open]="isDropdownOpen">
+            <div class="dropdown-item" (click)="sortPurchases('date', 'desc'); isDropdownOpen = false">
+              Date (most recent first)
+            </div>
+            <div class="dropdown-item" (click)="sortPurchases('date', 'asc'); isDropdownOpen = false">
+              Date (oldest first)
+            </div>
+            <div class="dropdown-item" (click)="sortPurchases('amount', 'desc'); isDropdownOpen = false">
+              Amount (highest to lowest)
+            </div>
+            <div class="dropdown-item" (click)="sortPurchases('amount', 'asc'); isDropdownOpen = false">
+              Amount (lowest to highest)
+            </div>
+          </div>
+        </div>
+      </div>
       <div *ngFor="let purchase of purchases">
         <div class="purchase-item">
-          <p>ID Compra: {{ purchase.idPu }} - Fecha: {{ purchase.datePu | date }} - Número de Envío:
-            {{purchase.shipment.idSh}} (Estado: {{purchase.shipment.status}}) - Total: {{ purchase.amount | currency }}</p>
-            <p>Usuario: {{purchase.user.nameUs | titlecase}} {{purchase.user.lastNameUs | titlecase}} (ID: {{ purchase.user.idUs }}) - Dirección: {{purchase.user.addressUs | titlecase}}, {{purchase.user.locality.nameLo}}</p>
-          <p>Productos:</p>
-          <div *ngFor="let product of purchase.products">
-            ID: {{product.clothe?.idCl}} - {{ product.clothe?.nameCl }} - Cantidad: {{product.quantity}} - {{
-            product.unitPrice | currency }}
+          <div class="purchase-main">
+            <p>ID Purchase: {{ purchase.idPu }} - Date: {{ purchase.datePu | date }} - Shipment Number:
+              {{purchase.shipment.idSh}} (Status: {{purchase.shipment.status}}) - Total: {{ purchase.amount | currency
+              }}</p>
+            <p>User: {{purchase.user.nameUs | titlecase}} {{purchase.user.lastNameUs | titlecase}} (ID: {{
+              purchase.user.idUs }}) - Address: {{purchase.user.addressUs | titlecase}},
+              {{purchase.user.locality.nameLo}}</p>
+            <p>Products:</p>
+            <div *ngFor="let product of purchase.products">
+              ID: {{product.clothe?.idCl}} - {{ product.clothe?.nameCl }} - Quantity: {{product.quantity}} - {{
+              product.unitPrice | currency }}
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>

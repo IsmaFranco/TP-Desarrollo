@@ -28,7 +28,7 @@ export class AddStockComponent implements OnInit {
     private clothesService: ClothesService,
     private route: ActivatedRoute,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
@@ -52,7 +52,7 @@ export class AddStockComponent implements OnInit {
         .subscribe((response) => {
           Swal.fire({
             icon: 'success',
-            title: 'Stock añadido correctamente',
+            title: 'Stock updated successfully',
             timer: 1000,
             showConfirmButton: false,
           });

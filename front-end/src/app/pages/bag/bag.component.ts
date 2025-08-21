@@ -4,8 +4,8 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { TokenService } from '../../services/token.service';
 import { User } from '../../models/clothes.model';
-import { Observable, Subscription } from 'rxjs';
-import { AuthService } from '../../services/auth.service';
+import { Subscription } from 'rxjs';
+import { PaymentService } from '../../services/payment.service';
 
 @Component({
   selector: 'app-bag',
@@ -22,15 +22,15 @@ export class BagComponent implements OnInit {
 
   private subs: Subscription[] = [];
 
-  constructor(private bagService: BagService, private router: Router, private tokenService: TokenService, private cdRef: ChangeDetectorRef, private authService: AuthService) {}
+  constructor(private bagService: BagService, private router: Router, private tokenService: TokenService, private cdRef: ChangeDetectorRef, private paymentService: PaymentService) { }
 
-    ngOnInit(): void {
+  ngOnInit(): void {
     const userSub = this.tokenService.currentUser$.subscribe(user => {
       this.user = user?.user || null;
       this.cdRef.markForCheck();
     });
     this.subs.push(userSub);
-    
+
     this.tokenService.checkAuthStatus();
 
     this.bagItems = this.bagService.getBagItems();
@@ -51,7 +51,11 @@ export class BagComponent implements OnInit {
     return this.bagItems.length > 0;
   }
 
-  navigate(){
-    this.router.navigate(['/pay']);
+  aceptarCompra() {
+    this.paymentService
+      .createPayment(this.bagItems, this.user!)
+      .subscribe((response: { init_point: string }) => {
+        window.location.href = response.init_point;
+      });
   }
 }

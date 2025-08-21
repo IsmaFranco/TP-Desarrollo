@@ -17,7 +17,7 @@ export class UserPurchasesComponent implements OnInit {
     private authService: AuthService,
     private tokenService: TokenService,
     private cdRef: ChangeDetectorRef
-  ) {}
+  ) { }
 
   purchases: any[] = [];
   isLoading = true;
@@ -43,7 +43,7 @@ export class UserPurchasesComponent implements OnInit {
         ///esto lo puse porque me daba unos errores en consola de que el usuario no estaba definido, pero porque tarda un pequeño tiempo en cargarlo
         return;
       }
-      
+
       const purchaseData = await firstValueFrom(
         this.authService.getUserPurchases(this.user.idUs)
       );

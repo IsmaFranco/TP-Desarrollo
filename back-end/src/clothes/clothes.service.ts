@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 import { CreateClotheDto } from './dto/create-clothe.dto';
 import { UpdateClotheDto } from './dto/update-clothe.dto';
 import { Clothe } from './entities/clothe.entity';
@@ -50,5 +50,11 @@ export class ClothesService {
     const product = await this.findOne(id);
     await this.updateProductStock(id, product.stock - quantity);
   }
+
+  async searchByName(query: string): Promise<Clothe[]> {
+  return this.clotheRepository.find({
+    where: { nameCl: ILike(`%${query}%`) }
+  });
+}
 
 }

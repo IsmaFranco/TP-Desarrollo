@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   Put,
+  Query,
 } from '@nestjs/common';
 import { ClothesService } from './clothes.service';
 import { CreateClotheDto } from './dto/create-clothe.dto';
@@ -28,6 +29,11 @@ export class ClothesController {
   @Get()
   findAll(): Promise<Clothe[]> {
     return this.clothesService.findAll();
+  }
+
+  @Get('search')
+  searchProducts(@Query('q') query: string) {
+    return this.clothesService.searchByName(query);
   }
 
   @Get(':idCl')

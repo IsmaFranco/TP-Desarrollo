@@ -27,7 +27,7 @@ export class SuccessComponent implements OnInit {
     private authService: AuthService,
     private zone: NgZone,
     private cd: ChangeDetectorRef
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loadData();
@@ -38,7 +38,6 @@ export class SuccessComponent implements OnInit {
       this.route.queryParams
         .pipe(
           switchMap((params) => {
-            console.log('Query params recibidos:', params); // <-- para depurar
             this.paymentId = params['payment_id'];
             return this.authService.getPurchaseByPaymentId(this.paymentId);
           }),
@@ -58,7 +57,7 @@ export class SuccessComponent implements OnInit {
 
             Swal.fire({
               icon: 'success',
-              title: 'Compra realizada',
+              title: 'Purchase successful',
               timer: 2000,
               showConfirmButton: false,
             });

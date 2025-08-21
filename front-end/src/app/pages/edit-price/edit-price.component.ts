@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ClothesService } from '../../services/clothes.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Cloth } from '../../models/clothes.model';
@@ -52,7 +52,7 @@ export class EditPriceComponent implements OnInit {
         .subscribe((response) => {
           Swal.fire({
             icon: 'success',
-            title: 'Precio actualizado correctamente',
+            title: 'Price updated successfully',
             timer: 1000,
             showConfirmButton: false,
           });

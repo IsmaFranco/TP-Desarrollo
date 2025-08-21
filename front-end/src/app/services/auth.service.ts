@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { API_CONFIG } from '../../environments';
-import { TokenService } from './token.service'; 
+import { TokenService } from './token.service';
 
 @Injectable({
   providedIn: 'root',
@@ -15,11 +15,12 @@ export class AuthService {
   private urlPurchases = API_CONFIG.API_URL + '/purchases';
   private urlPurchaseClothes = API_CONFIG.API_URL + '/purchase-clothe';
   private urlLocalities = API_CONFIG.API_URL + '/localities';
+  private urlUsers = API_CONFIG.API_URL + '/users';
 
   constructor(
     private http: HttpClient,
-    private tokenService: TokenService 
-  ) {}
+    private tokenService: TokenService
+  ) { }
 
   login(email: string, password: string): Observable<any> {
     return this.http
@@ -86,6 +87,10 @@ export class AuthService {
     return this.http.post<any>(this.urlShipments, shipmentData);
   }
 
+  updateShipmentStatus(idSh: number, status: string) {
+    return this.http.patch(`${this.urlShipments}/${idSh}`, { status });
+  }
+
   createPurchase(purchaseData: any) {
     return this.http.post(this.urlPurchases, purchaseData);
   }
@@ -114,7 +119,28 @@ export class AuthService {
     return this.http.get(this.urlLocalities);
   }
 
+  updateLocality(idLo: number, updatedData: any): Observable<any> {
+    return this.http.patch(`${this.urlLocalities}/${idLo}`, updatedData);
+  }
+
+  deleteLocality(idLo: number): Observable<any> {
+    return this.http.delete(`${this.urlLocalities}/${idLo}`);
+  }
+
   newLocality(nameLo: string, postalCode: number, cost: number): Observable<any> {
     return this.http.post(this.urlLocalities, { nameLo, postalCode, cost });
   }
+
+  changePassword(data: { idUs: number, newPassword: string }) {
+    return this.http.patch(`${this.urlUsers}/${data.idUs}/password`, data);
+  }
+
+  updateProfile(data: any) {
+    return this.http.patch(`${this.urlUsers}/${data.idUs}`, data);
+  }
+
+  deleteAccount(data: { idUs: number, password: string }) {
+    return this.http.delete(`${this.urlUsers}/${data.idUs}`, { body: { password: data.password } });
+  }
+
 }

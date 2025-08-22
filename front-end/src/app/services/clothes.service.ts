@@ -39,7 +39,7 @@ export class ClothesService {
     });
   }
 
-  deleteProduct(id: number): Observable<any> {
-    return this.http.delete(`${this.urlBase}/${id}`);
+  deleteProduct(idCl: number): Observable<any> {
+    return this.http.patch<any>(`${this.urlBase}/${idCl}/deactivate`, {});
   }
 }

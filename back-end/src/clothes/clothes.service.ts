@@ -18,11 +18,13 @@ export class ClothesService {
   }
 
   findAll(): Promise<Clothe[]> {
-    return this.clotheRepository.find();
+    return this.clotheRepository.find({
+    where: { isActive: true }
+  });
   }
 
   findOne(idCl: number): Promise<Clothe> {
-    return this.clotheRepository.findOne({ where: { idCl: idCl } });
+    return this.clotheRepository.findOne({ where: { idCl: idCl, isActive: true } });
   }
 
   async update(idCl: number, updateClotheDto: UpdateClotheDto,): Promise<Clothe> {
@@ -31,7 +33,7 @@ export class ClothesService {
   }
 
   async remove(idCl: number): Promise<void> {
-    await this.clotheRepository.delete(idCl);
+    await this.clotheRepository.update(idCl, { isActive: false });
   }
 
   async updateProductPrice(id: number, newPrice: number): Promise<void> {
@@ -43,7 +45,7 @@ export class ClothesService {
   }
 
   async findByCategory(category: string): Promise<Clothe[]> {
-    return this.clotheRepository.find({ where: { typeCl: category } });
+    return this.clotheRepository.find({ where: { typeCl: category, isActive: true } });
   }
 
   async decreaseStock(id: number, quantity: number): Promise<void> {
@@ -52,9 +54,14 @@ export class ClothesService {
   }
 
   async searchByName(query: string): Promise<Clothe[]> {
-  return this.clotheRepository.find({
-    where: { nameCl: ILike(`%${query}%`) }
-  });
-}
+    return this.clotheRepository.find({
+      where: { nameCl: ILike(`%${query}%`), isActive: true }
+    });
+  }
+
+  async deactivateProduct(idCl: number): Promise<Clothe> {
+    await this.clotheRepository.update(idCl, { isActive: false });
+    return this.findOne(idCl);
+  }
 
 }

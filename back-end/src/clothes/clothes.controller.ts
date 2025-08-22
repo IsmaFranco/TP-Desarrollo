@@ -70,4 +70,9 @@ export class ClothesController {
   return await this.clothesService.updateProductStock(id, stock);
   }
 
+  @Patch(':idCl/deactivate')
+  async deactivateProduct(@Param('idCl') idCl: number) {
+    return await this.clothesService.deactivateProduct(idCl);
+  }
+
 }

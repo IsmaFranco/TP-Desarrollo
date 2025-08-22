@@ -2,22 +2,23 @@
   margin-top: 20px;
 }
 
-  .purchases-list {
-    margin-top: 20px;
-    padding: 10px;
-    border-radius: 5px;
-    background-color: #363636;
-  }
-  
-  .purchase-item {
-    border: 1px solid #ddd;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-  }
-  
+.purchases-list {
+  margin-top: 20px;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: var(--back-color);
+  color: var(--title-color);
+}
+
+.purchase-item {
+  border: 1px solid var(--border-color);
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
 .filtro-fechas {
-  background-color: #2c2c2c; 
+  background-color: var(--back-color);
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
@@ -29,29 +30,27 @@
   margin: auto;
 }
 
-/* Estilo para los elementos de entrada */
 .filtro-fechas input {
-  background-color: #1e1e1e; /* Gris más oscuro */
-  color: #ffffff; /* Texto blanco */
-  border: 1px solid #444;
+  background-color: var(--background-color);
+  color: #ffffff;
+  border: 1px solid var(--border-color);
   border-radius: 5px;
   padding: 10px;
   width: 100%;
   font-size: 14px;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  transition: var(--border-color) 0.3s ease, box-shadow 0.3s ease;
 }
 
 .filtro-fechas input:hover {
-  border-color: #00bcd4; /* Azul claro */
-  box-shadow: 0 0 5px rgba(0, 188, 212, 0.8);
+  border-color: var(--pay-color);
+  box-shadow: 0 0 5px var(--pay-color);
   outline: none;
 }
 
-/* Estilo para el botón de filtro */
 .filtro-fechas button {
-  background-color: #00bcd4; /* Azul claro */
+  background-color: var(--pay-color);
   color: #ffffff;
-  margin-top: 10px;
+  margin: 15px auto 0;
   display: flex;
   align-items: center;
   border: none;
@@ -59,23 +58,129 @@
   padding: 10px 20px;
   font-size: 16px;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  transition: var(--background-color) 0.3s ease, transform 0.2s ease;
 }
 
 .filtro-fechas button:hover {
-  background-color: #0097a7; /* Azul más oscuro */
   transform: scale(1.05);
 }
 
 .filtro-fechas button:active {
-  background-color: #00796b; /* Verde azulado oscuro */
   transform: scale(1);
 }
 
-/* Estilo para etiquetas */
 .filtro-fechas label {
-  color: #ffffff;
+  color: var(--text-color);
   font-size: 14px;
   margin-bottom: 5px;
   align-self: flex-start;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  padding: 15px 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--title-color);
+    letter-spacing: 0.5px;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.sort-options {
+  position: relative;
+  margin-bottom: 0;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.sort-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--background-color);
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  cursor: pointer;
+  min-width: 120px;
+  border-radius: 25px;
+  font-weight: 500;
+  font-size: 0.9rem;
+  letter-spacing: 0.3px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  }
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  background: var(--back-color);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  z-index: 100;
+  width: 280px;
+  right: 0;
+  top: calc(100% + 5px);
+  border-radius: 15px;
+  overflow: hidden;
+  animation: fadeInUp 0.3s ease-out;
+
+  &.open {
+    display: block;
+  }
+}
+
+.dropdown-item {
+  padding: 15px 20px;
+  cursor: pointer;
+  color: var(--text-color);
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  position: relative;
+
+  &:hover {
+    color: var(--text-color);
+    background: var(--background-color);
+  }
+}
+
+.purchase-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border: 1px solid var(--border-color);
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  background: var(--back-color);
+
+  .purchase-main {
+    flex: 1 1 auto;
+  }
+
+  .purchase-actions {
+    display: flex;
+    align-items: flex-start;
+    margin-left: 20px;
+  }
 }

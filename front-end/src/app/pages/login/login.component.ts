@@ -1,53 +1,70 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { Router, RouterLink} from '@angular/router';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, Inject } from '@angular/core';
+import { Router } from '@angular/router';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, RouterLink, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule],
   providers: [AuthService],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  styleUrl: './login.component.scss',
 })
-export class LoginComponent implements OnInit {
-
+export class LoginComponent {
   loginForm!: FormGroup;
-  menuOption: string = '';
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router) {
+  constructor(
+    private formBuilder: FormBuilder,
+    @Inject(AuthService) private authService: AuthService,
+    private router: Router
+  ) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
+      password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
 
   onSubmit() {
     const { email, password } = this.loginForm.value;
     if (this.loginForm.invalid) {
-      return;}
-    this.authService.login(email, password).subscribe(
-      response => {
-        console.log('Login exitoso:', response);
-        this.router.navigate(['/'], {replaceUrl: true});
-        setTimeout(() => {
-          window.location.reload();
-        }, 10);
-      }
+      return;
+    }
+    this.authService.login(email, password).subscribe({next: (response) => {
+      Swal.fire({
+        icon: 'success',
+        title: 'Login successful',
+        timer: 1000,
+        showConfirmButton: false,
+      });
+      this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+        this.router.navigate(['/']);
+      });
+    }, error: (err) => {
+      Swal.fire({
+        icon: 'error',
+        title: 'Login failed',
+        text: 'Incorrect credentials, please try again',
+      });
+    }
+    });
+  }
+
+  navigate(url: string) {
+    this.router.navigate([url]);
+  }
+
+  hasError(field: string, typeError: string) {
+    return (
+      this.loginForm.get(field)?.hasError(typeError) &&
+      this.loginForm.get(field)?.touched
     );
   }
-  
-  ngOnInit(): void {
-  }
-
-  onOption(menuOption: string){
-    this.menuOption = menuOption;
-  }
-
-  hasError(field: string, typeError: string){
-    return this.loginForm.get(field)?.hasError(typeError) && this.loginForm.get(field)?.touched;
-  }
-
 }

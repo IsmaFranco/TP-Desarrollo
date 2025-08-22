@@ -1,0 +1,128 @@
+<div class="settings-container">
+  <h1 class="settings-title">Account Settings</h1>
+
+  <div class="settings-options">
+
+    <div class="setting-card">
+      <div class="card-header">
+        <h3>Change Password</h3>
+      </div>
+      <p>Update your account password</p>
+      <button class="btn btn-primary" (click)="showChangePassword = !showChangePassword">
+        {{ showChangePassword ? 'Cancel' : 'Change Password' }}
+      </button>
+
+      <div class="form-section" *ngIf="showChangePassword">
+        <form [formGroup]="passwordForm" (ngSubmit)="changePassword()">
+          <div class="form-group">
+            <label>Current Password</label>
+            <input type="password" formControlName="currentPassword" class="form-control">
+            <span class="error-message"
+              *ngIf="passwordForm.get('currentPassword')?.invalid && passwordForm.get('currentPassword')?.touched">
+              Current password is required
+            </span>
+          </div>
+          <div class="form-group">
+            <label>New Password</label>
+            <input type="password" formControlName="newPassword" class="form-control">
+            <span class="error-message"
+              *ngIf="passwordForm.get('newPassword')?.invalid && passwordForm.get('newPassword')?.touched">
+              Password must be at least 6 characters
+            </span>
+          </div>
+          <div class="form-group">
+            <label>Confirm New Password</label>
+            <input type="password" formControlName="confirmPassword" class="form-control">
+            <span class="error-message"
+              *ngIf="passwordForm.hasError('passwordMismatch') && passwordForm.get('confirmPassword')?.touched">
+              Passwords don't match
+            </span>
+          </div>
+          <button type="submit" class="btn btn-success" [disabled]="passwordForm.invalid">
+            Update Password
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <div class="setting-card">
+      <div class="card-header">
+        <h3>Update Profile</h3>
+      </div>
+      <p>Change your personal information</p>
+      <button class="btn btn-primary" (click)="showUpdateProfile = !showUpdateProfile">
+        {{ showUpdateProfile ? 'Cancel' : 'Update Profile' }}
+      </button>
+
+      <div class="form-section" *ngIf="showUpdateProfile">
+        <form [formGroup]="profileForm" (ngSubmit)="updateProfile()">
+          <div class="form-group">
+            <label>First Name</label>
+            <input type="text" formControlName="nameUs" class="form-control">
+          </div>
+          <div class="form-group">
+            <label>Last Name</label>
+            <input type="text" formControlName="lastNameUs" class="form-control">
+          </div>
+          <div class="form-group">
+            <label>Phone</label>
+            <input type="text" formControlName="phoneUs" class="form-control">
+          </div>
+          <div class="form-group">
+            <label>Address</label>
+            <input type="text" formControlName="addressUs" class="form-control">
+          </div>
+          <div class="form-group">
+            <label>Locality</label>
+            <select formControlName="idLo" class="form-control">
+              <option value="">Select a locality</option>
+              <option *ngFor="let locality of localities" [value]="locality.idLo">
+                {{locality.nameLo}} (CP: {{locality.postalCode}})
+              </option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-success" [disabled]="profileForm.invalid">
+            Update Profile
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <div class="setting-card danger">
+      <div class="card-header">
+        <h3>Delete Account</h3>
+      </div>
+      <p>Permanently delete your account and all data</p>
+      <button class="btn btn-danger" (click)="showDeleteAccount = !showDeleteAccount">
+        {{ showDeleteAccount ? 'Cancel' : 'Delete Account' }}
+      </button>
+
+      <div class="form-section" *ngIf="showDeleteAccount">
+        <div class="warning-box">
+          <p>This action cannot be undone. All your data will be permanently deleted.</p>
+        </div>
+        <form [formGroup]="deleteForm" (ngSubmit)="deleteAccount()">
+          <div class="form-group">
+            <label>Enter your password to confirm</label>
+            <input type="password" formControlName="password" class="form-control">
+            <span class="error-message"
+              *ngIf="deleteForm.get('password')?.invalid && deleteForm.get('password')?.touched">
+              Password is required to delete account
+            </span>
+          </div>
+          <div class="form-group">
+            <label>Type "DELETE" to confirm</label>
+            <input type="text" formControlName="confirmText" class="form-control" placeholder="DELETE">
+            <span class="error-message"
+              *ngIf="deleteForm.hasError('confirmTextMismatch') && deleteForm.get('confirmText')?.touched">
+              You must type "DELETE" to confirm
+            </span>
+          </div>
+          <button type="submit" class="btn btn-danger" [disabled]="deleteForm.invalid">
+            Delete My Account Forever
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -13,10 +13,7 @@ import { LocalitiesService } from './localities.service';
 import { CreateLocalityDto } from './dto/create-locality.dto';
 import { UpdateLocalityDto } from './dto/update-locality.dto';
 import { Locality } from './entities/locality.entity';
-import { Rol } from 'src/common/enums/rol.enum';
-import { Auth } from 'src/auth/decorators/auth.decorators';
 
-@Auth(Rol.ADMIN)
 @Controller('localities')
 export class LocalitiesController {
   constructor(private readonly localitiesService: LocalitiesService) {}
@@ -32,21 +29,21 @@ export class LocalitiesController {
     return this.localitiesService.findAll();
   }
 
-  @Get(':postalCode')
-  findOne(@Param('postalCode') postalCode: number): Promise<Locality> {
-    return this.localitiesService.findOne(+postalCode);
+  @Get(':idLo')
+  findOne(@Param('idLo') idLo: number): Promise<Locality> {
+    return this.localitiesService.findOne(+idLo);
   }
 
-  @Patch(':postalCode')
+  @Patch(':idLo')
   update(
-    @Param('postalCode') postalCode: number,
+    @Param('idLo') idLo: number,
     @Body() updateLocalityDto: UpdateLocalityDto,
   ): Promise<Locality> {
-    return this.localitiesService.update(+postalCode, updateLocalityDto);
+    return this.localitiesService.update(+idLo, updateLocalityDto);
   }
 
-  @Delete(':postalCode')
-  remove(@Param('postalCode') postalCode: number): Promise<void> {
-    return this.localitiesService.remove(+postalCode);
+  @Delete(':idLo')
+  remove(@Param('idLo') idLo: number): Promise<void> {
+    return this.localitiesService.remove(+idLo);
   }
 }

@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   Put,
+  Query,
 } from '@nestjs/common';
 import { ClothesService } from './clothes.service';
 import { CreateClotheDto } from './dto/create-clothe.dto';
@@ -30,9 +31,19 @@ export class ClothesController {
     return this.clothesService.findAll();
   }
 
+  @Get('search')
+  searchProducts(@Query('q') query: string) {
+    return this.clothesService.searchByName(query);
+  }
+
   @Get(':idCl')
   findOne(@Param('idCl') idCl: number): Promise<Clothe> {
     return this.clothesService.findOne(idCl);
+  }
+
+  @Get('type/:typeCl')
+  findByCategory(@Param('typeCl') category: string): Promise<Clothe[]> {
+    return this.clothesService.findByCategory(category);
   }
 
   @Auth(Rol.ADMIN)
@@ -44,7 +55,6 @@ export class ClothesController {
     return this.clothesService.update(+idCl, updateClotheDto);
   }
 
-  @Auth(Rol.ADMIN)
   @Delete(':idCl')
   remove(@Param('idCl') idCl: number): Promise<void> {
     return this.clothesService.remove(idCl);
@@ -58,6 +68,11 @@ export class ClothesController {
   @Put(':idCl/add-stock')
   async updateProductStock(@Param('idCl') id: number, @Body('stock') stock: number) {
   return await this.clothesService.updateProductStock(id, stock);
+  }
+
+  @Patch(':idCl/deactivate')
+  async deactivateProduct(@Param('idCl') idCl: number) {
+    return await this.clothesService.deactivateProduct(idCl);
   }
 
 }

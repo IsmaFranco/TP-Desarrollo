@@ -13,6 +13,18 @@ export interface Cloth {
     user: User;
 }
 
+export interface Clothes {
+    idCl: number;
+    nameCl: string;
+    description: string;
+    size: string;
+    typeCl: string;
+    stock: number;
+    price: number;
+    image: string;
+    quantity: number;
+}
+
 export interface Purchase {
     idPur: number;
     date: Date;

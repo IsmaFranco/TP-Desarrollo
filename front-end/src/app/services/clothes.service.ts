@@ -9,7 +9,7 @@ import { API_CONFIG } from '../../environments';
 export class ClothesService {
   private urlBase = `${API_CONFIG.API_URL}/clothes`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getProducts(): Observable<any> {
     return this.http.get(this.urlBase);
@@ -21,6 +21,10 @@ export class ClothesService {
 
   getProductsByType(type: string): Observable<any> {
     return this.http.get(`${this.urlBase}/type/${type}`);
+  }
+
+  searchProducts(query: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.urlBase}/search?q=${query}`);
   }
 
   updateProductPrice(productId: number, newPrice: number): Observable<any> {
@@ -35,7 +39,7 @@ export class ClothesService {
     });
   }
 
-  deleteProduct(id: number): Observable<any> {
-    return this.http.delete(`${this.urlBase}/${id}`);
+  deleteProduct(idCl: number): Observable<any> {
+    return this.http.patch<any>(`${this.urlBase}/${idCl}/deactivate`, {});
   }
 }

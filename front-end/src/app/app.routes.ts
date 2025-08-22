@@ -7,14 +7,16 @@ import { BagComponent } from './pages/bag/bag.component';
 import { NewItemComponent } from './pages/new-item/new-item.component';
 import { EditPriceComponent } from './pages/edit-price/edit-price.component';
 import { AddStockComponent } from './pages/add-stock/add-stock.component';
-import { PayComponent } from './pages/pay/pay.component';
 import { PurchasesComponent } from './pages/purchases/purchases.component';
 import { UserPurchasesComponent } from './pages/user-purchases/user-purchases.component';
 import { SuccessComponent } from './pages/success/success.component';
-import { NewLocalityComponent } from './pages/new-locality/new-locality.component';
+import { LocalitiesComponent } from './pages/localities/localities.component';
+import { SettingsComponent } from './pages/settings/settings.component';
+import { PendingPurchasesComponent } from './pages/pending-purchases/pending-purchases.component';
 
 export const routes: Routes = [
     {path: '', component: HomeComponent},
+    {path: 'search/:desc', component: HomeComponent},
     {path: 'products/:id', component: ProductDetailComponent},
     {path: 'login', component: LoginComponent},
     {path: 'sign-up', component: SignUpComponent},
@@ -22,10 +24,11 @@ export const routes: Routes = [
     {path: 'new-item', component: NewItemComponent},
     {path: 'edit-price/:id', component: EditPriceComponent},
     {path: 'add-stock/:id', component: AddStockComponent},
-    {path: 'pay', component: PayComponent},
     {path: 'purchases', component: PurchasesComponent},
     {path: 'user-purchases', component: UserPurchasesComponent},
     {path: 'success', component: SuccessComponent},
-    {path: 'new-locality', component: NewLocalityComponent},
+    {path: 'localities', component: LocalitiesComponent},
+    {path: 'settings', component: SettingsComponent},
+    {path: 'pending-purchases', component: PendingPurchasesComponent},
     {path: '**', redirectTo: '', pathMatch: 'full'}
 ];

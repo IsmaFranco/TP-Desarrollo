@@ -49,7 +49,7 @@ export class SignUpComponent implements OnInit {
         this.localities = data;
       },
       error: (error: any) => {
-        console.error('Error al cargar las localidades', error);
+        console.error('Error loading localities', error);
       }
     });
   }
@@ -65,8 +65,12 @@ export class SignUpComponent implements OnInit {
       addressUs,
       idLo,
     } = this.loginForm.value;
-    console.log(this.loginForm.value);
     if (this.loginForm.invalid) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Please fill out all fields correctly.',
+      });
       return;
     }
     this.authService
@@ -83,7 +87,7 @@ export class SignUpComponent implements OnInit {
       .subscribe((response: any) => {
         Swal.fire({
           icon: 'success',
-          title: 'Registro exitoso',
+          title: 'Registration successful',
           timer: 2000,
           showConfirmButton: false,
         });

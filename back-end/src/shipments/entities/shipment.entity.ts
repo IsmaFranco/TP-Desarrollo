@@ -3,9 +3,9 @@ import { Purchase } from 'src/purchases/entities/purchase.entity';
 import { Locality } from 'src/localities/entities/locality.entity';
 
 export enum STATUS {
-  PENDING = 'Pendiente',
-  SENT = 'Enviado',
-  DELIVERED = 'Entregado',
+  PENDING = 'Pending',
+  SENT = 'Sent',
+  DELIVERED = 'Delivered',
 }
 
 @Entity()

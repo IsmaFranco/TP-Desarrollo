@@ -37,7 +37,7 @@ export class BagService {
     if (!existingProduct && product.quantity === 0) {
       Swal.fire({
         title: 'Error',
-        text: 'Seleccione una cantidad',
+        text: 'Please select a quantity',
         icon: 'error',
         timer: 1300,
         showConfirmButton: false,
@@ -52,7 +52,7 @@ export class BagService {
       ) {
         Swal.fire({
           title: 'Error',
-          text: 'Seleccione una cantidad',
+          text: 'Please select a quantity',
           icon: 'error',
           timer: 1300,
           showConfirmButton: false,
@@ -62,8 +62,8 @@ export class BagService {
       if (existingProduct.quantity === existingProduct.stock) {
         Swal.fire({
           icon: 'error',
-          title: 'Stock máximo alcanzado',
-          text: 'No se pueden añadir más unidades de este producto al carrito',
+          title: 'Maximum stock reached',
+          text: 'No more units of this product can be added to the cart',
           timer: 2000,
           showConfirmButton: false,
         });
@@ -77,8 +77,8 @@ export class BagService {
         existingProduct.quantity = newQuantity;
         Swal.fire({
           icon: 'success',
-          title: 'Producto añadido al carrito',
-          text: `Se han añadido ${actuallyAdded} unidades al carrito`,
+          title: 'Product added to cart',
+          text: `Added ${actuallyAdded} units to the cart`,
           timer: 1700,
           showConfirmButton: false,
         });
@@ -87,7 +87,7 @@ export class BagService {
       this.bagItems.push(product);
       Swal.fire({
         icon: 'success',
-        title: `Se han añadido ${product.quantity} unidades al carrito`,
+        title: `Added ${product.quantity} units to the cart`,
         timer: 1300,
         showConfirmButton: false,
       });

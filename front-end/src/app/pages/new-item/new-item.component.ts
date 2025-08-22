@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   FormBuilder,
@@ -32,27 +32,32 @@ export class NewItemComponent {
       typeCl: ['', [Validators.required, Validators.maxLength(200)]],
       stock: ['', [Validators.required]],
       price: ['', [Validators.required]],
-      image: ['', [Validators.required, Validators.maxLength(200)]],
+      image: ['', [Validators.required, Validators.maxLength(700)]],
     });
   }
 
   onSubmit() {
     const { nameCl, description, size, typeCl, stock, price, image } =
       this.loginForm.value;
+    if (this.loginForm.invalid) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Please fill out all fields correctly.',
+      });
+      return;
+        }
     this.authService
       .newItem(nameCl, description, size, typeCl, stock, price, image)
       .subscribe(
         () => {
           Swal.fire({
             icon: 'success',
-            title: 'Ítem creado correctamente',
+            title: 'Item created successfully',
             timer: 2000,
             showConfirmButton: false,
           });
           this.router.navigate(['/']);
-        },
-        (error) => {
-          console.log('Error al crear el item:', error);
         }
       );
   }

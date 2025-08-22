@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   Put,
+  Query,
 } from '@nestjs/common';
 import { ClothesService } from './clothes.service';
 import { CreateClotheDto } from './dto/create-clothe.dto';
@@ -28,6 +29,11 @@ export class ClothesController {
   @Get()
   findAll(): Promise<Clothe[]> {
     return this.clothesService.findAll();
+  }
+
+  @Get('search')
+  searchProducts(@Query('q') query: string) {
+    return this.clothesService.searchByName(query);
   }
 
   @Get(':idCl')
@@ -62,6 +68,11 @@ export class ClothesController {
   @Put(':idCl/add-stock')
   async updateProductStock(@Param('idCl') id: number, @Body('stock') stock: number) {
   return await this.clothesService.updateProductStock(id, stock);
+  }
+
+  @Patch(':idCl/deactivate')
+  async deactivateProduct(@Param('idCl') idCl: number) {
+    return await this.clothesService.deactivateProduct(idCl);
   }
 
 }

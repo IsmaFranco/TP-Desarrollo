@@ -29,11 +29,12 @@ export class PaymentService {
           unit_price: user.locality.cost,
         }],
         back_urls: {
-          success: 'http://localhost:4200/success',
-          failure: 'http://localhost:4200/failure',
-          pending: 'http://localhost:4200/pending',
+          success: 'https://tp-desarrollo-sage.vercel.app/success',
+          failure: 'https://tp-desarrollo-sage.vercel.app/failure',
+          pending: 'https://tp-desarrollo-sage.vercel.app/pending',
         },
         auto_return: 'approved',
+        notification_url: 'https://tp-desarrollo-production-de37.up.railway.app/webhook/mercadopago',
         metadata: {
           user: {
             id: user.idUs,
@@ -54,7 +55,7 @@ export class PaymentService {
 
     try {
       console.log('Preferencia creada:', preference);
-      return { sandbox_init_point: preference.sandbox_init_point };
+      return { init_point: preference.init_point };
     } catch (error) {
       throw new Error(`Error al crear el pago: ${error.message}`);
     }

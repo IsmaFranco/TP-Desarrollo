@@ -1,0 +1,87 @@
+:root{
+    --text-color: #d6d6d6;
+    --background-color: rgb(33, 33, 33);
+    --border-color: #ddd;
+    --back-color: #363636;
+    --delete-color: #e74c3c;
+    --pay-color: #0a6fda;
+    --pay-color-selected: #0056b3;
+    --back-home-color: rgb(196, 196, 196);
+    --text-home-color: #131313;
+    --title-color: #e6eef8;
+}
+
+html, body {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.title{
+    text-align: center;
+}
+
+.text-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.text-field input {
+    max-width: 100%;
+    width: 100%;
+    border: 1px solid var(--border-color);
+    min-height: 3rem;
+    letter-spacing: 0.3rem;
+    outline: none;
+    background: var(--back-home-color);
+    transition: .25s;
+    border-radius: 0.5rem;
+    text-indent: 1.25rem;
+}
+
+.text-field label {
+    color: var(--text-color);
+}
+
+.error-message {
+    display: block;
+    margin-top: 0.25rem;
+    font-size: 13px;
+    color: var(--delete-color);
+}
+
+.text-field input:focus {
+    box-shadow: 4px 4px 4px rgba(233, 233, 233, 0.2);
+}
+
+.my-form__button:hover {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+.my-form__actions {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    width: 100%;
+    justify-content: space-between;
+    color: var(--text-color);
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+
+.my-form__actions a {
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.my-form__actions a:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.my-form__row {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: space-between;
+}

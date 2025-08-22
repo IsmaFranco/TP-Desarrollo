@@ -1,0 +1,31 @@
+.edit-price-container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background-color: var(--back-color);
+  margin-top: 20px;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.subtitle {
+  text-align: center;
+  color: var(--text-color);
+}
+
+.form-control {
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 0.5rem;
+  width: 100%;
+  box-sizing: border-box;
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}

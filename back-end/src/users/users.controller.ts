@@ -49,7 +49,7 @@ export class UsersController {
       return { user: updatedUser, token: newToken };
       }
 
-  @Delete(':idUs')
+  @Patch(':idUs/deactivate')
   async remove(@Param('idUs') idUs: number, @Body() deleteDto: {password: string}): Promise<void> {
     const user = await this.usersService.findOne(+idUs);
     const isPasswordValid = await bcryptjs.compare(deleteDto.password, user.passwordUs);

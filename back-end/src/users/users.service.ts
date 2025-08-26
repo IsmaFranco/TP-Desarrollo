@@ -28,20 +28,20 @@ export class UsersService {
   }
 
   findOneByEmail(emailUs: string): Promise<User | undefined> {
-    return this.userRepository.findOneBy({ emailUs });
+    return this.userRepository.findOneBy({ emailUs, isActive: true });
   }
 
   findByEmailWithPassword(emailUs: string): Promise<User> {
     return this.userRepository.findOne({
-      where: { emailUs: emailUs } });
+      where: { emailUs: emailUs, isActive: true } });
   }
 
   findAll(): Promise<User[]> {
-    return this.userRepository.find();
+    return this.userRepository.find({ where: { isActive: true } });
   }
   
   findOne(idUs: number): Promise<User> {
-    return this.userRepository.findOne({ where: { idUs: idUs }, relations: ['locality'] });
+    return this.userRepository.findOne({ where: { idUs: idUs, isActive: true }, relations: ['locality'] });
   }
 
   async update(idUs: number, updateUserDto: UpdateUserDto): Promise<User> {
@@ -88,6 +88,6 @@ export class UsersService {
 }
 
   async remove(idUs: number): Promise<void> {
-    await this.userRepository.delete(idUs);
+    await this.userRepository.update(idUs, { isActive: false });
   }
 }

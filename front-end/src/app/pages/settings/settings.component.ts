@@ -88,7 +88,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
   }
 
   private loadLocalities(): void {
-    const localitiesSub = this.authService.getLocalities().subscribe({
+    const localitiesSub = this.authService.getActiveLocalities().subscribe({
       next: (localities) => {
         this.localities = localities;
       },
@@ -193,12 +193,10 @@ export class SettingsComponent implements OnInit, OnDestroy {
         cancelButtonText: 'Cancel',
       }).then((result) => {
         if (result.isConfirmed) {
-          const deleteData = {
-            idUs: this.user!.idUs,
-            password: this.deleteForm.value.password
-          };
+          const idUs = this.user!.idUs;
+          const password = this.deleteForm.value.password;
 
-          const deleteAccountSub = this.authService.deleteAccount(deleteData).subscribe({
+          const deleteAccountSub = this.authService.deleteAccount(idUs, password).subscribe({
             next: (response) => {
               Swal.fire({
                 icon: 'success',

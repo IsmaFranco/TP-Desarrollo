@@ -16,7 +16,7 @@ import { Locality } from './entities/locality.entity';
 
 @Controller('localities')
 export class LocalitiesController {
-  constructor(private readonly localitiesService: LocalitiesService) {}
+  constructor(private readonly localitiesService: LocalitiesService) { }
 
   @Post()
   @UsePipes(new ValidationPipe({ transform: true }))
@@ -27,6 +27,11 @@ export class LocalitiesController {
   @Get()
   findAll(): Promise<Locality[]> {
     return this.localitiesService.findAll();
+  }
+
+  @Get('active')
+  findActiveLocalities(): Promise<Locality[]> {
+    return this.localitiesService.findActiveLocalities();
   }
 
   @Get(':idLo')
@@ -42,8 +47,13 @@ export class LocalitiesController {
     return this.localitiesService.update(+idLo, updateLocalityDto);
   }
 
-  @Delete(':idLo')
+  @Patch(':idLo/deactivate')
   remove(@Param('idLo') idLo: number): Promise<void> {
     return this.localitiesService.remove(+idLo);
+  }
+
+  @Patch(':idLo/activate')
+  activate(@Param('idLo') idLo: number): Promise<void> {
+    return this.localitiesService.activate(+idLo);
   }
 }

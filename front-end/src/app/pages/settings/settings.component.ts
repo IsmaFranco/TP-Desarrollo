@@ -150,9 +150,11 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   updateProfile(): void {
     if (this.profileForm.valid && this.user) {
+      const formValue = this.profileForm.value;
       const profileData = {
-        ...this.profileForm.value,
-        idUs: this.user.idUs
+        ...formValue,
+        idUs: this.user.idUs,
+        idLo: Number(formValue.idLo)  // Convertir a número
       };
 
       const updateProfileSub = this.authService.updateProfile(profileData).subscribe({

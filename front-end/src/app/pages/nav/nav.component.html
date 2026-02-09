@@ -13,7 +13,7 @@
                 <li class="nav-item" *ngIf="!isAuthenticated">
                     <a class="nav-link" (click)="navigate('login')">Login</a>
                 </li>
-                <li class="nav-item" *ngIf="userRole==='user'">
+                <li class="nav-item" *ngIf="userRole!='admin'">
                     <a class="nav-link" (click)="navigate('bag')">Bag</a>
                 </li>
                 <li class="nav-item" *ngIf="userRole==='user'">
@@ -30,7 +30,11 @@
                 </li>
                 <li class="nav-item" *ngIf="userRole==='admin'">
                     <a class="nav-link" (click)="navigate('localities')">Localities</a>
-                <li class="nav-item search-item" *ngIf="isAuthenticated">
+                </li>
+                <li class="nav-item" *ngIf="userRole==='admin'">
+                    <a class="nav-link" (click)="navigate('admin-users')">Users</a>
+                </li>
+                <li class="nav-item search-item">
                     <input type="text" class="form-control" placeholder="Search products..." [(ngModel)]="searchTerm"
                         (input)="onSearchChange()" (keydown.enter)="onSearchEnter($any($event))" autocomplete="off" />
                     <ul class="search-results" *ngIf="searchResults.length > 0">

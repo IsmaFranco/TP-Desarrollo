@@ -75,7 +75,7 @@ export class LocalitiesComponent implements OnInit, OnDestroy {
     if (this.editForm.valid && this.editingLocality) {
       const updateData = {
         nameLo: this.editForm.value.nameLo,
-        cost: this.editForm.value.cost,
+        cost: Number(this.editForm.value.cost),
       };
 
       const updateSub = this.authService.updateLocality(this.editingLocality.idLo, updateData).subscribe({

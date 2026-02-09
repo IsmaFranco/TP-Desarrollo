@@ -139,16 +139,22 @@ export class AuthService {
     return this.http.post(this.urlLocalities, { nameLo, postalCode, cost });
   }
 
-  changePassword(data: { idUs: number, newPassword: string }) {
-    return this.http.patch(`${this.urlUsers}/${data.idUs}/password`, data);
+  changePassword(data: { idUs: number, currentPassword: string, newPassword: string }) {
+    const { idUs, ...passwordData } = data;
+    return this.http.patch(`${this.urlUsers}/${idUs}/password`, passwordData);
   }
 
   updateProfile(data: any) {
-    return this.http.patch(`${this.urlUsers}/${data.idUs}`, data);
+    const { idUs, ...profileData } = data;
+    return this.http.patch(`${this.urlUsers}/${idUs}`, profileData);
   }
 
   deleteAccount(idUs: number, password: string) {
     return this.http.patch(`${this.urlUsers}/${idUs}/deactivate`, { password });
+  }
+
+  getUsersWithStats(): Observable<any> {
+    return this.http.get(`${this.urlUsers}/stats`);
   }
 
 }

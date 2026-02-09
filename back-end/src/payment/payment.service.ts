@@ -12,6 +12,7 @@ export class PaymentService {
     const mercadopago = new MercadoPagoConfig({
       accessToken: this.configService.get('MP_ACCESS_TOKEN'),
     });
+    console.log(this.configService.get('MP_ACCESS_TOKEN'));
     const preference = await new Preference(mercadopago).create({
       body: {
         items: [...items.map(item => ({
@@ -29,12 +30,12 @@ export class PaymentService {
           unit_price: user.locality.cost,
         }],
         back_urls: {
-          success: this.configService.get<string>('back_url_success'),
-          failure: this.configService.get<string>('back_url_failure'),
-          pending: this.configService.get<string>('back_url_pending'),
+          success: this.configService.get('back_url_success'),
+          failure: this.configService.get('back_url_failure'),
+          pending: this.configService.get('back_url_pending'),
         },
         auto_return: 'approved',
-        notification_url: this.configService.get<string>('notification_url'),
+        notification_url: this.configService.get('notification_url'),
         metadata: {
           user: {
             id: user.idUs,

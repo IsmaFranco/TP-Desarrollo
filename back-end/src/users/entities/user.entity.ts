@@ -11,7 +11,7 @@ import { Purchase } from 'src/purchases/entities/purchase.entity';
 import { Locality } from 'src/localities/entities/locality.entity';
 
 @Entity()
-export abstract class User {
+export class User {
   @PrimaryGeneratedColumn('increment')
   idUs: number;
 

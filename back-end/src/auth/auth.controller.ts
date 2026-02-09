@@ -50,7 +50,7 @@ export class AuthController {
   }
 
   @Get('profile')
-  @Roles(Rol.ADMIN, Rol.USER, Rol.SUPPLIER)
+  @Roles(Rol.ADMIN, Rol.USER)
   @UseGuards(AuthGuard, RolesGuard)
   profile(@ActiveUser() user: UserActiveInterface) {
     return this.authService.profile(user);

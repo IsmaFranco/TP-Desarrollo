@@ -32,10 +32,6 @@ export class ClothesService {
     return this.findOne(idCl);
   }
 
-  async remove(idCl: number): Promise<void> {
-    await this.clotheRepository.update(idCl, { isActive: false });
-  }
-
   async updateProductPrice(id: number, newPrice: number): Promise<void> {
     await this.clotheRepository.update(id, { price: newPrice });
   }

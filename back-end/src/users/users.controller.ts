@@ -14,6 +14,8 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import { JwtService } from '@nestjs/jwt';
 import * as bcryptjs from 'bcryptjs'
+import { Auth } from 'src/auth/decorators/auth.decorators';
+import { Rol } from 'src/common/enums/rol.enum';
 
 @Controller('users')
 export class UsersController {
@@ -27,16 +29,19 @@ export class UsersController {
     return this.usersService.create(createUserDto);
   }
 
+  @Auth(Rol.ADMIN)
   @Get()
   findAll(): Promise<User[]> {
     return this.usersService.findAll();
   }
 
+  @Auth(Rol.USER)
   @Get(':idUs')
   findOne(@Param('idUs') idUs: number): Promise<User> {
     return this.usersService.findOne(+idUs);
   }
 
+  @Auth(Rol.USER)
   @Patch(':idUs')
   async update(
     @Param('idUs') idUs: number,
@@ -49,6 +54,7 @@ export class UsersController {
       return { user: updatedUser, token: newToken };
       }
 
+  @Auth(Rol.USER)
   @Patch(':idUs/deactivate')
   async remove(@Param('idUs') idUs: number, @Body() deleteDto: {password: string}): Promise<void> {
     const user = await this.usersService.findOne(+idUs);
@@ -60,6 +66,7 @@ export class UsersController {
     return;
   }
 
+  @Auth(Rol.USER)
   @Patch(':id/password')
   async changePassword(
     @Param('id') idUs: number,

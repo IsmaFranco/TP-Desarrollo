@@ -44,8 +44,6 @@ import { PurchaseClothe } from './purchase-clothe/entities/purchase-clothe.entit
           Locality,
           PurchaseClothe,
         ],
-        autoLoadEntities: true,
-        synchronize: true,
       }),
       inject: [ConfigService],
     }),

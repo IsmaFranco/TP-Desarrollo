@@ -26,7 +26,7 @@
           <span><b>${{ product.price }}</b></span>
         </div>
         <div class="actions">
-          <button *ngIf="userRole === 'user' && product.stock > 0" class="btn-primary"
+          <button *ngIf="product.stock > 0" class="btn-primary"
             (click)="navegate('/products/', product.idCl)">
             View Product
           </button>

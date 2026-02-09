@@ -1,0 +1,58 @@
+<div class="container">
+    <div class="header-container">
+        <h2>Registered Users</h2>
+        <span class="user-count">{{ users.length }} user(s)</span>
+    </div>
+
+    <div *ngIf="loading" class="loading">
+        <p>Loading users...</p>
+    </div>
+
+    <div *ngIf="!loading && users.length === 0" class="empty-state">
+        <p>No registered users found.</p>
+    </div>
+
+    <div *ngIf="!loading && users.length > 0" class="users-table-container">
+        <table class="users-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Address</th>
+                    <th>Locality</th>
+                    <th>Role</th>
+                    <th>Purchases</th>
+                    <th>Last Purchase</th>
+                    <th>Pending Shipments</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let user of users">
+                    <td>{{ user.idUs }}</td>
+                    <td>{{ user.nameUs }} {{ user.lastNameUs }}</td>
+                    <td>{{ user.emailUs }}</td>
+                    <td>{{ user.phoneUs }}</td>
+                    <td>{{ user.addressUs }}</td>
+                    <td>{{ user.locality?.nameLo || '-' }}</td>
+                    <td>
+                        <span class="badge" [ngClass]="user.rol === 'admin' ? 'badge-admin' : 'badge-user'">
+                            {{ user.rol }}
+                        </span>
+                    </td>
+                    <td class="center">{{ user.purchaseCount }}</td>
+                    <td>{{ formatDate(user.lastPurchaseDate) }}</td>
+                    <td class="center">
+                        <span *ngIf="user.pendingShipments > 0" class="badge badge-pending">
+                            {{ user.pendingShipments }}
+                        </span>
+                        <span *ngIf="user.pendingShipments === 0" class="badge badge-ok">
+                            0
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

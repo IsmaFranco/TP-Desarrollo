@@ -5,6 +5,7 @@ import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { Subscription } from 'rxjs';
+import { Locality } from '../../models/localities.model';
 
 @Component({
   selector: 'app-localities',
@@ -56,7 +57,7 @@ export class LocalitiesComponent implements OnInit, OnDestroy {
     this.subscriptions.push(localitiesSub);
   }
 
-  editLocality(locality: any): void {
+  editLocality(locality: Locality): void {
     this.editingLocality = { ...locality };
     this.editForm.patchValue({
       nameLo: locality.nameLo,
@@ -74,7 +75,7 @@ export class LocalitiesComponent implements OnInit, OnDestroy {
     if (this.editForm.valid && this.editingLocality) {
       const updateData = {
         nameLo: this.editForm.value.nameLo,
-        cost: this.editForm.value.cost,
+        cost: Number(this.editForm.value.cost),
       };
 
       const updateSub = this.authService.updateLocality(this.editingLocality.idLo, updateData).subscribe({
@@ -102,7 +103,7 @@ export class LocalitiesComponent implements OnInit, OnDestroy {
     }
   }
 
-  deleteLocality(locality: any): void {
+  deleteLocality(locality: Locality): void {
     Swal.fire({
       title: 'Are you sure?',
       text: `Do you want to delete ${locality.nameLo}?`,
@@ -113,7 +114,7 @@ export class LocalitiesComponent implements OnInit, OnDestroy {
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.isConfirmed) {
-        const deleteSub = this.authService.deleteLocality(locality.idLo).subscribe({
+        this.authService.deleteLocality(locality.idLo).subscribe({
           next: () => {
             Swal.fire({
               icon: 'success',
@@ -133,7 +134,29 @@ export class LocalitiesComponent implements OnInit, OnDestroy {
             });
           }
         });
-        this.subscriptions.push(deleteSub);
+      }
+    });
+  }
+
+  activateLocality(locality: Locality): void {
+    const activateSub = this.authService.activateLocality(locality.idLo).subscribe({
+      next: () => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Activated!',
+          text: 'Locality has been activated.',
+          timer: 2000,
+          showConfirmButton: false
+        });
+        this.loadLocalities();
+      },
+      error: (error: any) => {
+        console.error('Error activating locality:', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Error activating locality'
+        });
       }
     });
   }

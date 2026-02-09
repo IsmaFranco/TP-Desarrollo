@@ -5,7 +5,7 @@ import { ROLES_KEY } from '../decorators/roles.decorators';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
-  constructor(private readonly reflector: Reflector) {}
+  constructor(private readonly reflector: Reflector) { }
 
   canActivate(context: ExecutionContext): boolean {
     const roles = this.reflector.getAllAndOverride<Rol[]>(ROLES_KEY, [
@@ -19,11 +19,15 @@ export class RolesGuard implements CanActivate {
 
     const { user } = context.switchToHttp().getRequest();
 
-    if (user.rol === Rol.ADMIN) {
+    // El payload del JWT tiene estructura { user: { rol: '...' } }
+    // Por eso accedemos a user.user.rol
+    const userRole = user?.user?.rol;
+
+    if (userRole === Rol.ADMIN) {
       return true;
     }
 
-    // check if user.rol  is in roles
-    return roles.indexOf(user.rol) >= 0;
+    // check if user.rol is in roles
+    return roles.indexOf(userRole) >= 0;
   }
 }

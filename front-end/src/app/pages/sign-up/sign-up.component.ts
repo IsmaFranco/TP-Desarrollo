@@ -44,7 +44,7 @@ export class SignUpComponent implements OnInit {
   }
 
   loadLocalities() {
-    this.authService.getLocalities().subscribe({
+    this.authService.getActiveLocalities().subscribe({
       next: (data: Locality[]) => {
         this.localities = data;
       },

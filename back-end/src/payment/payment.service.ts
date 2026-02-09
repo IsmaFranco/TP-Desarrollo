@@ -29,12 +29,12 @@ export class PaymentService {
           unit_price: user.locality.cost,
         }],
         back_urls: {
-          success: 'https://tp-desarrollo-sage.vercel.app/success',
-          failure: 'https://tp-desarrollo-sage.vercel.app/failure',
-          pending: 'https://tp-desarrollo-sage.vercel.app/pending',
+          success: this.configService.get<string>('back_url_success'),
+          failure: this.configService.get<string>('back_url_failure'),
+          pending: this.configService.get<string>('back_url_pending'),
         },
         auto_return: 'approved',
-        notification_url: 'https://tp-desarrollo-production-de37.up.railway.app/webhook/mercadopago',
+        notification_url: this.configService.get<string>('notification_url'),
         metadata: {
           user: {
             id: user.idUs,

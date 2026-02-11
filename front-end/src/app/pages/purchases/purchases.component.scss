@@ -7,6 +7,7 @@
   padding: 10px;
   border-radius: 5px;
   background-color: var(--back-color);
+  color: var(--title-color);
 }
 
 .purchase-item {
@@ -61,7 +62,6 @@
 }
 
 .filtro-fechas button:hover {
-  background-color: var(--pay-color-selected);
   transform: scale(1.05);
 }
 
@@ -74,4 +74,113 @@
   font-size: 14px;
   margin-bottom: 5px;
   align-self: flex-start;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  padding: 15px 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--title-color);
+    letter-spacing: 0.5px;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.sort-options {
+  position: relative;
+  margin-bottom: 0;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.sort-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--background-color);
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  cursor: pointer;
+  min-width: 120px;
+  border-radius: 25px;
+  font-weight: 500;
+  font-size: 0.9rem;
+  letter-spacing: 0.3px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  }
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  background: var(--back-color);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  z-index: 100;
+  width: 280px;
+  right: 0;
+  top: calc(100% + 5px);
+  border-radius: 15px;
+  overflow: hidden;
+  animation: fadeInUp 0.3s ease-out;
+
+  &.open {
+    display: block;
+  }
+}
+
+.dropdown-item {
+  padding: 15px 20px;
+  cursor: pointer;
+  color: var(--text-color);
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  position: relative;
+
+  &:hover {
+    color: var(--text-color);
+    background: var(--background-color);
+  }
+}
+
+.purchase-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border: 1px solid var(--border-color);
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  background: var(--back-color);
+
+  .purchase-main {
+    flex: 1 1 auto;
+  }
+
+  .purchase-actions {
+    display: flex;
+    align-items: flex-start;
+    margin-left: 20px;
+  }
 }

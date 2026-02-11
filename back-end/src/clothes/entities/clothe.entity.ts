@@ -21,11 +21,14 @@ export class Clothe {
   @Column({ type: 'integer', nullable: false })
   stock: number;
 
-  @Column({ type: 'varchar', nullable: false, length: 500 })
+  @Column({ type: 'varchar', nullable: false, length: 700 })
   image: string; 
 
   @Column({ type: 'integer', nullable: false })
   price: number;
+
+  @Column({default: true})
+  isActive: boolean;
 
   @OneToMany(() => PurchaseClothe, purchaseClothe => purchaseClothe.clothe)
   purchaseClothe: PurchaseClothe;

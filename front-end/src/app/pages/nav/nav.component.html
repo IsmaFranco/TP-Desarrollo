@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">Venta de Ropa</a>
+        <a class="navbar-brand" href="#">Slicer's Shop</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -13,7 +13,7 @@
                 <li class="nav-item" *ngIf="!isAuthenticated">
                     <a class="nav-link" (click)="navigate('login')">Login</a>
                 </li>
-                <li class="nav-item" *ngIf="userRole==='user'">
+                <li class="nav-item" *ngIf="userRole!='admin'">
                     <a class="nav-link" (click)="navigate('bag')">Bag</a>
                 </li>
                 <li class="nav-item" *ngIf="userRole==='user'">
@@ -26,11 +26,42 @@
                     <a class="nav-link" (click)="navigate('purchases')">View Purchases</a>
                 </li>
                 <li class="nav-item" *ngIf="userRole==='admin'">
-                    <a class="nav-link" (click)="navigate('new-locality')">New Locality</a>
+                    <a class="nav-link" (click)="navigate('pending-purchases')">Pending Purchases</a>
+                </li>
+                <li class="nav-item" *ngIf="userRole==='admin'">
+                    <a class="nav-link" (click)="navigate('localities')">Localities</a>
+                </li>
+                <li class="nav-item" *ngIf="userRole==='admin'">
+                    <a class="nav-link" (click)="navigate('admin-users')">Users</a>
+                </li>
+                <li class="nav-item search-item">
+                    <input type="text" class="form-control" placeholder="Search products..." [(ngModel)]="searchTerm"
+                        (input)="onSearchChange()" (keydown.enter)="onSearchEnter($any($event))" autocomplete="off" />
+                    <ul class="search-results" *ngIf="searchResults.length > 0">
+                        <li *ngFor="let product of searchResults" (click)="goToProduct(product.idCl)">
+                            {{ product.nameCl }}
+                        </li>
+                    </ul>
+                    <div class="no-results" *ngIf="searchTerm.length >= 3 && searchResults.length === 0">
+                        No products found.
+                    </div>
+                </li>
             </ul>
             <ul class="navbar-nav">
-                <li class="nav-item" *ngIf="isAuthenticated">
-                    <a class="nav-link close" (click)="logout()">Close</a>
+                <li class="nav-item custom-dropdown" *ngIf="userRole==='user'">
+                    <a class="nav-link " role="button">
+                        Options
+                    </a>
+                    <ul class="custom-dropdown-menu">
+                        <li><a class="custom-dropdown-item" (click)="navigate('settings')">Settings</a></li>
+                        <li><a class="custom-dropdown-item" (click)="logout()">Close</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item" *ngIf="userRole==='admin'">
+                    <a class="nav-link" (click)="logout()">Close</a>
+                </li>
+                <li class="nav-item" *ngIf="userRole==='user'">
+                    <a class="nav-link">¡Hello {{ userName | titlecase}}!</a>
                 </li>
             </ul>
         </div>

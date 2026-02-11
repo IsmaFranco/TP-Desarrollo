@@ -21,13 +21,14 @@ import Swal from 'sweetalert2';
 export class AddStockComponent implements OnInit {
   @Input() cloth!: Cloth;
   editStockForm!: FormGroup;
+  loading = true;
 
   constructor(
     private fb: FormBuilder,
     private clothesService: ClothesService,
     private route: ActivatedRoute,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
@@ -35,6 +36,7 @@ export class AddStockComponent implements OnInit {
         .getProductById(params['id'])
         .subscribe((data: Cloth) => {
           this.cloth = data;
+          this.loading = false;
         });
     });
     this.editStockForm = this.fb.group({
@@ -50,7 +52,7 @@ export class AddStockComponent implements OnInit {
         .subscribe((response) => {
           Swal.fire({
             icon: 'success',
-            title: 'Stock añadido correctamente',
+            title: 'Stock updated successfully',
             timer: 1000,
             showConfirmButton: false,
           });

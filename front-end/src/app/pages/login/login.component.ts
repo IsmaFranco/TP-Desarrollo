@@ -40,7 +40,7 @@ export class LoginComponent {
     this.authService.login(email, password).subscribe({next: (response) => {
       Swal.fire({
         icon: 'success',
-        title: 'Sesion iniciada',
+        title: 'Login successful',
         timer: 1000,
         showConfirmButton: false,
       });
@@ -50,8 +50,8 @@ export class LoginComponent {
     }, error: (err) => {
       Swal.fire({
         icon: 'error',
-        title: 'Error al iniciar sesión',
-        text: 'Datos incorrectos, intente nuevamente',
+        title: 'Login failed',
+        text: 'Incorrect credentials, please try again',
       });
     }
     });

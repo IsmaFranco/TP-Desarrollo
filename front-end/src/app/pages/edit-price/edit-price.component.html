@@ -6,17 +6,17 @@
     }
 
     @if (!loading){
-    <h2 class="subtitle">Actualizar Precio del Producto</h2>
+    <h2 class="subtitle">Update product price</h2>
     <form [formGroup]="editPriceForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
-            <label for="productName">Nombre del producto: {{cloth.nameCl}}</label>
+            <label for="productName">Product name: {{cloth.nameCl}}</label>
         </div>
         <div class="form-group">
-            <label for="newPrice">Nuevo Precio</label>
+            <label for="newPrice">New Price</label>
             <input type="number" id="newPrice" class="form-control" formControlName="price" name="newPrice" required
                 min="0" />
         </div>
-        <button type="submit" class="btn btn-primary" [disabled]="!editPriceForm.valid"> Actualizar Precio </button>
+        <button type="submit" class="btn btn-primary" [disabled]="!editPriceForm.valid">Update Price</button>
     </form>
     }
 </div>

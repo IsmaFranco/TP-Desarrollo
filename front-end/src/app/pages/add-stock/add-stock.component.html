@@ -1,16 +1,24 @@
 <div class="edit-price-container">
-    <h2 class="subtitle">Actualizar Precio del Producto</h2>
+    @if (loading) {
+    <div class="spinner-border text-primary" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+    }
+
+    @if (!loading){
+    <h2 class="subtitle">Update product stock</h2>
     <form [formGroup]="editStockForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
-            <label for="productName">Nombre del producto: {{ cloth.nameCl }}</label>
+            <label for="productName">Product name: {{ cloth.nameCl }}</label>
         </div>
         <div class="form-group">
-            <label for="newStock">Unidades nuevas:</label>
+            <label for="newStock">New units:</label>
             <input type="number" id="newStock" class="form-control" formControlName="stock" name="newStock" required
                 min="0" />
         </div>
         <button type="submit" class="btn btn-primary" [disabled]="!editStockForm.valid">
-            Actualizar Stock
+            Update stock
         </button>
     </form>
+    }
 </div>

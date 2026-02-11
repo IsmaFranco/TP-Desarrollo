@@ -5,7 +5,7 @@ import { User } from '../../users/entities/user.entity';
 @Entity()
 export class Locality {
   @PrimaryGeneratedColumn('increment')
-  idLo:number;
+  idLo: number;
 
   @Column({ type: 'integer', unique: true, nullable: false })
   postalCode: number;
@@ -21,5 +21,8 @@ export class Locality {
 
   @OneToMany(() => User, (user) => user.locality)
   user: User[];
+
+  @Column({ default: true })
+  isActive: boolean;
 
 }

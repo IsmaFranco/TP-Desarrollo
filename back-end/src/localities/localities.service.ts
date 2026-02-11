@@ -21,21 +21,29 @@ export class LocalitiesService {
     return this.localityRepository.find();
   }
 
-  findOne(postalCode: number): Promise<Locality> {
+  findActiveLocalities(): Promise<Locality[]> {
+    return this.localityRepository.find({ where: { isActive: true } });
+  }
+
+  findOne(idLo: number): Promise<Locality> {
     return this.localityRepository.findOne({
-      where: { postalCode: postalCode },
+      where: { idLo: idLo, isActive: true },
     });
   }
 
   async update(
-    postalCode: number,
+    idLo: number,
     updateLocalityDto: UpdateLocalityDto,
   ): Promise<Locality> {
-    await this.localityRepository.update(postalCode, updateLocalityDto);
-    return this.findOne(postalCode);
+    await this.localityRepository.update(idLo, updateLocalityDto);
+    return this.findOne(idLo);
   }
 
-  async remove(postalCode: number): Promise<void> {
-    await this.localityRepository.delete(postalCode);
+  async remove(idLo: number): Promise<void> {
+    await this.localityRepository.update(idLo, { isActive: false });
+  }
+
+  async activate(idLo: number): Promise<void> {
+    await this.localityRepository.update(idLo, { isActive: true });
   }
 }

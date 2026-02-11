@@ -27,7 +27,7 @@ export class SuccessComponent implements OnInit {
     private authService: AuthService,
     private zone: NgZone,
     private cd: ChangeDetectorRef
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loadData();
@@ -57,7 +57,7 @@ export class SuccessComponent implements OnInit {
 
             Swal.fire({
               icon: 'success',
-              title: 'Compra realizada',
+              title: 'Purchase successful',
               timer: 2000,
               showConfirmButton: false,
             });

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { API_CONFIG } from '../../environments';
-import { TokenService } from './token.service'; // Importar TokenService
+import { TokenService } from './token.service';
 
 @Injectable({
   providedIn: 'root',
@@ -13,13 +13,14 @@ export class AuthService {
   private urlClothes = API_CONFIG.API_URL + '/clothes';
   private urlShipments = API_CONFIG.API_URL + '/shipments';
   private urlPurchases = API_CONFIG.API_URL + '/purchases';
-  private urlPurchaseClothes = API_CONFIG.API_URL + '/purchase-clothes';
+  private urlPurchaseClothes = API_CONFIG.API_URL + '/purchase-clothe';
   private urlLocalities = API_CONFIG.API_URL + '/localities';
+  private urlUsers = API_CONFIG.API_URL + '/users';
 
   constructor(
     private http: HttpClient,
-    private tokenService: TokenService // Inyectar TokenService
-  ) {}
+    private tokenService: TokenService
+  ) { }
 
   login(email: string, password: string): Observable<any> {
     return this.http
@@ -29,9 +30,7 @@ export class AuthService {
       })
       .pipe(
         tap((response: { token: string }) => {
-          // CAMBIO IMPORTANTE: Usar el TokenService en lugar de localStorage directamente
           this.tokenService.login(response.token);
-          console.log('Login exitoso, token guardado'); // Para debug
         })
       );
   }
@@ -57,16 +56,8 @@ export class AuthService {
         addressUs,
         idLo: Number(idLo),
       })
-      .pipe(
-        tap((response: any) => {
-          console.log('Registro exitoso:', response);
-        })
-      );
   }
 
-  /**
-   * Método para hacer logout
-   */
   logout(): void {
     this.tokenService.logout();
   }
@@ -94,6 +85,10 @@ export class AuthService {
 
   createShipment(shipmentData: any): Observable<any> {
     return this.http.post<any>(this.urlShipments, shipmentData);
+  }
+
+  updateShipmentStatus(idSh: number, status: string) {
+    return this.http.patch(`${this.urlShipments}/${idSh}`, { status });
   }
 
   createPurchase(purchaseData: any) {
@@ -124,7 +119,42 @@ export class AuthService {
     return this.http.get(this.urlLocalities);
   }
 
+  getActiveLocalities(): Observable<any> {
+    return this.http.get(`${this.urlLocalities}/active`);
+  }
+
+  updateLocality(idLo: number, updatedData: any): Observable<any> {
+    return this.http.patch(`${this.urlLocalities}/${idLo}`, updatedData);
+  }
+
+  deleteLocality(idLo: number): Observable<any> {
+    return this.http.patch(`${this.urlLocalities}/${idLo}/deactivate`, {});
+  }
+
+  activateLocality(idLo: number): Observable<any> {
+    return this.http.patch(`${this.urlLocalities}/${idLo}/activate`, {});
+  }
+
   newLocality(nameLo: string, postalCode: number, cost: number): Observable<any> {
     return this.http.post(this.urlLocalities, { nameLo, postalCode, cost });
   }
+
+  changePassword(data: { idUs: number, currentPassword: string, newPassword: string }) {
+    const { idUs, ...passwordData } = data;
+    return this.http.patch(`${this.urlUsers}/${idUs}/password`, passwordData);
+  }
+
+  updateProfile(data: any) {
+    const { idUs, ...profileData } = data;
+    return this.http.patch(`${this.urlUsers}/${idUs}`, profileData);
+  }
+
+  deleteAccount(idUs: number, password: string) {
+    return this.http.patch(`${this.urlUsers}/${idUs}/deactivate`, { password });
+  }
+
+  getUsersWithStats(): Observable<any> {
+    return this.http.get(`${this.urlUsers}/stats`);
+  }
+
 }

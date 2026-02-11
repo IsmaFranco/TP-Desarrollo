@@ -1,4 +1,4 @@
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { ClothesService } from '../../services/clothes.service';
@@ -6,6 +6,7 @@ import { Cloth } from '../../models/clothes.model';
 import { BagService } from '../../services/bag.service';
 import { TokenService } from '../../services/token.service';
 import { FormsModule } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-product-detail',
@@ -25,9 +26,19 @@ export class ProductDetailComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private clothesService = inject(ClothesService);
   private bagService = inject(BagService);
+  private cdRef = inject(ChangeDetectorRef);
+
+  private subs: Subscription[] = [];
 
   ngOnInit(): void {
-    this.userRole = this.tokenService.getRoleFromToken();
+    const userSub = this.tokenService.currentUser$.subscribe(user => {
+      this.userRole = user?.user.rol || null;
+      this.cdRef.markForCheck();
+    });
+    this.subs.push(userSub);
+
+    this.tokenService.checkAuthStatus();
+
     this.route.params.subscribe((params) => {
       this.clothesService
         .getProductById(params['id'])

@@ -1,22 +1,42 @@
-<div class="category-buttons">
-    <a (click)="filterByCategory('T-shirt')" class="category-button" [ngClass]="{'selected': isCategorySelected('T-shirt')}">T-Shirts</a>
-    <a (click)="filterByCategory('Pants')" class="category-button" [ngClass]="{'selected': isCategorySelected('Pants')}">Pants</a>
-    <a (click)="filterByCategory('Shoes')" class="category-button" [ngClass]="{'selected': isCategorySelected('Shoes')}">Shoes</a>
-</div>
-<div class="product-grid">
+<div class="home-container">
+  <nav class="category-bar" *ngIf="searchDesc == ''">
+    <button (click)="filterByCategory('T-shirt')" [class.selected]="isCategorySelected('T-shirt')">T-Shirts</button>
+    <button (click)="filterByCategory('Pants')" [class.selected]="isCategorySelected('Pants')">Pants</button>
+    <button (click)="filterByCategory('Shoes')" [class.selected]="isCategorySelected('Shoes')">Shoes</button>
+  </nav>
+
+  <div class="product-grid">
     <div class="product-card" *ngFor="let product of filteredProducts">
-        <img [src]="product.image" alt="{{ product.description }}" class="product-image" />
-        <h2>{{ product.nameCl }}</h2>
-        <p>{{ product.description }}</p>
-        <p class="product-price">${{ product.price }}</p>
-        @if (product.stock == 0){
-            <p class="product-stock">Size:  {{ product.size }} --- Out of stock</p>}
-        @else {
-            <p class="product-stock">Size:  {{ product.size }} --- Stock: {{ product.stock }}</p>
-            <button *ngIf="userRole==='user'" (click)="navegate('/products/', product.idCl)" class="view-button">Ver producto</button>
-        }
-        <button type="button" *ngIf="userRole==='admin'" class="btn btn-primary" (click)="navegate('/edit-price/', product.idCl)">Edit Price</button>
-        <p></p>
-        <button type="button" *ngIf="userRole==='admin'" class="btn btn-primary" (click)="navegate('/add-stock/', product.idCl)">Add Stock</button>
+      <div class="image-wrap">
+        <img [src]="product.image" alt="{{ product.nameCl }}" />
+      </div>
+      <div class="card-content">
+        <h3>{{ product.nameCl }}</h3>
+        <p class="desc">{{ product.description }}</p>
+        <div class="meta">
+          <span><b>Size</b>: {{ product.size }}</span>
+          <span [class.out]="product.stock === 0">
+            <ng-container *ngIf="product.stock === 0">
+              <strong>Out of stock</strong>
+            </ng-container>
+            <ng-container *ngIf="product.stock !== 0">
+              <strong>Stock:</strong> {{ product.stock }}
+            </ng-container>
+          </span>
+          <span><b>${{ product.price }}</b></span>
+        </div>
+        <div class="actions">
+          <button *ngIf="product.stock > 0" class="btn-primary"
+            (click)="navegate('/products/', product.idCl)">
+            View Product
+          </button>
+          <div *ngIf="userRole === 'admin'" class="admin-actions">
+            <button class="btn" (click)="navegate('/edit-price/', product.idCl)">Edit Price</button>
+            <button class="btn" (click)="navegate('/add-stock/', product.idCl)"> Add Stock</button>
+            <button class="btn btn-danger" (click)="confirmAction(product.idCl)">Delete</button>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </div>

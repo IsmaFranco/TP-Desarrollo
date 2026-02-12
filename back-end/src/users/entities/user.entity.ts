@@ -2,16 +2,16 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  ManyToOne,
   OneToMany,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
-import { Locality } from '../../localities/entities/locality.entity';
 import { Rol } from '../../common/enums/rol.enum';
-import { Clothe } from 'src/clothes/entities/clothe.entity';
 import { Purchase } from 'src/purchases/entities/purchase.entity';
+import { Locality } from 'src/localities/entities/locality.entity';
 
 @Entity()
-export abstract class User {
+export class User {
   @PrimaryGeneratedColumn('increment')
   idUs: number;
 
@@ -30,18 +30,19 @@ export abstract class User {
   @Column({ type: 'varchar', length: 50, nullable: false })
   addressUs: string;
 
-  @Column({ type: 'varchar', length: 200, nullable: false, select: false }) //nullabe false significa que no puede ser nulo
-  passwordUs: string; // ver bien como es lo de la contgraseña y si este atr esta bien pasado
+  @Column({ type: 'varchar', length: 200, nullable: false }) //nullabe false significa que no puede ser nulo
+  passwordUs: string;
 
   @Column({ type: 'enum', default: Rol.USER, enum: Rol })
   rol: Rol; //tendria que haber sido role, pero ya avanzamos bastante y no quiero cambiarlo
 
-  @Column({ type: 'int', nullable: false })
-  postalCode: number;
-
-  @ManyToOne(() => Clothe, (clothe) => clothe.user)
-  clothes: Clothe[];
+  @ManyToOne(() => Locality, { eager: true })
+  @JoinColumn({ name: 'idLo' })
+  locality: Locality;
 
   @OneToMany(() => Purchase, (purchase) => purchase.user)
   purchases: Purchase[];
+
+  @Column({ default: true })
+  isActive: boolean;
 }

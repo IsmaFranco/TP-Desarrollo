@@ -1,0 +1,79 @@
+<div class="container purchases-page">
+  <div class="purchases-list">
+
+    <div class="purchases-header">
+      <div class="title-wrap">
+        <h2 *ngIf="purchases.length !== 0">
+          Purchases made by
+          <span class="user-name">{{ user.lastNameUs | titlecase }}, {{ user.nameUs | titlecase }}</span>
+          <span class="badge">{{ purchases.length }}</span>
+        </h2>
+        <div *ngIf="purchases.length === 0" class="empty-purchases">
+          <div class="empty-purchases-content">
+            <h2>No purchases were made.</h2>
+            <p>You haven't made any purchases yet</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="sort-options">
+        <button class="sort-button" *ngIf="purchases.length !== 0" (click)="isDropdownOpen = !isDropdownOpen">
+          <span>Order by</span>
+        </button>
+
+        <div class="dropdown-menu" [class.open]="isDropdownOpen">
+          <div class="dropdown-item" (click)="sortPurchases('date', 'desc'); isDropdownOpen = false">
+            Date (most recent first)
+          </div>
+          <div class="dropdown-item" (click)="sortPurchases('date', 'asc'); isDropdownOpen = false">
+            Date (oldest first)
+          </div>
+          <div class="dropdown-item" (click)="sortPurchases('amount', 'desc'); isDropdownOpen = false">
+            Amount (highest to lowest)
+          </div>
+          <div class="dropdown-item" (click)="sortPurchases('amount', 'asc'); isDropdownOpen = false">
+            Amount (lowest to highest)
+          </div>
+        </div>
+      </div>
+    </div> 
+
+    <div *ngFor="let purchase of purchases" class="purchase-item card">
+      <div class="purchase-top">
+        <div class="purchase-id">Purchase: <strong>#{{ purchase.idPu }}</strong></div>
+        <div class="purchase-meta">
+          <span class="date">{{ purchase.datePu | date:'mediumDate' }}</span>
+          <span class="shipment">Shipment: {{ purchase.shipment?.idSh }} ({{ purchase.shipment?.status }})</span>
+        </div>
+      </div>
+
+      <div class="purchase-body">
+        <div class="left">
+          <div class="products-list">
+            <h4>Products</h4>
+            <div *ngFor="let product of purchase.products" class="product-item">
+              <div class="product-left">
+                <div class="product-thumb">
+                  <img *ngIf="product.clothe?.image" [src]="product.clothe?.image" alt="{{product.clothe?.nameCl}}">
+                </div>
+                <div class="product-info">
+                  <div class="p-name">{{ product.clothe?.nameCl }}</div>
+                  <div class="p-attr">Size: {{ product.clothe?.size }} • Quantity: {{ product.quantity }}</div>
+                </div>
+              </div>
+
+              <div class="product-right">
+                <div class="unit-price">{{ product.unitPrice | currency }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="right">
+          <div class="amount">Total: <strong>{{ purchase.amount | currency }}</strong></div>
+        </div>
+      </div>
+    </div> 
+
+  </div> 
+</div>

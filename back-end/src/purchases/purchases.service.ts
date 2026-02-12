@@ -1,12 +1,9 @@
-import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Between, Repository } from 'typeorm';
 import { CreatePurchaseDto } from './dto/create-purchase.dto';
 import { UpdatePurchaseDto } from './dto/update-purchase.dto';
 import { Purchase } from './entities/purchase.entity';
-import { User } from '../users/entities/user.entity';
-import { UserActiveInterface } from 'src/common/interfaces/user-active.interface';
-import { Rol } from 'src/common/enums/rol.enum'; // Adjust the import path as necessary
 
 
 
@@ -14,58 +11,75 @@ import { Rol } from 'src/common/enums/rol.enum'; // Adjust the import path as ne
 export class PurchasesService {
   constructor(
     @InjectRepository(Purchase)
-    private purchaseRepository: Repository<Purchase>,
-    @InjectRepository(User)
-    private userRepository: Repository<User>,
-  ) {}
+    private purchaseRepository: Repository<Purchase>
+  ) { }
 
-  async create (createPurchaseDto: CreatePurchaseDto): Promise<Purchase> {
+  async create(createPurchaseDto: CreatePurchaseDto): Promise<Purchase> {
     const purchase = this.purchaseRepository.create(createPurchaseDto);
-    return this.purchaseRepository.save(purchase);
+    return await this.purchaseRepository.save(purchase);
   }
 
   async findAll(): Promise<Purchase[]> {
-      return await this.purchaseRepository.find({
-        relations: ['shipment', 'clothes', 'user'], // Incluye las relaciones necesarias
-      });
+    return await this.purchaseRepository.find();
   }
 
-  async findOne(idPu: number, user: UserActiveInterface): Promise<Purchase> {
+  async findOne(idPu: number): Promise<Purchase> {
     const purchase = await this.purchaseRepository.findOneBy({ idPu });
 
     if (!purchase) {
       throw new BadRequestException('La compra no existe');
     }
 
-    this.validateOwnership(purchase, user);
-
     return purchase;
   }
 
-  async update(idPu: number,updatePurchaseDto: UpdatePurchaseDto, user: UserActiveInterface): Promise<Purchase> {
-    await this.findOne(idPu, user);
+  async update(idPu: number, updatePurchaseDto: UpdatePurchaseDto): Promise<Purchase> {
+    await this.findOne(idPu);
 
-    await this.purchaseRepository.update(idPu, {...updatePurchaseDto});
-    return this.findOne(idPu, user); // Devuelve la compra actualizada
-  }// Este método actualiza la compra y devuelve la compra actualizada
+    await this.purchaseRepository.update(idPu, { ...updatePurchaseDto });
+    return this.findOne(idPu); // Devuelve la compra actualizada
+  }
 
-  async remove(idPu: number, user: UserActiveInterface): Promise<void> {
-    await this.findOne(idPu, user);
+  async remove(idPu: number): Promise<void> {
+    await this.findOne(idPu);
     await this.purchaseRepository.delete({ idPu });
     return;
   }
 
   async findOneCloth(idPu: number) {
-    // Esta consulta recupera la compra con todas las "clothes" asociadas
     return this.purchaseRepository.findOne({
       where: { idPu: idPu },
-      relations: ['clothes'], // Esta opción carga la relación desde la tabla de unión
+      relations: ['clothes'],
     });
   }
 
-  private validateOwnership(purchase: Purchase, user: UserActiveInterface) {
-    if (!user.rol.includes(Rol.ADMIN) && purchase.user.idUs !== user.idUs) {
-      throw new UnauthorizedException('No tienes permisos para ver esta compra');
-    }
-  } // Este método valida si el usuario tiene permisos para ver la compra
+  async findAllByDate(date1: string, date2: string): Promise<Purchase[]> { ///Tuve que armar las fechas manualmente porque las creaba con distinto huso horario
+    let localDate1: Date = null;
+    let localDate2: Date = null;
+    let parts1: string[] = null;
+    let parts2: string[] = null;
+    parts1 = date1.split('-'); 
+    localDate1 = new Date(Number(parts1[0]), Number(parts1[1]) - 1, Number(parts1[2]), 0, 0, 0);
+    parts2 = date2.split('-'); 
+    localDate2 = new Date(Number(parts2[0]), Number(parts2[1]) - 1, Number(parts2[2]), 23, 59, 59);
+    return this.purchaseRepository.find({
+      where: {
+        datePu: Between(localDate1, localDate2),
+      },
+    });
+  }
+
+  findAllByUser(idUs: number): Promise<Purchase[]> {
+    return this.purchaseRepository.find({
+      where: { user: { idUs } },
+      relations: ['user'],
+    });
+  }
+
+  findOneByPayment(paymentId: string): Promise<Purchase> {
+    return this.purchaseRepository.findOne({
+      where: { paymentId: paymentId }
+    });
+  }
+
 }

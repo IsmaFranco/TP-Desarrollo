@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   Put,
+  Query,
 } from '@nestjs/common';
 import { ClothesService } from './clothes.service';
 import { CreateClotheDto } from './dto/create-clothe.dto';
@@ -20,6 +21,7 @@ import { Rol } from 'src/common/enums/rol.enum';
 export class ClothesController {
   constructor(private readonly clothesService: ClothesService) {}
 
+  @Auth(Rol.ADMIN)
   @Post()
   create(@Body() createClotheDto: CreateClotheDto): Promise<Clothe> {
     return this.clothesService.create(createClotheDto);
@@ -30,9 +32,19 @@ export class ClothesController {
     return this.clothesService.findAll();
   }
 
+  @Get('search')
+  searchProducts(@Query('q') query: string) {
+    return this.clothesService.searchByName(query);
+  }
+
   @Get(':idCl')
   findOne(@Param('idCl') idCl: number): Promise<Clothe> {
     return this.clothesService.findOne(idCl);
+  }
+
+  @Get('type/:typeCl')
+  findByCategory(@Param('typeCl') category: string): Promise<Clothe[]> {
+    return this.clothesService.findByCategory(category);
   }
 
   @Auth(Rol.ADMIN)
@@ -45,19 +57,21 @@ export class ClothesController {
   }
 
   @Auth(Rol.ADMIN)
-  @Delete(':idCl')
-  remove(@Param('idCl') idCl: number): Promise<void> {
-    return this.clothesService.remove(idCl);
-  }
-
   @Put(':idCl/new-price')
   async updateProductPrice(@Param('idCl') id: number, @Body('price') price: number) {
   return await this.clothesService.updateProductPrice(id, price);
   }
 
+  @Auth(Rol.ADMIN)
   @Put(':idCl/add-stock')
   async updateProductStock(@Param('idCl') id: number, @Body('stock') stock: number) {
   return await this.clothesService.updateProductStock(id, stock);
+  }
+
+  @Auth(Rol.ADMIN)
+  @Patch(':idCl/deactivate')
+  async deactivateProduct(@Param('idCl') idCl: number) {
+    return await this.clothesService.deactivateProduct(idCl);
   }
 
 }

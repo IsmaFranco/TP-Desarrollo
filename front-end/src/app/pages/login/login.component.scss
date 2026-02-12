@@ -4,46 +4,6 @@
     box-sizing: border-box;
 }
 
-h1{
-    text-align: center;
-}
-
-.text-field {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-.text-field input {
-    color: rgb(25, 25, 25);
-    max-width: 100%;
-    width: 100%;
-    border: 1px solid #F4F4F6;
-    min-height: 3rem;
-    letter-spacing: 0.3rem;
-    outline: none;
-    background: rgb(193, 193, 193);
-    transition: .25s;
-    border-radius: 0.5rem;
-    text-indent: 1.25rem;
-}
-
-.text-field label {
-    color: rgb(195, 195, 195);
-}
-
-.error-message {
-    display: block;
-    margin-top: 0.25rem;
-    font-size: 13px;
-    color: red;
-}
-
-.text-field input:focus {
-    border: 1px solid rgb(230, 230, 230);
-    box-shadow: 4px 4px 4px rgba(219, 219, 219, 0.2);
-}
-
 .my-form {
     display: flex;
     margin: auto;
@@ -52,8 +12,9 @@ h1{
     justify-content: start;
     position: relative;
     gap: 1rem;
-    background: rgb(23, 23, 23);
+    background: var(--back-color);
     width: 100%;
+    border: var(--border-color) 1px solid;
     max-width: 32rem;
     padding: 3rem 2rem;
     border-radius: 2rem;
@@ -62,8 +23,6 @@ h1{
 }
 
 .my-form__button {
-    color: rgb(47, 47, 47);
-    white-space: nowrap;
     border: none;
     display: flex;
     justify-content: center;
@@ -79,38 +38,6 @@ h1{
     min-height: 3.125rem;
     width: 100%;
     border-radius: 0.5rem;
-    transition: all .3s ease;
-    -webkit-transition: all .3s ease;
-}
-
-.my-form__button:hover {
-    background: #484848;
-    color: rgb(219, 219, 219);
-}
-
-.my-form__actions {
-    display: flex;
-    flex-direction: column;
-    align-self: center;
-    width: 100%;
-    justify-content: space-between;
-    color: #d0d0d0;
-    gap: 1rem;
-    margin-top: 0.5rem;
-}
-
-.my-form__actions a {
-    font-weight: 600;
-    text-decoration: none;
-}
-
-.my-form__actions a:hover {
-    text-decoration: underline;
-    cursor: pointer;
-}
-
-.my-form__row {
-    display: flex;
-    gap: 0.5rem;
-    justify-content: space-between;
+    transition: all 0.3s ease;
+    -webkit-transition: all 0.3s ease;
 }

@@ -1,51 +1,140 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
-import { RouterLink, Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
-import { LOCAL_STORAGE } from '../../services/local-storage.provider.service';
+import { Component, inject, OnInit, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 import { BagService } from '../../services/bag.service';
+import { AuthService } from '../../services/auth.service';
+import { TokenService } from '../../services/token.service';
+import { Subscription } from 'rxjs';
+import Swal from 'sweetalert2';
+import { ClothesService } from '../../services/clothes.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-nav',
   standalone: true,
-  imports: [RouterLink, CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './nav.component.html',
-  styleUrl: './nav.component.scss'
+  styleUrl: './nav.component.scss',
 })
-export class NavComponent implements OnInit {
+export class NavComponent implements OnInit, OnDestroy {
+  isAuthenticated = false;
+  currentUser: any = null;
   userRole: string | null = null;
+  searchTerm: string = '';
+  searchResults: any[] = [];
+  searchTimeout: any;
 
-  private _localStorage = inject(LOCAL_STORAGE);
+  private subscriptions: Subscription[] = [];
+
   private _bagService = inject(BagService);
   private _router = inject(Router);
+  private _tokenService = inject(TokenService);
   private _authService = inject(AuthService);
+  private clothesService = inject(ClothesService);
 
   ngOnInit(): void {
-    this.userRole = this._authService.getRoleFromToken();
+    const authSub = this._tokenService.isAuthenticated$.subscribe(
+      (isAuth) => {
+        this.isAuthenticated = isAuth;
+      }
+    );
+
+    const userSub = this._tokenService.currentUser$.subscribe(
+      (user) => {
+        this.currentUser = user?.user;
+        this.userRole = user?.user.rol || null;
+      }
+    );
+
+    this.subscriptions.push(authSub, userSub);
+
+    this._tokenService.checkAuthStatus();
   }
 
-  menuOption: string = '';
-  onOption(menuOption: string){
-    this.menuOption = menuOption;
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 
-  isAuthenticated(): boolean {
-    if (this._localStorage) { // Verifica si `localStorage` está disponible
-      const token = this._localStorage.getItem('token');
-      return token !== null;
+  navigate(route: string): void {
+    this._router.navigate([route]);
+  }
+
+  logout(): void {
+    this._authService.logout();
+    this._bagService.clearBag();
+
+    Swal.fire({
+      icon: 'success',
+      title: 'Logout successful',
+      timer: 1000,
+      showConfirmButton: false,
+    });
+
+    this._router.navigate(['/login']);
+  }
+
+  get userName(): string {
+    return this.currentUser?.nameUs || 'User';
+  }
+
+  onSearchChange(): void {
+    const term = this.searchTerm.trim();
+    if (term.length < 3) {
+      setTimeout(() => {
+        this.searchResults = [];
+      }, 100);
+      return;
     }
-    return false; // Si `localStorage` es `null`, retorna `false`
+    if (term.length > 2) {
+      clearTimeout(this.searchTimeout);
+      this.searchTimeout = setTimeout(() => {
+        this.clothesService.searchProducts(term).subscribe({
+          next: (results) => this.searchResults = results
+        });
+      }, 100);
+    }
   }
 
-  logout() {
-    if (this._localStorage) { // Verifica si `localStorage` está disponible
-      this._localStorage.removeItem('token');} // Elimina el token del `localStorage
-    // Redirige al usuario si es necesario
-    this._bagService.clearBag();  // Vacía el carrito al cerrar sesión
-    this._router.navigate(['/login'], {replaceUrl: true});
-    setTimeout(() => {
-      window.location.reload();
-    }, 10);
+  onSearchEnter(event: KeyboardEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+    const term = (this.searchTerm || '').trim();
+    if (!term) {
+      this._router.navigate(['/']);
+      return;
+    }
+    if (term.length < 3) {
+      Swal.fire({
+        title: 'Please enter at least 3 characters',
+        icon: 'info',
+        confirmButtonText: 'OK',
+        allowOutsideClick: false
+      });
+      return;
+    }
+    if (!this.searchResults || this.searchResults.length === 0) {
+      Swal.fire({
+        title: 'No results found',
+        text: 'Please try a different search term.',
+        icon: 'info',
+        confirmButtonText: 'OK',
+        allowOutsideClick: false
+      }).then(() => {
+        this.searchTerm = '';
+        this.searchResults = [];
+      });
+      return;
+    }
+    this._router.navigate(['/search', term]).then(() => {
+      this.searchTerm = '';
+      this.searchResults = [];
+    });
+  }
+
+  goToProduct(idCl: number): void {
+    this._router.navigate([`/products/${idCl}`]);
+    this.searchTerm = '';
+    this.searchResults = [];
   }
 
 }

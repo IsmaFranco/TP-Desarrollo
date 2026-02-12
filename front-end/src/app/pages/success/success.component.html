@@ -1,0 +1,98 @@
+@if (!purchaseClothes) {
+<div class="empty-success">
+  <div class="empty-success-content">
+    <h2>No purchase information found</h2>
+    <p>Please try again or contact support</p>
+  </div>
+</div>
+}
+
+@else {
+<div class="container success-page">
+  <div class="success-header">
+    <div class="success-icon">
+    </div>
+    <div class="title-wrap">
+      <h2>¡Purchase completed successfully!</h2>
+      <p>Your order has been processed correctly</p>
+    </div>
+  </div>
+
+  <div class="purchase-item">
+    <div class="purchase-top">
+      <div class="purchase-id">
+        <strong>Purchase ID: #{{ purchase?.idPu }}</strong>
+      </div>
+      <div class="purchase-meta">
+        <span class="date">
+          {{ purchase?.datePu | date:'dd/MM/yyyy' }}
+        </span>
+        <span class="time">
+          {{ purchase?.datePu | date:'HH:mm' }}
+        </span>
+      </div>
+    </div>
+
+    <div class="purchase-body">
+      <div class="left">
+        <div class="customer-info">
+          <h4>Customer Information</h4>
+          <p class="customer-name">
+            <strong>{{ purchase?.user.nameUs | titlecase }} {{ purchase?.user.lastNameUs | titlecase }}</strong>
+          </p>
+          <p class="address">
+            {{ purchase?.user.addressUs | titlecase }}, {{ purchase?.user.locality.nameLo }}
+          </p>
+        </div>
+
+        <div class="shipment-info">
+          <h4> Shipment Information</h4>
+          <p class="shipment-details">
+            <span class="shipment-id">Shipment ID: #{{ purchase?.shipment.idSh }}</span>
+            <span class="shipment-status status-{{ purchase?.shipment.status?.toLowerCase() }}">
+              {{ purchase?.shipment.status }}
+            </span>
+          </p>
+        </div>
+
+        <div class="products-list">
+          <h4>Purchased Products</h4>
+          <div *ngFor="let product of purchaseClothes" class="product-item">
+            <div class="product-left">
+              <div class="product-thumb">
+                <img [src]="product.clothe.image" [alt]="product.clothe.nameCl" />
+              </div>
+              <div class="product-info">
+                <div class="p-name">{{ product.clothe.nameCl }}</div>
+                <div class="p-attr">
+                  <span>Size: {{ product.clothe.size }}</span> •
+                  <span>Quantity: {{ product.quantity }}</span>
+                </div>
+              </div>
+            </div>
+            <div class="product-right">
+              <div class="unit-price">{{ product.unitPrice | currency }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="right">
+        <div class="amount-container">
+          <div class="total-label">Total Paid</div>
+          <div class="amount">{{ purchase?.amount | currency }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="action-buttons">
+    <button class="back-button" (click)="navigate()">
+      Back to Home
+    </button>
+    <button class="print-button" onclick="window.print()">
+      Print Receipt
+    </button>
+  </div>
+</div>
+}

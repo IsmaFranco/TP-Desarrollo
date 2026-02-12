@@ -37,7 +37,6 @@ export class AuthController {
     @Body()
     registerDto: RegisterDto,
   ) {
-    console.log(registerDto); //lo dejo para verlo dsp ya que no esta validando los datos (creo)
     return this.authService.register(registerDto);
   }
 
@@ -51,7 +50,7 @@ export class AuthController {
   }
 
   @Get('profile')
-  @Roles(Rol.ADMIN, Rol.USER, Rol.SUPPLIER)
+  @Roles(Rol.ADMIN, Rol.USER)
   @UseGuards(AuthGuard, RolesGuard)
   profile(@ActiveUser() user: UserActiveInterface) {
     return this.authService.profile(user);

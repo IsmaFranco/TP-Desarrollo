@@ -13,14 +13,14 @@ import { LocalitiesService } from './localities.service';
 import { CreateLocalityDto } from './dto/create-locality.dto';
 import { UpdateLocalityDto } from './dto/update-locality.dto';
 import { Locality } from './entities/locality.entity';
-import { Rol } from 'src/common/enums/rol.enum';
 import { Auth } from 'src/auth/decorators/auth.decorators';
+import { Rol } from 'src/common/enums/rol.enum';
 
-@Auth(Rol.ADMIN)
 @Controller('localities')
 export class LocalitiesController {
-  constructor(private readonly localitiesService: LocalitiesService) {}
+  constructor(private readonly localitiesService: LocalitiesService) { }
 
+  @Auth(Rol.ADMIN)
   @Post()
   @UsePipes(new ValidationPipe({ transform: true }))
   create(@Body() createLocalityDto: CreateLocalityDto): Promise<Locality> {
@@ -32,21 +32,34 @@ export class LocalitiesController {
     return this.localitiesService.findAll();
   }
 
-  @Get(':postalCode')
-  findOne(@Param('postalCode') postalCode: number): Promise<Locality> {
-    return this.localitiesService.findOne(+postalCode);
+  @Get('active')
+  findActiveLocalities(): Promise<Locality[]> {
+    return this.localitiesService.findActiveLocalities();
   }
 
-  @Patch(':postalCode')
+  @Get(':idLo')
+  findOne(@Param('idLo') idLo: number): Promise<Locality> {
+    return this.localitiesService.findOne(+idLo);
+  }
+
+  @Auth(Rol.ADMIN)
+  @Patch(':idLo')
   update(
-    @Param('postalCode') postalCode: number,
+    @Param('idLo') idLo: number,
     @Body() updateLocalityDto: UpdateLocalityDto,
   ): Promise<Locality> {
-    return this.localitiesService.update(+postalCode, updateLocalityDto);
+    return this.localitiesService.update(+idLo, updateLocalityDto);
   }
 
-  @Delete(':postalCode')
-  remove(@Param('postalCode') postalCode: number): Promise<void> {
-    return this.localitiesService.remove(+postalCode);
+  @Auth(Rol.ADMIN)
+  @Patch(':idLo/deactivate')
+  remove(@Param('idLo') idLo: number): Promise<void> {
+    return this.localitiesService.remove(+idLo);
+  }
+
+  @Auth(Rol.ADMIN)
+  @Patch(':idLo/activate')
+  activate(@Param('idLo') idLo: number): Promise<void> {
+    return this.localitiesService.activate(+idLo);
   }
 }

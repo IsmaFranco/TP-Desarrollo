@@ -1,50 +1,91 @@
-<div class="my-form">
-    <form [formGroup]="loginForm" novalidate (ngSubmit)="onSubmit()" >
-        <h1>Add new clothe</h1>
-        <div class="text-field">
+<div class="new-item-container">
+  <form [formGroup]="loginForm" novalidate (ngSubmit)="onSubmit()" class="form-card">
+    <div class="form-card__main">
+      <div class="form-card__content">
+        <div class="form-header">
+          <h1 class="title">Add new clothe</h1>
+        </div>
+
+        <div class="form-grid">
+          <div class="field">
             <label for="nameCl">Name</label>
-            <input type="text" id="nameCl" name="nameCl" placeholder="Vans Knu" autocomplete="off" formControlName="nameCl" ngClass="{is-invalid: hasError('nameCl', 'required')}">
-            @if (hasError('nameCl', 'required')){
-                <span class="error-message" >name is required</span>}
-            <label for="description">Description</label>
-            <input type="text" id="description" name="description" placeholder="White pants" autocomplete="off" formControlName="description" ngClass="{is-invalid: hasError('description', 'required')}">
-            @if (hasError('description', 'required')){
-                <span class="error-message" >description is required</span>}
-            <label for="size">Size</label>
-            <select type="text" id="size" name="size" placeholder="XL" autocomplete="off" formControlName="size" ngClass="{is-invalid: hasError('size', 'required')}">
-                <option value="" disabled selected>Choose...</option>
-                <option value="XS">XS</option>
-                <option value="S">S</option>
-                <option value="M">M</option>
-                <option value="L">L</option>
-                <option value="XL">XL</option>
-            </select>
-            <label for="typeCl">TypeCl</label>
-            <select type="text" id="typeCl" name="typeCl" placeholder="T-shirt" autocomplete="off" formControlName="typeCl" ngClass="{is-invalid: hasError('typeCl', 'required')}">
-                <option value="" disabled selected>Choose...</option>
-                <option value="T-shirt">T-shirt</option>
-                <option value="Pants">Pants</option>
-                <option value="Shoes">Shoes</option>
-            </select>
-            @if (hasError('typeCl', 'required')){
-                <span class="error-message" >typeCl is required</span>}
-            <label for="stock">Stock</label>
-            <input type="number" min="0" id="stock" name="stock" placeholder="10" autocomplete="off" formControlName="stock" ngClass="{is-invalid: hasError('stock', 'required')}">
-            @if (hasError('stock', 'required')){
-                <span class="error-message" >stock is required</span>}
+            <input id="nameCl" type="text" placeholder="Vans Knu" formControlName="nameCl" autocomplete="off">
+            <span *ngIf="hasError('nameCl','required')" class="error-message">Name is required</span>
+          </div>
+
+          <div class="field">
             <label for="price">Price</label>
-            <input type="number" min="0" id="price" name="price" placeholder="100" autocomplete="off" formControlName="price" ngClass="{is-invalid: hasError('price', 'required')}">
-            @if (hasError('price', 'required')){
-                <span class="error-message" >price is required</span>}
-            <label for="image">Image</label>
-            <input type="text" id="image" name="image" placeholder="https://www.google.com" autocomplete="off" formControlName="image" ngClass="{is-invalid: hasError('image', 'required')}">
-            @if (hasError('image', 'required')){
-                <span class="error-message" >image is required</span>}
+            <input id="price" type="number" min="0" placeholder="100" formControlName="price" autocomplete="off">
+            <span *ngIf="hasError('price','required')" class="error-message">Price is required</span>
+          </div>
+
+          <div class="field">
+            <label for="stock">Stock</label>
+            <input id="stock" type="number" min="0" placeholder="10" formControlName="stock" autocomplete="off">
+            <span *ngIf="hasError('stock','required')" class="error-message">Stock is required</span>
+          </div>
+
+          <div class="field">
+            <label for="size">Size</label>
+            <select id="size" formControlName="size">
+              <option value="" disabled selected>Choose...</option>
+              <option value="XS">XS</option>
+              <option value="S">S</option>
+              <option value="M">M</option>
+              <option value="L">L</option>
+              <option value="XL">XL</option>
+            </select>
+            <span *ngIf="hasError('size','required')" class="error-message">Size is required</span>
+          </div>
+
+          <div class="field field--wide">
+            <label for="description">Description</label>
+            <input id="description" type="text" placeholder="White pants" formControlName="description"
+              autocomplete="off">
+            <span *ngIf="hasError('description','required')" class="error-message">Description is required</span>
+          </div>
+
+          <div class="field">
+            <label for="typeCl">Type</label>
+            <select id="typeCl" formControlName="typeCl">
+              <option value="" disabled selected>Choose...</option>
+              <option value="T-shirt">T-shirt</option>
+              <option value="Pants">Pants</option>
+              <option value="Shoes">Shoes</option>
+            </select>
+            <span *ngIf="hasError('typeCl','required')" class="error-message">Type is required</span>
+          </div>
+
+          <div class="field field--wide">
+            <label for="image">Image URL</label>
+            <input id="image" type="text" placeholder="https://..." formControlName="image" autocomplete="off">
+            <span *ngIf="hasError('image','required')" class="error-message">Image is required</span>
+          </div>
         </div>
-        <button type="submit" class="my-form__button" >Add</button>
-    </form>
-    <div class="my-form__actions">
-        <div class="my-form__row">
+
+        <div class="form-actions">
+          <button type="submit" class="btn-submit">Add</button>
         </div>
+      </div>
+
+      <aside class="form-preview">
+        <div class="preview-card">
+          <div class="preview-image">
+            <img [src]="loginForm.get('image')?.value || 'https://images.emojiterra.com/openmoji/v13.1/512px/1f455.png'"
+              alt="preview">
+          </div>
+          <div class="preview-body">
+            <h3 class="preview-title">{{ loginForm.get('nameCl')?.value || 'Product name' }}</h3>
+            <p class="preview-desc">{{ loginForm.get('description')?.value || 'Short description' }}</p>
+            <div class="preview-meta">
+              <span class="size">Size: {{ loginForm.get('size')?.value || '-' }}</span>
+              <span class="stock">Stock: {{ loginForm.get('stock')?.value || 0 }}</span>
+              <span class="price">{{ loginForm.get('price')?.value ? ('$' + loginForm.get('price')?.value) : '-'
+                }}</span>
+            </div>
+          </div>
+        </div>
+      </aside>
     </div>
+  </form>
 </div>

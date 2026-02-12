@@ -22,9 +22,14 @@
     "@angular/router": "^18.0.0",
     "@angular/ssr": "^18.0.1",
     "bootstrap": "^5.3.3",
+    "dotenv": "^16.4.7",
     "express": "^4.18.2",
+    "jwt-decode": "^4.0.0",
+    "nodejs": "^0.0.0",
     "rxjs": "~7.8.0",
+    "sweetalert2": "^11.15.2",
     "tslib": "^2.3.0",
+    "vercel": "^44.7.3",
     "zone.js": "~0.14.3"
   },
   "devDependencies": {

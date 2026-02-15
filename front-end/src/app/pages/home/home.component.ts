@@ -36,6 +36,7 @@ export class HomeComponent implements OnInit {
     const userSub = this.tokenService.currentUser$.subscribe(user => {
       this.userRole = user?.user.rol || null;
       this.cdRef.markForCheck();
+      this.loadProducts();
     });
     this.subs.push(userSub);
 

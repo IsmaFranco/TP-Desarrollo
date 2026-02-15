@@ -1,4 +1,4 @@
-import { IsInt, IsPositive, IsString, MinLength } from 'class-validator';
+import { IsInt, IsNumber, IsPositive, IsString, MinLength } from 'class-validator';
 
 export class CreateLocalityDto {
   @IsPositive()
@@ -8,4 +8,8 @@ export class CreateLocalityDto {
   @IsString()
   @MinLength(2)
   nameLo: string;
+
+  @IsNumber()
+  @IsPositive()
+  cost: number;
 }

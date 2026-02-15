@@ -19,6 +19,7 @@ export class BagComponent implements OnInit {
   user: User | null = null;
   total: number = 0;
   userLocality: any | null = null;
+  isAuthenticated: boolean = false;
 
   private subs: Subscription[] = [];
 
@@ -31,6 +32,11 @@ export class BagComponent implements OnInit {
     });
     this.subs.push(userSub);
 
+    const authSub = this.tokenService.isAuthenticated$.subscribe(isAuth => {
+      this.isAuthenticated = isAuth;
+    });
+    this.subs.push(authSub);
+
     this.tokenService.checkAuthStatus();
 
     this.bagItems = this.bagService.getBagItems();
@@ -40,11 +46,17 @@ export class BagComponent implements OnInit {
     this.bagService.removeFromBag(productId);
   }
 
-  calculateTotalPrice() {
+  calculateSubtotal(): number {
     return this.bagItems.reduce(
       (total, item) => total + item.price * item.quantity,
-      this.user?.locality.cost
+      0
     );
+  }
+
+  calculateTotalPrice(): number {
+    const subtotal = this.calculateSubtotal();
+    const shippingCost = this.user?.locality?.cost || 0;
+    return subtotal + shippingCost;
   }
 
   hasItemsInBag() {
@@ -57,5 +69,9 @@ export class BagComponent implements OnInit {
       .subscribe((response: { init_point: string }) => {
         window.location.href = response.init_point;
       });
+  }
+
+  goToLogin() {
+    this.router.navigate(['/login']);
   }
 }

@@ -21,9 +21,13 @@ export class LocalitiesService {
     return this.localityRepository.find();
   }
 
+  findActiveLocalities(): Promise<Locality[]> {
+    return this.localityRepository.find({ where: { isActive: true } });
+  }
+
   findOne(idLo: number): Promise<Locality> {
     return this.localityRepository.findOne({
-      where: { idLo: idLo },
+      where: { idLo: idLo, isActive: true },
     });
   }
 
@@ -36,6 +40,10 @@ export class LocalitiesService {
   }
 
   async remove(idLo: number): Promise<void> {
-    await this.localityRepository.delete(idLo);
+    await this.localityRepository.update(idLo, { isActive: false });
+  }
+
+  async activate(idLo: number): Promise<void> {
+    await this.localityRepository.update(idLo, { isActive: true });
   }
 }

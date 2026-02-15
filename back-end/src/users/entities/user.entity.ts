@@ -11,7 +11,7 @@ import { Purchase } from 'src/purchases/entities/purchase.entity';
 import { Locality } from 'src/localities/entities/locality.entity';
 
 @Entity()
-export abstract class User {
+export class User {
   @PrimaryGeneratedColumn('increment')
   idUs: number;
 
@@ -24,14 +24,14 @@ export abstract class User {
   @Column({ type: 'varchar', length: 50, nullable: false })
   emailUs: string;
 
-  @Column({ type: 'varchar', length: 20, nullable: false }) 
+  @Column({ type: 'varchar', length: 20, nullable: false })
   phoneUs: string;
 
   @Column({ type: 'varchar', length: 50, nullable: false })
   addressUs: string;
 
   @Column({ type: 'varchar', length: 200, nullable: false }) //nullabe false significa que no puede ser nulo
-  passwordUs: string; 
+  passwordUs: string;
 
   @Column({ type: 'enum', default: Rol.USER, enum: Rol })
   rol: Rol; //tendria que haber sido role, pero ya avanzamos bastante y no quiero cambiarlo
@@ -42,4 +42,7 @@ export abstract class User {
 
   @OneToMany(() => Purchase, (purchase) => purchase.user)
   purchases: Purchase[];
+
+  @Column({ default: true })
+  isActive: boolean;
 }

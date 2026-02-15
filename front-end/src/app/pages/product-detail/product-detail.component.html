@@ -19,7 +19,7 @@
           <button type="button" class="quantity-btn" (click)="increaseQuantity()">+</button>
         </div>
       </div>
-      <button type="button" *ngIf="userRole==='user'" class="add-to-bag-btn" (click)="addToBag(cloth)">
+      <button type="button" *ngIf="userRole!='admin'" class="add-to-bag-btn" (click)="addToBag(cloth)">
         Add to bag
       </button>
     </div>

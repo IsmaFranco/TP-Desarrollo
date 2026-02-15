@@ -88,7 +88,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
   }
 
   private loadLocalities(): void {
-    const localitiesSub = this.authService.getLocalities().subscribe({
+    const localitiesSub = this.authService.getActiveLocalities().subscribe({
       next: (localities) => {
         this.localities = localities;
       },
@@ -150,9 +150,11 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   updateProfile(): void {
     if (this.profileForm.valid && this.user) {
+      const formValue = this.profileForm.value;
       const profileData = {
-        ...this.profileForm.value,
-        idUs: this.user.idUs
+        ...formValue,
+        idUs: this.user.idUs,
+        idLo: Number(formValue.idLo)  // Convertir a número
       };
 
       const updateProfileSub = this.authService.updateProfile(profileData).subscribe({
@@ -193,12 +195,10 @@ export class SettingsComponent implements OnInit, OnDestroy {
         cancelButtonText: 'Cancel',
       }).then((result) => {
         if (result.isConfirmed) {
-          const deleteData = {
-            idUs: this.user!.idUs,
-            password: this.deleteForm.value.password
-          };
+          const idUs = this.user!.idUs;
+          const password = this.deleteForm.value.password;
 
-          const deleteAccountSub = this.authService.deleteAccount(deleteData).subscribe({
+          const deleteAccountSub = this.authService.deleteAccount(idUs, password).subscribe({
             next: (response) => {
               Swal.fire({
                 icon: 'success',

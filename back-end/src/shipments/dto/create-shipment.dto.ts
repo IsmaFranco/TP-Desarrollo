@@ -1,4 +1,5 @@
-import { IsDate, IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsDate, IsEnum, IsNumber, IsOptional, IsString } from 'class-validator';
+import { STATUS } from '../entities/shipment.entity';
 
 export class CreateShipmentDto {
   @IsDate()
@@ -6,5 +7,9 @@ export class CreateShipmentDto {
 
   @IsNumber()
   idLocality: number;
+
+  @IsOptional()
+  @IsEnum(STATUS)
+  status?: STATUS;
 
 }

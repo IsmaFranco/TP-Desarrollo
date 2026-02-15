@@ -119,28 +119,42 @@ export class AuthService {
     return this.http.get(this.urlLocalities);
   }
 
+  getActiveLocalities(): Observable<any> {
+    return this.http.get(`${this.urlLocalities}/active`);
+  }
+
   updateLocality(idLo: number, updatedData: any): Observable<any> {
     return this.http.patch(`${this.urlLocalities}/${idLo}`, updatedData);
   }
 
   deleteLocality(idLo: number): Observable<any> {
-    return this.http.delete(`${this.urlLocalities}/${idLo}`);
+    return this.http.patch(`${this.urlLocalities}/${idLo}/deactivate`, {});
+  }
+
+  activateLocality(idLo: number): Observable<any> {
+    return this.http.patch(`${this.urlLocalities}/${idLo}/activate`, {});
   }
 
   newLocality(nameLo: string, postalCode: number, cost: number): Observable<any> {
     return this.http.post(this.urlLocalities, { nameLo, postalCode, cost });
   }
 
-  changePassword(data: { idUs: number, newPassword: string }) {
-    return this.http.patch(`${this.urlUsers}/${data.idUs}/password`, data);
+  changePassword(data: { idUs: number, currentPassword: string, newPassword: string }) {
+    const { idUs, ...passwordData } = data;
+    return this.http.patch(`${this.urlUsers}/${idUs}/password`, passwordData);
   }
 
   updateProfile(data: any) {
-    return this.http.patch(`${this.urlUsers}/${data.idUs}`, data);
+    const { idUs, ...profileData } = data;
+    return this.http.patch(`${this.urlUsers}/${idUs}`, profileData);
   }
 
-  deleteAccount(data: { idUs: number, password: string }) {
-    return this.http.delete(`${this.urlUsers}/${data.idUs}`, { body: { password: data.password } });
+  deleteAccount(idUs: number, password: string) {
+    return this.http.patch(`${this.urlUsers}/${idUs}/deactivate`, { password });
+  }
+
+  getUsersWithStats(): Observable<any> {
+    return this.http.get(`${this.urlUsers}/stats`);
   }
 
 }

@@ -57,8 +57,11 @@
           <button class="btn btn-edit" (click)="editLocality(locality)">
             Edit
           </button>
-          <button class="btn btn-delete" (click)="deleteLocality(locality)">
+          <button class="btn btn-delete" (click)="deleteLocality(locality)" *ngIf="locality.isActive">
             Delete
+          </button>
+          <button class="btn btn-delete" (click)="activateLocality(locality)" *ngIf="!locality.isActive">
+            Activate
           </button>
         </div>
       </div>

@@ -27,6 +27,9 @@ export class Clothe {
   @Column({ type: 'integer', nullable: false })
   price: number;
 
+  @Column({default: true})
+  isActive: boolean;
+
   @OneToMany(() => PurchaseClothe, purchaseClothe => purchaseClothe.clothe)
   purchaseClothe: PurchaseClothe;
 }

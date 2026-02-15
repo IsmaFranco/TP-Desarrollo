@@ -42,21 +42,35 @@
 
                 <div class="summary-row">
                     <span>Subtotal:</span>
-                    <span>${{ calculateTotalPrice() - (user?.locality?.cost || 0) }}</span>
+                    <span>${{ calculateSubtotal() }}</span>
                 </div>
 
-                <div class="summary-row">
+                <!-- Mostrar envío solo si está logueado -->
+                <div class="summary-row" *ngIf="isAuthenticated && user?.locality">
                     <span>Shipping to {{user?.addressUs}}, {{user?.locality?.nameLo}}:</span>
                     <span>${{ user?.locality?.cost }}</span>
                 </div>
 
-                <div class="summary-row total-row">
-                    <span>Total:</span>
-                    <span class="total-amount">${{ calculateTotalPrice() }}</span>
+                <!-- Mensaje para usuarios no logueados -->
+                <div class="summary-row" *ngIf="!isAuthenticated">
+                    <span>Shipping:</span>
+                    <span>Login to see shipping cost</span>
                 </div>
 
-                <button class="checkout-btn" *ngIf="hasItemsInBag()" (click)="aceptarCompra()">
+                <div class="summary-row total-row">
+                    <span>Total:</span>
+                    <span class="total-amount" *ngIf="isAuthenticated">${{ calculateTotalPrice() }}</span>
+                    <span class="total-amount" *ngIf="!isAuthenticated">${{ calculateSubtotal() }} + shipping</span>
+                </div>
+
+                <!-- Botón de checkout para usuarios logueados -->
+                <button class="checkout-btn" *ngIf="isAuthenticated && hasItemsInBag()" (click)="aceptarCompra()">
                     Checkout
+                </button>
+
+                <!-- Botón de login para usuarios no logueados -->
+                <button class="checkout-btn" *ngIf="!isAuthenticated && hasItemsInBag()" (click)="goToLogin()">
+                    Login to Checkout
                 </button>
             </div>
         </div>
